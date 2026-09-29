@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <data name="Nav_General.Content" xml:space="preserve">
+    <value>Allgemein</value>
+  </data>
+  <data name="Nav_Desktops.Content" xml:space="preserve">
+    <value>Virtuelle Desktops</value>
+  </data>
+  <data name="Nav_Clock.Content" xml:space="preserve">
+    <value>Uhr &amp; Datum</value>
+  </data>
+  <data name="Nav_Weather.Content" xml:space="preserve">
+    <value>Wetter</value>
+  </data>
+  <data name="Nav_System.Content" xml:space="preserve">
+    <value>System</value>
+  </data>
+  <data name="Nav_Info.Content" xml:space="preserve">
+    <value>Info</value>
+  </data>
+  <data name="General_Title.Text" xml:space="preserve">
+    <value>Allgemein</value>
+  </data>
+  <data name="General_Autostart.Header" xml:space="preserve">
+    <value>Mit Windows starten</value>
+  </data>
+  <data name="General_Theme.Header" xml:space="preserve">
+    <value>Design</value>
+  </data>
+  <data name="General_Theme_System.Content" xml:space="preserve">
+    <value>System</value>
+  </data>
+  <data name="General_Theme_Light.Content" xml:space="preserve">
+    <value>Hell</value>
+  </data>
+  <data name="General_Theme_Dark.Content" xml:space="preserve">
+    <value>Dunkel</value>
+  </data>
+  <data name="General_Monitors.Header" xml:space="preserve">
+    <value>Anzeigen auf</value>
+  </data>
+  <data name="General_Monitors_Primary.Content" xml:space="preserve">
+    <value>Nur Hauptmonitor</value>
+  </data>
+  <data name="General_Monitors_All.Content" xml:space="preserve">
+    <value>Allen Monitoren</value>
+  </data>
+  <data name="Desktops_Title.Text" xml:space="preserve">
+    <value>Virtuelle Desktops</value>
+  </data>
+  <data name="Desktops_Show.Header" xml:space="preserve">
+    <value>Anzeigen</value>
+  </data>
+  <data name="Desktops_Scroll.Header" xml:space="preserve">
+    <value>Mit Mausrad wechseln</value>
+  </data>
+  <data name="Desktops_Unavailable.Message" xml:space="preserve">
+    <value>Virtuelle Desktops werden auf dieser Windows-Version nicht unterstützt.</value>
+  </data>
+  <data name="Clock_Title.Text" xml:space="preserve">
+    <value>Uhr &amp; Datum</value>
+  </data>
+  <data name="Clock_Use24h.Header" xml:space="preserve">
+    <value>24-Stunden-Format</value>
+  </data>
+  <data name="Clock_Seconds.Header" xml:space="preserve">
+    <value>Sekunden anzeigen</value>
+  </data>
+  <data name="Clock_DateFormat.Header" xml:space="preserve">
+    <value>Datumsformat</value>
+  </data>
+  <data name="Clock_CustomFormat.Header" xml:space="preserve">
+    <value>Benutzerdefiniertes Format</value>
+  </data>
+  <data name="Clock_Preview.Text" xml:space="preserve">
+    <value>Vorschau:</value>
+  </data>
+  <data name="Weather_Title.Text" xml:space="preserve">
+    <value>Wetter</value>
+  </data>
+  <data name="Weather_Show.Header" xml:space="preserve">
+    <value>Anzeigen</value>
+  </data>
+  <data name="Weather_Location.Header" xml:space="preserve">
+    <value>Ort</value>
+  </data>
+  <data name="Weather_Location.PlaceholderText" xml:space="preserve">
+    <value>Ort suchen …</value>
+  </data>
+  <data name="Weather_Unit.Header" xml:space="preserve">
+    <value>Einheit</value>
+  </data>
+  <data name="Weather_Unit_C.Content" xml:space="preserve">
+    <value>°C</value>
+  </data>
+  <data name="Weather_Unit_F.Content" xml:space="preserve">
+    <value>°F</value>
+  </data>
+  <data name="Weather_Interval.Header" xml:space="preserve">
+    <value>Aktualisierungsintervall (Minuten)</value>
+  </data>
+  <data name="System_Title.Text" xml:space="preserve">
+    <value>System</value>
+  </data>
+  <data name="System_Cpu.Header" xml:space="preserve">
+    <value>CPU anzeigen</value>
+  </data>
+  <data name="System_Gpu.Header" xml:space="preserve">
+    <value>GPU anzeigen</value>
+  </data>
+  <data name="System_Ram.Header" xml:space="preserve">
+    <value>RAM anzeigen</value>
+  </data>
+  <data name="System_Network.Header" xml:space="preserve">
+    <value>Netzwerk anzeigen</value>
+  </data>
+  <data name="System_Labels.Header" xml:space="preserve">
+    <value>Beschriftungen anzeigen</value>
+  </data>
+  <data name="System_Interval.Header" xml:space="preserve">
+    <value>Aktualisierungsintervall</value>
+  </data>
+  <data name="System_Interval_500.Content" xml:space="preserve">
+    <value>0,5 s</value>
+  </data>
+  <data name="System_Interval_1000.Content" xml:space="preserve">
+    <value>1 s</value>
+  </data>
+  <data name="System_Interval_2000.Content" xml:space="preserve">
+    <value>2 s</value>
+  </data>
+  <data name="System_Interval_5000.Content" xml:space="preserve">
+    <value>5 s</value>
+  </data>
+  <data name="System_Nic.Header" xml:space="preserve">
+    <value>Netzwerkadapter</value>
+  </data>
+  <data name="Info_Title.Text" xml:space="preserve">
+    <value>Info</value>
+  </data>
+  <data name="Info_OpenLogs.Content" xml:space="preserve">
+    <value>Log-Ordner öffnen</value>
+  </data>
+  <data name="Info_Reset.Content" xml:space="preserve">
+    <value>Einstellungen zurücksetzen</value>
+  </data>
+  <data name="Settings_Title" xml:space="preserve">
+    <value>TopBar – Einstellungen</value>
+  </data>
+  <data name="Menu_Settings" xml:space="preserve">
+    <value>Einstellungen</value>
+  </data>
+  <data name="Menu_Reload" xml:space="preserve">
+    <value>Neu laden</value>
+  </data>
+  <data name="Menu_Exit" xml:space="preserve">
+    <value>Beenden</value>
+  </data>
+  <data name="Common_On" xml:space="preserve">
+    <value>Ein</value>
+  </data>
+  <data name="Common_Off" xml:space="preserve">
+    <value>Aus</value>
+  </data>
+  <data name="Common_Cancel" xml:space="preserve">
+    <value>Abbrechen</value>
+  </data>
+  <data name="General_BarHeight" xml:space="preserve">
+    <value>Höhe der Leiste</value>
+  </data>
+  <data name="General_FontSize" xml:space="preserve">
+    <value>Schriftgröße</value>
+  </data>
+  <data name="General_Opacity" xml:space="preserve">
+    <value>Deckkraft des Hintergrunds</value>
+  </data>
+  <data name="Desktops_DotSize" xml:space="preserve">
+    <value>Punktgröße</value>
+  </data>
+  <data name="Clock_Custom" xml:space="preserve">
+    <value>Benutzerdefiniert</value>
+  </data>
+  <data name="Clock_InvalidFormat" xml:space="preserve">
+    <value>Ungültiges Format</value>
+  </data>
+  <data name="Weather_SetLocation" xml:space="preserve">
+    <value>Ort festlegen</value>
+  </data>
+  <data name="Weather_CurrentLocation" xml:space="preserve">
+    <value>Aktueller Ort: {0}</value>
+  </data>
+  <data name="Weather_NoLocation" xml:space="preserve">
+    <value>Kein Ort festgelegt</value>
+  </data>
+  <data name="System_Warn" xml:space="preserve">
+    <value>Warnschwelle</value>
+  </data>
+  <data name="System_Critical" xml:space="preserve">
+    <value>Kritische Schwelle</value>
+  </data>
+  <data name="System_Nic_Auto" xml:space="preserve">
+    <value>Automatisch</value>
+  </data>
+  <data name="System_Nic_Missing" xml:space="preserve">
+    <value>nicht verfügbar</value>
+  </data>
+  <data name="Info_Version" xml:space="preserve">
+    <value>Version {0}</value>
+  </data>
+  <data name="Info_Reset_Title" xml:space="preserve">
+    <value>Einstellungen zurücksetzen?</value>
+  </data>
+  <data name="Info_Reset_Message" xml:space="preserve">
+    <value>Alle Einstellungen werden auf die Standardwerte zurückgesetzt.</value>
+  </data>
+  <data name="Info_Reset_Confirm" xml:space="preserve">
+    <value>Zurücksetzen</value>
+  </data>
+</root>

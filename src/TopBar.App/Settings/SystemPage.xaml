@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Page
+    x:Class="TopBar.App.SettingsPages.SystemPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="using:TopBar.App.Controls">
+    <ScrollViewer>
+        <StackPanel Spacing="24" Padding="36,20,36,36" MaxWidth="720" HorizontalAlignment="Left">
+            <TextBlock x:Uid="System_Title" Style="{StaticResource TitleTextBlockStyle}" />
+
+            <ToggleSwitch x:Name="CpuSwitch" x:Uid="System_Cpu" Toggled="CpuSwitch_Toggled" />
+            <ToggleSwitch x:Name="GpuSwitch" x:Uid="System_Gpu" Toggled="GpuSwitch_Toggled" />
+            <ToggleSwitch x:Name="RamSwitch" x:Uid="System_Ram" Toggled="RamSwitch_Toggled" />
+            <ToggleSwitch x:Name="NetSwitch" x:Uid="System_Network" Toggled="NetSwitch_Toggled" />
+            <ToggleSwitch x:Name="LabelsSwitch" x:Uid="System_Labels" Toggled="LabelsSwitch_Toggled" />
+
+            <ComboBox x:Name="IntervalCombo" x:Uid="System_Interval" MinWidth="200" SelectionChanged="IntervalCombo_SelectionChanged">
+                <ComboBoxItem x:Uid="System_Interval_500" Tag="500" />
+                <ComboBoxItem x:Uid="System_Interval_1000" Tag="1000" />
+                <ComboBoxItem x:Uid="System_Interval_2000" Tag="2000" />
+                <ComboBoxItem x:Uid="System_Interval_5000" Tag="5000" />
+            </ComboBox>
+
+            <controls:SliderRow x:Name="WarnRow" />
+            <controls:SliderRow x:Name="CriticalRow" />
+
+            <ComboBox x:Name="NicCombo" x:Uid="System_Nic" MinWidth="320" SelectionChanged="NicCombo_SelectionChanged" />
+        </StackPanel>
+    </ScrollViewer>
+</Page>

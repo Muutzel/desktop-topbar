@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Page
+    x:Class="TopBar.App.SettingsPages.GeneralPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="using:TopBar.App.Controls">
+    <ScrollViewer>
+        <StackPanel Spacing="24" Padding="36,20,36,36" MaxWidth="720" HorizontalAlignment="Left">
+            <TextBlock x:Uid="General_Title" Style="{StaticResource TitleTextBlockStyle}" />
+
+            <ToggleSwitch x:Name="AutostartSwitch" x:Uid="General_Autostart" Toggled="AutostartSwitch_Toggled" />
+
+            <RadioButtons x:Name="ThemeRadios" x:Uid="General_Theme" SelectionChanged="ThemeRadios_SelectionChanged">
+                <RadioButton x:Uid="General_Theme_System" Tag="System" />
+                <RadioButton x:Uid="General_Theme_Light" Tag="Light" />
+                <RadioButton x:Uid="General_Theme_Dark" Tag="Dark" />
+            </RadioButtons>
+
+            <RadioButtons x:Name="MonitorRadios" x:Uid="General_Monitors" SelectionChanged="MonitorRadios_SelectionChanged">
+                <RadioButton x:Uid="General_Monitors_Primary" Tag="Primary" />
+                <RadioButton x:Uid="General_Monitors_All" Tag="All" />
+            </RadioButtons>
+
+            <controls:SliderRow x:Name="BarHeightRow" />
+            <controls:SliderRow x:Name="FontSizeRow" />
+            <controls:SliderRow x:Name="OpacityRow" />
+        </StackPanel>
+    </ScrollViewer>
+</Page>

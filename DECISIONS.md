@@ -1,0 +1,28 @@
+# DECISIONS
+
+Format: Datum · Thema · Entscheidung · Grund
+
+## Wichtig vorab
+
+**Der Code wurde in einer Linux-Umgebung ohne .NET-SDK und ohne NuGet-Zugriff geschrieben und ist deshalb weder gebaut noch getestet.**
+Der erste `dotnet build` auf Windows wird sehr wahrscheinlich noch Fehler zeigen (siehe README → „Bekannte Risiken“).
+
+## Entscheidungen
+
+- 2026-09-29 · Paketversionen · Alle NuGet-Referenzen sind als Floating-Versionen (`1.8.*`, `10.0.*`, `0.3.*` …) eingetragen · Ich konnte die aktuellen Nummern nicht gegen nuget.org prüfen. **Nach dem ersten erfolgreichen Restore die aufgelösten Versionen (z. B. `dotnet list package`) hier eintragen und pinnen.** Spec verlangt „neueste stabile Version“ für Windows App SDK; eine Websuche nannte teils 2.x – falls dort ein stabiles 2.x existiert, `Microsoft.WindowsAppSDK` in `TopBar.App.csproj` entsprechend anheben.
+- 2026-09-29 · Zusätzliche NuGet-Pakete · `Microsoft.Extensions.Logging.Abstractions` (Core, für `ILogger` im SettingsService), `Microsoft.Extensions.Hosting.Abstractions` (Platform, `IHostedService`), `Microsoft.Win32.SystemEvents` (Platform, `PowerModeChanged` für Standby-Rückkehr – in der Spec ausdrücklich verlangt, gehört aber nicht zum Shared Framework), `Microsoft.Windows.SDK.BuildTools` (App, Standard für WinUI-Projekte) · jeweils technisch nötig.
+- 2026-09-29 · Windows-Version · `VirtualDesktopAccessor.dll` (heruntergeladen von `releases/latest`) verlangt laut README **Windows 11 24H2, Build ≥ 26100.2605**, nicht 22H2 wie in der Spec · Auf älteren Builds liefert der Probe-Aufruf ≤ 0 → `IsAvailable = false`, der Desktop-Bereich wird ausgeblendet (wie in der Spec vorgesehen). Wer 22H2/23H2 braucht, muss eine ältere DLL-Version einsetzen (andere Signaturen prüfen).
+- 2026-09-29 · Hook-Nachricht VDA · `RegisterPostMessageHook(hwnd, WM_APP + 42)`; laut Beispiel im README trägt die Nachricht `wParam = alter`, `lParam = neuer Desktop`. Ich lese trotzdem bei jedem Hook-Treffer den vollständigen Zustand neu (Anzahl, Namen, Index), statt den Parametern zu vertrauen. Zusätzlich Polling alle 1000 ms (Fallback 250 ms, wenn der Hook fehlschlägt).
+- 2026-09-29 · VDA-Aufrufe nur auf dem UI-Thread · Polling-Timer postet auf den UI-Thread (`IUiThread`) · Ob die DLL Aufrufe aus beliebigen Threads verträgt, ist unbekannt; UI-Thread ist sicher. `VirtualDesktopService.StartAsync` muss deshalb auf dem UI-Thread laufen (tut es).
+- 2026-09-29 · Controls in C# statt XAML · `DesktopIndicator`, `CenterInfo`, `SystemStatsControl` haben eine kleine XAML-Hülle (Ressourcen), der dynamische Inhalt wird im Code-Behind gebaut · Animationen/dynamische Elementlisten sind so einfacher; ThemeResource-Brushes stehen in den `UserControl.Resources`, damit sie bei erzwungenem Hell/Dunkel-Theme korrekt sind. `SystemStats.xaml` heißt deshalb `SystemStatsControl.xaml` (Namenskonflikt mit dem Record `SystemStats`).
+- 2026-09-29 · Namespaces · Fenster liegen im Ordner `Windows/`, der Namespace ist aber `TopBar.App.Views`, Einstellungsseiten `TopBar.App.SettingsPages` · Ein Namespace `TopBar.App.Windows` würde `Windows.*` (WinRT/Win32) im App-Code verdecken.
+- 2026-09-29 · Icons der Systemwerte · CPU/GPU/RAM/Netzwerk nutzen Glyphen aus der mitgelieferten **Fluent System Icons**-Schrift (`developer_board`, `top_speed`, `data_usage`, `globe`; Codepoints aus der JSON verifiziert), nicht Segoe Fluent Icons · Segoe-Codepoints für diese Symbole konnte ich offline nicht verifizieren. Zahnrad (`E713`), Neu laden (`E72C`), Beenden (`E7E8`) sind wie in der Spec Segoe Fluent Icons.
+- 2026-09-29 · „Ort festlegen“-Icon · `E774` (Globe) statt `EB11` · `EB11` konnte ich nicht verifizieren, `E774` ist in Segoe MDL2/Fluent Icons als Globe bekannt. Bei Bedarf in `CenterInfo.xaml` ändern.
+- 2026-09-29 · Wetter-Icons · Alle in 8.4 genannten Icon-Namen existieren in `FluentSystemIcons-Regular.json` (Größe 20, Regular); Codepoints stehen in `WeatherCodes.cs`. Kein Ersatz nötig.
+- 2026-09-29 · Trefferfläche/Abstand Desktop-Punkte · Jedes Element hat MinWidth 16 und 3 px Innenabstand → sichtbarer Abstand zwischen zwei 8-px-Punkten ist 8 statt 6 px · Spec fordert gleichzeitig 6 px Abstand und ≥ 16 px Trefferfläche; das geht bei 8-px-Punkten nur mit überlappenden Trefferflächen. Trefferfläche hat Vorrang.
+- 2026-09-29 · Theme-Wechsel · Zusätzlich zu `UISettings.ColorValuesChanged` wird `ActualThemeChanged` ausgewertet · Beides aktualisiert nur das Backdrop-Theme.
+- 2026-09-29 · Netzwerk-Formatierung · Werte werden abgeschnitten (nicht gerundet) · verhindert „1024 KB/s“ bzw. „10,0 MB/s“ an Stufengrenzen.
+- 2026-09-29 · 12h-Format · wird mit `InvariantCulture` formatiert (AM/PM) · deutsche Kulturen können leere AM/PM-Bezeichner liefern. Datum nutzt `CurrentCulture` wie gefordert.
+- 2026-09-29 · Solution-Datei · von Hand geschrieben (Any CPU) · kein `dotnet` verfügbar. Falls VS/`dotnet` meckert: `dotnet new sln` neu erzeugen und die vier Projekte mit `dotnet sln add` hinzufügen.
+- 2026-09-29 · Start-Aktivierung · Das Bar-Fenster ruft `Activate()` auf (stiehlt beim Start einmal kurz den Fokus) · Ich konnte nicht prüfen, ob WinUI den Inhalt auch mit `AppWindow.Show(false)` rendert.
+- 2026-09-29 · Host · `Host.CreateApplicationBuilder` mit `DisableDefaults = true`, der Host wird nie gestartet; die `IHostedService`-Instanzen werden manuell gestartet/gestoppt (nötig für „Neu laden“) · vermeidet Dateiwächter auf `appsettings.json` und Konsolen-/EventLog-Logger.

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Page
+    x:Class="TopBar.App.SettingsPages.ClockPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <ScrollViewer>
+        <StackPanel Spacing="24" Padding="36,20,36,36" MaxWidth="720" HorizontalAlignment="Left">
+            <TextBlock x:Uid="Clock_Title" Style="{StaticResource TitleTextBlockStyle}" />
+
+            <ToggleSwitch x:Name="Use24hSwitch" x:Uid="Clock_Use24h" Toggled="Use24hSwitch_Toggled" />
+            <ToggleSwitch x:Name="SecondsSwitch" x:Uid="Clock_Seconds" Toggled="SecondsSwitch_Toggled" />
+
+            <StackPanel Spacing="8">
+                <ComboBox x:Name="FormatCombo" x:Uid="Clock_DateFormat" MinWidth="280" SelectionChanged="FormatCombo_SelectionChanged" />
+                <TextBox x:Name="CustomBox" x:Uid="Clock_CustomFormat" MinWidth="280" Visibility="Collapsed" TextChanged="CustomBox_TextChanged" />
+                <StackPanel Orientation="Horizontal" Spacing="8">
+                    <TextBlock x:Uid="Clock_Preview" Opacity="0.7" />
+                    <TextBlock x:Name="PreviewText" />
+                </StackPanel>
+            </StackPanel>
+        </StackPanel>
+    </ScrollViewer>
+</Page>

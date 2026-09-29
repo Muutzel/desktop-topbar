@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Page
+    x:Class="TopBar.App.SettingsPages.InfoPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <ScrollViewer>
+        <StackPanel Spacing="24" Padding="36,20,36,36" MaxWidth="720" HorizontalAlignment="Left">
+            <TextBlock x:Uid="Info_Title" Style="{StaticResource TitleTextBlockStyle}" />
+
+            <StackPanel Spacing="4">
+                <TextBlock x:Name="AppNameText" Style="{StaticResource SubtitleTextBlockStyle}" />
+                <TextBlock x:Name="VersionText" Opacity="0.7" />
+            </StackPanel>
+
+            <Button x:Name="OpenLogsButton" x:Uid="Info_OpenLogs" Click="OpenLogsButton_Click" />
+            <Button x:Name="ResetButton" x:Uid="Info_Reset" Click="ResetButton_Click" />
+        </StackPanel>
+    </ScrollViewer>
+</Page>

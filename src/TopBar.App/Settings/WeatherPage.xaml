@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Page
+    x:Class="TopBar.App.SettingsPages.WeatherPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <ScrollViewer>
+        <StackPanel Spacing="24" Padding="36,20,36,36" MaxWidth="720" HorizontalAlignment="Left">
+            <TextBlock x:Uid="Weather_Title" Style="{StaticResource TitleTextBlockStyle}" />
+
+            <ToggleSwitch x:Name="ShowSwitch" x:Uid="Weather_Show" Toggled="ShowSwitch_Toggled" />
+
+            <StackPanel Spacing="8">
+                <AutoSuggestBox x:Name="LocationBox"
+                                x:Uid="Weather_Location"
+                                MinWidth="320"
+                                HorizontalAlignment="Left"
+                                DisplayMemberPath="DisplayName"
+                                TextMemberPath="DisplayName"
+                                TextChanged="LocationBox_TextChanged"
+                                SuggestionChosen="LocationBox_SuggestionChosen"
+                                QuerySubmitted="LocationBox_QuerySubmitted" />
+                <TextBlock x:Name="CurrentLocationText" Opacity="0.7" />
+            </StackPanel>
+
+            <RadioButtons x:Name="UnitRadios" x:Uid="Weather_Unit" SelectionChanged="UnitRadios_SelectionChanged">
+                <RadioButton x:Uid="Weather_Unit_C" Tag="Celsius" />
+                <RadioButton x:Uid="Weather_Unit_F" Tag="Fahrenheit" />
+            </RadioButtons>
+
+            <NumberBox x:Name="IntervalBox"
+                       x:Uid="Weather_Interval"
+                       Minimum="5" Maximum="120" SmallChange="5" LargeChange="15"
+                       SpinButtonPlacementMode="Inline"
+                       HorizontalAlignment="Left" MinWidth="180"
+                       ValueChanged="IntervalBox_ValueChanged" />
+        </StackPanel>
+    </ScrollViewer>
+</Page>

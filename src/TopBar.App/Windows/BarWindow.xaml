@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Window
+    x:Class="TopBar.App.Views.BarWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="using:TopBar.App.Controls">
+    <!-- ContentControl so FontFamily/FontSize flow down to every TextBlock -->
+    <ContentControl x:Name="Root"
+                    IsTabStop="False"
+                    HorizontalContentAlignment="Stretch"
+                    VerticalContentAlignment="Stretch"
+                    FontFamily="{StaticResource BarFont}"
+                    RightTapped="Root_RightTapped">
+        <Grid Background="Transparent">
+            <controls:ThreeSectionPanel x:Name="Sections" Margin="12,0" />
+            <Border x:Name="BottomLine"
+                    Height="1"
+                    VerticalAlignment="Bottom"
+                    IsHitTestVisible="False"
+                    Background="{ThemeResource CardStrokeColorDefaultBrush}" />
+        </Grid>
+    </ContentControl>
+</Window>
