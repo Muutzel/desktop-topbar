@@ -103,11 +103,12 @@ public sealed class WeatherService : LoopService, IWeatherService
         try
         {
             var unit = w.Unit == "Fahrenheit" ? "fahrenheit" : "celsius";
-            var url = string.Create(CultureInfo.InvariantCulture,
-                $"https://api.open-meteo.com/v1/forecast?latitude={w.Latitude}&longitude={w.Longitude}" +
-                "&current=temperature_2m,apparent_temperature,weather_code,is_day,wind_speed_10m" +
-                "&daily=temperature_2m_max,temperature_2m_min,precipitation_probability_max" +
-                $"&timezone=auto&forecast_days=1&temperature_unit={unit}&wind_speed_unit=kmh");
+            var inv = CultureInfo.InvariantCulture;
+            var url = "https://api.open-meteo.com/v1/forecast?latitude=" + w.Latitude!.Value.ToString(inv) +
+                      "&longitude=" + w.Longitude!.Value.ToString(inv) +
+                      "&current=temperature_2m,apparent_temperature,weather_code,is_day,wind_speed_10m" +
+                      "&daily=temperature_2m_max,temperature_2m_min,precipitation_probability_max" +
+                      "&timezone=auto&forecast_days=1&temperature_unit=" + unit + "&wind_speed_unit=kmh";
 
             using var response = await Http.GetAsync(url, ct).ConfigureAwait(false);
             response.EnsureSuccessStatusCode();

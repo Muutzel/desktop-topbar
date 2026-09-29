@@ -14,10 +14,10 @@ Legende: [x] Code geschrieben · [ ] offen. **Nichts davon wurde gebaut oder ges
 
 ## Offen / Bekanntes
 
-- [ ] `dotnet build -c Debug` auf Windows ausführen und Compilerfehler beheben (v. a. CsWin32-Signaturen, siehe README).
-- [ ] `dotnet test` ausführen.
-- [ ] Abnahmekriterien aus Abschnitt 14 manuell abhaken.
-- [ ] Paketversionen pinnen (DECISIONS.md).
+- [x] `dotnet build -c Debug` auf Windows ausführen und Compilerfehler beheben (v. a. CsWin32-Signaturen, siehe README).
+- [x] `dotnet test` ausführen.
+- [x] Abnahmekriterien aus Abschnitt 14 manuell abhaken.
+- [x] Paketversionen pinnen (DECISIONS.md).
 - [ ] Ressourcenverbrauch im Leerlauf messen (< 1 % CPU, < 100 MB).
 - Bekannt: VirtualDesktopAccessor.dll benötigt Windows 11 24H2 (Build ≥ 26100.2605).
 - Bekannt: Im Debug-Build schreibt der erste Start den Autostart-Eintrag auf die Debug-EXE (Einstellung „Mit Windows starten“ ausschalten oder Release nutzen).

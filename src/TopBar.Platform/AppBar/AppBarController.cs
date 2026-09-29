@@ -19,7 +19,7 @@ public sealed unsafe class AppBarController : IDisposable
 
     // window messages
     private const uint WM_ACTIVATE = 0x0006, WM_SETTINGCHANGE = 0x001A, WM_GETMINMAXINFO = 0x0024,
-        WM_WINDOWPOSCHANGED = 0x0047, WM_DISPLAYCHANGE = 0x007E, WM_DPICHANGED = 0x02E0;
+        WM_NCCALCSIZE = 0x0083, WM_NCPAINT = 0x0085, WM_WINDOWPOSCHANGED = 0x0047, WM_DISPLAYCHANGE = 0x007E, WM_DPICHANGED = 0x02E0;
     private const int SPI_SETWORKAREA = 0x002F;
 
     private static readonly List<AppBarController> Active = new();
@@ -115,6 +115,9 @@ public sealed unsafe class AppBarController : IDisposable
     {
         try
         {
+            // No non-client area at all: the whole window is client area and nothing draws a frame/bevel around it.
+            if (msg == WM_NCCALCSIZE || msg == WM_NCPAINT) return new LRESULT(0);
+
             if (msg == WM_GETMINMAXINFO)
             {
                 // A borderless window would otherwise be limited by the system minimum track size (~39 px high).

@@ -45,8 +45,17 @@ public class FormattingTests
         Assert.Equal(TimeSpan.FromMinutes(1), ClockFormats.NextTickDelay(now, false));
     }
 
+    [Fact]
+    public void DateFormat_AbbreviatedPreset_FollowsCulture()
+    {
+        // Abbreviations ("Di." vs "Di", "Sep." vs "Sept.") depend on the ICU/CLDR data of the machine, so compare against the culture itself.
+        var culture = new CultureInfo("de-DE");
+        Assert.True(DateFormats.TryFormat("ddd, d. MMM", T, culture, out var result));
+        Assert.Equal(T.ToString("ddd, d. MMM", culture), result);
+        Assert.StartsWith("Di", result);
+    }
+
     [Theory]
-    [InlineData("ddd, d. MMM", "Di., 29. Sep.")]
     [InlineData("dd.MM.yyyy", "29.09.2026")]
     [InlineData("dddd, d. MMMM", "Dienstag, 29. September")]
     [InlineData("yyyy-MM-dd", "2026-09-29")]

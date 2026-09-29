@@ -13,7 +13,7 @@ public static class Program
 
         if (RedirectToExistingInstance()) return 0;
 
-        Microsoft.UI.Xaml.Application.Start(_ =>
+        Microsoft.UI.Xaml.Application.Start(p =>
         {
             var context = new DispatcherQueueSynchronizationContext(DispatcherQueue.GetForCurrentThread());
             SynchronizationContext.SetSynchronizationContext(context);

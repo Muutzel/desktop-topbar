@@ -3,6 +3,7 @@ using Microsoft.UI.Composition.SystemBackdrops;
 using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
+using Microsoft.UI.Xaml.Controls.Primitives;
 using Microsoft.UI.Xaml.Input;
 using TopBar.App.Controls;
 using TopBar.App.Services;
@@ -74,6 +75,9 @@ public sealed partial class BarWindow : Window
         presenter.IsAlwaysOnTop = true;
         AppWindow.SetPresenter(presenter);
         AppWindow.IsShownInSwitchers = false;
+        var style = Win32Window.StripFrame(_hwnd);
+        var (border, corner) = Win32Window.RemoveBorderAndCorners(_hwnd);
+        _log.LogInformation("Bar frame: style=0x{Style:X8} dwmBorder=0x{Border:X8} dwmCorner=0x{Corner:X8}", style, border, corner);
         Win32Window.MakeToolWindow(_hwnd); // not in taskbar / Alt+Tab; deliberately NOT WS_EX_NOACTIVATE (breaks flyouts)
     }
 

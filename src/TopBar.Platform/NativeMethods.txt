@@ -29,3 +29,6 @@ CreateWindowEx
 DestroyWindow
 GetCursorPos
 MonitorFromPoint
+DwmSetWindowAttribute
+DWMWINDOWATTRIBUTE
+DWM_WINDOW_CORNER_PREFERENCE

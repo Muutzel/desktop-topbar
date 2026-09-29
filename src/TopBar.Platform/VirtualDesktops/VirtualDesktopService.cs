@@ -55,7 +55,7 @@ public sealed class VirtualDesktopService : IVirtualDesktopService, IHostedServi
             CreateMessageWindow();
             try
             {
-                _hookRegistered = _hwnd != HWND.Null && VdaNative.RegisterPostMessageHook(_hwnd.Value, HookMessage) >= 0;
+                _hookRegistered = _hwnd != HWND.Null && VdaNative.RegisterPostMessageHook(HwndValue, HookMessage) >= 0;
             }
             catch (Exception ex)
             {
@@ -81,12 +81,14 @@ public sealed class VirtualDesktopService : IVirtualDesktopService, IHostedServi
         _running = false;
         _timer?.Dispose();
         _timer = null;
-        try { if (_hookRegistered && _hwnd != HWND.Null) VdaNative.UnregisterPostMessageHook(_hwnd.Value); }
+        try { if (_hookRegistered && _hwnd != HWND.Null) VdaNative.UnregisterPostMessageHook(HwndValue); }
         catch (Exception ex) { _log.LogWarning(ex, "VirtualDesktops: unregister failed"); }
         _hookRegistered = false;
         DestroyMessageWindow();
         return Task.CompletedTask;
     }
+
+    private unsafe nint HwndValue => (nint)_hwnd.Value;
 
     private bool Probe()
     {
@@ -165,7 +167,7 @@ public sealed class VirtualDesktopService : IVirtualDesktopService, IHostedServi
         unsafe
         {
             _hwnd = PInvoke.CreateWindowEx(0, "STATIC", "TopBarVdaListener", 0, 0, 0, 0, 0,
-                new HWND(new IntPtr(-3)) /* HWND_MESSAGE */, default(HMENU), default(HINSTANCE), null);
+                new HWND(new IntPtr(-3)) /* HWND_MESSAGE */, null, null, null);
         }
         if (_hwnd == HWND.Null) return;
         _proc = SubclassProc;
