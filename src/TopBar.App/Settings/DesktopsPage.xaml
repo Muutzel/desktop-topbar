@@ -10,7 +10,6 @@
 
             <InfoBar x:Name="UnavailableInfo" x:Uid="Desktops_Unavailable" Severity="Warning" IsClosable="False" IsOpen="False" />
 
-            <ToggleSwitch x:Name="ShowSwitch" x:Uid="Desktops_Show" Toggled="ShowSwitch_Toggled" />
             <ToggleSwitch x:Name="ScrollSwitch" x:Uid="Desktops_Scroll" Toggled="ScrollSwitch_Toggled" />
             <controls:SliderRow x:Name="DotSizeRow" />
         </StackPanel>

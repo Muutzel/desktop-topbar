@@ -5,6 +5,7 @@ using Windows.Win32;
 using Windows.Win32.System.Performance;
 using Windows.Win32.System.SystemInformation;
 using TopBar.Core.Services;
+using TopBar.Core.Settings;
 using TopBar.Core.Stats;
 
 namespace TopBar.Platform.Stats;
@@ -72,13 +73,14 @@ public sealed class SystemStatsService : LoopService, ISystemStatsService
                 var elapsed = now - lastSample;
                 lastSample = now;
                 var stats = _settings.Current.Stats;
+                var gpuPlaced = _settings.Current.Layout.IsPlaced(BarElementIds.Gpu); // GPU counters are only sampled while the GPU tile is on the bar
 
                 // ---- PDH: CPU + GPU ----
                 double? cpu = null;
                 PDH_HCOUNTER? pendingGpu = null;
                 if (query is not null)
                 {
-                    if (stats.ShowGpu && DateTime.UtcNow - lastGpuRebuild >= GpuRebuildInterval)
+                    if (gpuPlaced && DateTime.UtcNow - lastGpuRebuild >= GpuRebuildInterval)
                     {
                         lastGpuRebuild = DateTime.UtcNow;
                         try { pendingGpu = query.AddCounter(GpuPath); ClearLogged("gpu-add"); }
@@ -110,7 +112,7 @@ public sealed class SystemStatsService : LoopService, ISystemStatsService
                         try { if (gpuCounter is { } old) query.RemoveCounter(old); } catch { /* ignore */ }
                         gpuCounter = pg;
                     }
-                    if (!stats.ShowGpu && gpuCounter is { } g2)
+                    if (!gpuPlaced && gpuCounter is { } g2)
                     {
                         try { query.RemoveCounter(g2); } catch { /* ignore */ }
                         gpuCounter = null;

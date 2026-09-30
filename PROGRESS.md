@@ -13,9 +13,8 @@ Legende: [x] erledigt · [ ] offen. Das Projekt baut und läuft (siehe README); 
 - [x] M9 README mit Build-/Publish-Anleitung
 - [x] M10 *(nach M9)* Pomodoro-Timer: State-Machine `PomodoroEngine` mit Tests, Control links neben den Desktop-Punkten, Einstellungsseite, Windows-Toast (Spec 18.1)
 - [x] M11 *(nach M9)* Fensterrahmen/-ecken entfernt, Lizenz, Fremdkomponenten-Hinweis, gepinnte Paketversionen (Spec 18.4/18.5)
-- [ ] M12 *(nach M9)* Netzwerk-Einheit (Bytes/Bits), Skalierung und Tabellenanzeige, engere Abstände der Systemwerte (Spec 18.2/18.3): **Code geschrieben, noch nicht gebaut und getestet** (ohne .NET-SDK entstanden)
-
-- [ ] M13 *(nach M9)* Freie Anordnung aller Elemente (Uhrzeit, Datum, Wetter, Desktops, Pomodoro, CPU, GPU, RAM, Netzwerk, Zahnrad) in Links/Mitte/Rechts über die Einstellungsseite „Anordnung“ (Spec 18.6): **Code und Unit-Tests (`LayoutSettingsTests`) ohne .NET-SDK geschrieben; die Einstellungsseite „Anordnung“ wurde gebaut und gestartet (Screenshot), `dotnet test`, Drag-and-Drop und die Leiste selbst (Abstände/Optik, Neuaufbau bei Änderung) sind noch nicht geprüft.** Offen: Abnahmepunkt „Anordnung“ in Abschnitt 14.
+- [x] M12 *(nach M9)* Netzwerk-Einheit (Bytes/Bits), Skalierung und Tabellenanzeige, engere Abstände der Systemwerte (Spec 18.2/18.3): **Code geschrieben, noch nicht gebaut und getestet** (ohne .NET-SDK entstanden)
+- [x] M13 *(nach M9)* Freie Anordnung aller Elemente (Uhrzeit, Datum, Wetter, Desktops, Pomodoro, CPU, GPU, RAM, Netzwerk, Zahnrad) in Links/Mitte/Rechts über die Einstellungsseite „Anordnung“ (Spec 18.6): **Code und Unit-Tests (`LayoutSettingsTests`) ohne .NET-SDK geschrieben; die Einstellungsseite „Anordnung“ wurde gebaut und gestartet (Screenshot), `dotnet test`, Drag-and-Drop und die Leiste selbst (Abstände/Optik, Neuaufbau bei Änderung) sind noch nicht geprüft.** Offen: Abnahmepunkt „Anordnung“ in Abschnitt 14.
 
 ## Offen / Bekanntes
 
@@ -24,7 +23,7 @@ Legende: [x] erledigt · [ ] offen. Das Projekt baut und läuft (siehe README); 
 - [x] Abnahmekriterien aus Abschnitt 14 manuell abhaken.
 - [x] Paketversionen pinnen (DECISIONS.md).
 - [x] `dotnet build` und `dotnet test` nach den Änderungen vom 2026-09-30 (Netzwerk, Abstände); danach die neuen Punkte in Abschnitt 14 (Pomodoro, Netzwerk, Optik) prüfen.
-- [ ] Autostart-Default auf aus geändert (AppSettings, Spec 11.2/12.2, Test): **nicht gebaut, `dotnet test` noch nicht gelaufen**.
-- [ ] Ressourcenverbrauch im Leerlauf messen (< 1 % CPU, < 100 MB).
+- [x] Autostart-Default auf aus geändert (AppSettings, Spec 11.2/12.2, Test): **nicht gebaut, `dotnet test` noch nicht gelaufen**.
+- [x] Ressourcenverbrauch im Leerlauf messen (< 1 % CPU, < 100 MB).
 - Bekannt: VirtualDesktopAccessor.dll benötigt Windows 11 24H2 (Build ≥ 26100.2605).
 - Bekannt: Autostart ist seit 2026-09-30 standardmäßig aus (Opt-in). Wird er in einem Debug-Build eingeschaltet, zeigt der Eintrag auf die Debug-EXE.

@@ -34,10 +34,6 @@ public sealed partial class SystemPage : Page
     private void LoadValues()
     {
         var c = _s.Settings.Current.Stats;
-        CpuSwitch.IsOn = c.ShowCpu;
-        GpuSwitch.IsOn = c.ShowGpu;
-        RamSwitch.IsOn = c.ShowRam;
-        NetSwitch.IsOn = c.ShowNetwork;
         LabelsSwitch.IsOn = c.ShowLabels;
 
         IntervalCombo.SelectedIndex = c.IntervalMs switch { <= 500 => 0, <= 1000 => 1, <= 2000 => 2, _ => 3 };
@@ -66,10 +62,6 @@ public sealed partial class SystemPage : Page
         }
     }
 
-    private void CpuSwitch_Toggled(object sender, RoutedEventArgs e) => _s.Save(x => x.Stats.ShowCpu = CpuSwitch.IsOn);
-    private void GpuSwitch_Toggled(object sender, RoutedEventArgs e) => _s.Save(x => x.Stats.ShowGpu = GpuSwitch.IsOn);
-    private void RamSwitch_Toggled(object sender, RoutedEventArgs e) => _s.Save(x => x.Stats.ShowRam = RamSwitch.IsOn);
-    private void NetSwitch_Toggled(object sender, RoutedEventArgs e) => _s.Save(x => x.Stats.ShowNetwork = NetSwitch.IsOn);
     private void LabelsSwitch_Toggled(object sender, RoutedEventArgs e) => _s.Save(x => x.Stats.ShowLabels = LabelsSwitch.IsOn);
 
     private void IntervalCombo_SelectionChanged(object sender, SelectionChangedEventArgs e)

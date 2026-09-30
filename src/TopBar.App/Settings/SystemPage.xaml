@@ -8,10 +8,6 @@
         <StackPanel Spacing="24" Padding="36,20,36,36" MaxWidth="720" HorizontalAlignment="Left">
             <TextBlock x:Uid="System_Title" Style="{StaticResource TitleTextBlockStyle}" />
 
-            <ToggleSwitch x:Name="CpuSwitch" x:Uid="System_Cpu" Toggled="CpuSwitch_Toggled" />
-            <ToggleSwitch x:Name="GpuSwitch" x:Uid="System_Gpu" Toggled="GpuSwitch_Toggled" />
-            <ToggleSwitch x:Name="RamSwitch" x:Uid="System_Ram" Toggled="RamSwitch_Toggled" />
-            <ToggleSwitch x:Name="NetSwitch" x:Uid="System_Network" Toggled="NetSwitch_Toggled" />
             <ToggleSwitch x:Name="LabelsSwitch" x:Uid="System_Labels" Toggled="LabelsSwitch_Toggled" />
 
             <ComboBox x:Name="IntervalCombo" x:Uid="System_Interval" MinWidth="200" SelectionChanged="IntervalCombo_SelectionChanged">

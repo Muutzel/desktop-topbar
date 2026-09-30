@@ -24,7 +24,7 @@ public sealed partial class WeatherControl : UserControl
     {
         LocationButton.Visibility = _weather.NeedsLocation ? Visibility.Visible : Visibility.Collapsed;
 
-        var show = _weather.ShowWeather && _weather.HasData;
+        var show = _weather.HasData;
         WeatherPanel.Visibility = show ? Visibility.Visible : Visibility.Collapsed;
 
         WeatherIcon.Text = _weather.Glyph;

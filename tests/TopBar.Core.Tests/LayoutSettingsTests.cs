@@ -67,4 +67,15 @@ public class LayoutSettingsTests
         Assert.Equal(["Date"], l.Center);
         Assert.Empty(l.Right);
     }
+
+    [Fact]
+    public void IsPlaced_FollowsPlaceAndRemove()
+    {
+        var l = new LayoutSettings();
+        Assert.True(l.IsPlaced(BarElementIds.Gpu));
+        l.Remove(BarElementIds.Gpu);
+        Assert.False(l.IsPlaced(BarElementIds.Gpu));
+        l.Place(BarElementIds.Gpu, BarZone.Center);
+        Assert.True(l.IsPlaced(BarElementIds.Gpu));
+    }
 }

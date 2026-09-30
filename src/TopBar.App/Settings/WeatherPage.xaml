@@ -7,8 +7,6 @@
         <StackPanel Spacing="24" Padding="36,20,36,36" MaxWidth="720" HorizontalAlignment="Left">
             <TextBlock x:Uid="Weather_Title" Style="{StaticResource TitleTextBlockStyle}" />
 
-            <ToggleSwitch x:Name="ShowSwitch" x:Uid="Weather_Show" Toggled="ShowSwitch_Toggled" />
-
             <StackPanel Spacing="8">
                 <AutoSuggestBox x:Name="LocationBox"
                                 x:Uid="Weather_Location"

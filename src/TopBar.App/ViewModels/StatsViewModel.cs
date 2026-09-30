@@ -46,16 +46,16 @@ public sealed partial class StatsViewModel : ObservableObject
         var c = _settings.Current.Stats;
         ShowLabels = c.ShowLabels;
 
-        Fill(Cpu, c.ShowCpu, s.CpuPercent, "CPU-Auslastung", c);
+        Fill(Cpu, true, s.CpuPercent, "CPU-Auslastung", c);
         // GPU is hidden entirely when PDH delivers no GPU counters.
-        Fill(Gpu, c.ShowGpu && s.GpuPercent.HasValue, s.GpuPercent, "GPU-Auslastung", c);
+        Fill(Gpu, s.GpuPercent.HasValue, s.GpuPercent, "GPU-Auslastung", c);
 
-        Ram.IsVisible = c.ShowRam;
+        Ram.IsVisible = true;
         Ram.Text = StatFormat.Percent(s.RamPercent);
         Ram.Tooltip = $"Arbeitsspeicher: {StatFormat.Memory(s.RamUsedBytes, s.RamTotalBytes)}";
         Ram.Level = StatFormat.GetLevel(s.RamPercent, c.WarnThreshold, c.CriticalThreshold);
 
-        Network.IsVisible = c.ShowNetwork;
+        Network.IsVisible = true;
         var display = NetworkDisplay.From(c.NetworkUnit, c.NetworkScale);
         Network.Text = NetworkRate.FormatPair(s.DownBytesPerSec, s.UpBytesPerSec, display);
         var down = NetworkRate.Parts(s.DownBytesPerSec, display);

@@ -23,12 +23,10 @@ public sealed partial class DesktopsPage : Page
     private void LoadValues()
     {
         var d = _s.Settings.Current.Desktops;
-        ShowSwitch.IsOn = d.Show;
         ScrollSwitch.IsOn = d.ScrollSwitch;
         DotSizeRow.Value = d.DotSize;
         UnavailableInfo.IsOpen = !AppController.Services.GetRequiredService<IVirtualDesktopService>().IsAvailable;
     }
 
-    private void ShowSwitch_Toggled(object sender, RoutedEventArgs e) => _s.Save(x => x.Desktops.Show = ShowSwitch.IsOn);
     private void ScrollSwitch_Toggled(object sender, RoutedEventArgs e) => _s.Save(x => x.Desktops.ScrollSwitch = ScrollSwitch.IsOn);
 }

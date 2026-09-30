@@ -10,7 +10,6 @@ public sealed partial class WeatherViewModel : ObservableObject
     private readonly IWeatherService _weather;
     private readonly ISettingsService _settings;
 
-    [ObservableProperty] private bool _showWeather;
     [ObservableProperty] private bool _needsLocation;
     [ObservableProperty] private bool _hasData;
     [ObservableProperty] private bool _isStale;
@@ -32,10 +31,9 @@ public sealed partial class WeatherViewModel : ObservableObject
     public void Update()
     {
         var w = _settings.Current.Weather;
-        ShowWeather = w.Show;
-        NeedsLocation = w.Show && !w.HasLocation;
+        NeedsLocation = !w.HasLocation;
 
-        var snapshot = w.Show && w.HasLocation ? _weather.Current : null;
+        var snapshot = w.HasLocation ? _weather.Current : null;
         if (snapshot is null)
         {
             HasData = false; IsStale = false; Glyph = ""; Text = ""; Tooltip = "";

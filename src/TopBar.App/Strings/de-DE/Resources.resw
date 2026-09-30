@@ -52,9 +52,6 @@
   <data name="Desktops_Title.Text" xml:space="preserve">
     <value>Virtuelle Desktops</value>
   </data>
-  <data name="Desktops_Show.Header" xml:space="preserve">
-    <value>Anzeigen</value>
-  </data>
   <data name="Desktops_Scroll.Header" xml:space="preserve">
     <value>Mit Mausrad wechseln</value>
   </data>
@@ -82,9 +79,6 @@
   <data name="Weather_Title.Text" xml:space="preserve">
     <value>Wetter</value>
   </data>
-  <data name="Weather_Show.Header" xml:space="preserve">
-    <value>Anzeigen</value>
-  </data>
   <data name="Weather_Location.Header" xml:space="preserve">
     <value>Ort</value>
   </data>
@@ -105,18 +99,6 @@
   </data>
   <data name="System_Title.Text" xml:space="preserve">
     <value>System</value>
-  </data>
-  <data name="System_Cpu.Header" xml:space="preserve">
-    <value>CPU anzeigen</value>
-  </data>
-  <data name="System_Gpu.Header" xml:space="preserve">
-    <value>GPU anzeigen</value>
-  </data>
-  <data name="System_Ram.Header" xml:space="preserve">
-    <value>RAM anzeigen</value>
-  </data>
-  <data name="System_Network.Header" xml:space="preserve">
-    <value>Netzwerk anzeigen</value>
   </data>
   <data name="System_Labels.Header" xml:space="preserve">
     <value>Beschriftungen anzeigen</value>
@@ -348,9 +330,6 @@
   </data>
   <data name="Layout_Reset.Content" xml:space="preserve">
     <value>Anordnung zurücksetzen</value>
-  </data>
-  <data name="Layout_Switched_Off" xml:space="preserve">
-    <value>(aus)</value>
   </data>
   <data name="Element_Desktops" xml:space="preserve">
     <value>Virtuelle Desktops</value>

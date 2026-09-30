@@ -79,7 +79,7 @@ public sealed class WeatherService : LoopService, IWeatherService
         while (!ct.IsCancellationRequested)
         {
             var w = _settings.Current.Weather;
-            if (!w.Show || !w.HasLocation)
+            if (!_settings.Current.Layout.IsPlaced(BarElementIds.Weather) || !w.HasLocation)
             {
                 await _delay.DelayAsync(TimeSpan.FromHours(1), ct).ConfigureAwait(false);
                 continue;

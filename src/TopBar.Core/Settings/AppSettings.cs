@@ -16,7 +16,6 @@ public sealed class GeneralSettings
 
 public sealed class DesktopSettings
 {
-    public bool Show { get; set; } = true;
     public int DotSize { get; set; } = 8;
     public bool ScrollSwitch { get; set; } = true;
 }
@@ -30,7 +29,6 @@ public sealed class ClockSettings
 
 public sealed class WeatherSettings
 {
-    public bool Show { get; set; } = true;
     public string? LocationName { get; set; }
     public double? Latitude { get; set; }
     public double? Longitude { get; set; }
@@ -42,10 +40,6 @@ public sealed class WeatherSettings
 
 public sealed class StatsSettings
 {
-    public bool ShowCpu { get; set; } = true;
-    public bool ShowGpu { get; set; } = true;
-    public bool ShowRam { get; set; } = true;
-    public bool ShowNetwork { get; set; } = true;
     public bool ShowLabels { get; set; } = true;
     public int IntervalMs { get; set; } = 1000;
     public int WarnThreshold { get; set; } = 85;

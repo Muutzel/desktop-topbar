@@ -41,6 +41,9 @@ public sealed class LayoutSettings
         _ => Right,
     };
 
+    /// <summary>True if <paramref name="id"/> sits in any zone, i.e. is shown on the bar.</summary>
+    public bool IsPlaced(string id) => Left.Contains(id) || Center.Contains(id) || Right.Contains(id);
+
     /// <summary>Elements that are currently in no zone (hidden from the bar).</summary>
     public List<string> Unplaced()
     {

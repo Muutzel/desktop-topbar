@@ -70,10 +70,10 @@ public sealed partial class LayoutPage : Page
         _updatingSelection = true;
         try
         {
-            Fill(LeftList, settings.Layout.Left, settings);
-            Fill(CenterList, settings.Layout.Center, settings);
-            Fill(RightList, settings.Layout.Right, settings);
-            Fill(HiddenList, settings.Layout.Unplaced(), settings);
+            Fill(LeftList, settings.Layout.Left);
+            Fill(CenterList, settings.Layout.Center);
+            Fill(RightList, settings.Layout.Right);
+            Fill(HiddenList, settings.Layout.Unplaced());
 
             if (selectId is not null)
             {
@@ -91,14 +91,12 @@ public sealed partial class LayoutPage : Page
         UpdateButtons();
     }
 
-    private static void Fill(ListView list, IEnumerable<string> ids, AppSettings settings)
+    private static void Fill(ListView list, IEnumerable<string> ids)
     {
         list.Items.Clear();
         foreach (var id in ids)
         {
-            var name = BarElements.Name(id);
-            if (!BarElements.IsEnabled(settings, id)) name += " " + Loc.Get("Layout_Switched_Off");
-            list.Items.Add(new Item(id, name));
+            list.Items.Add(new Item(id, BarElements.Name(id)));
         }
     }
 
@@ -173,7 +171,6 @@ public sealed partial class LayoutPage : Page
             if (zone is { } target)
             {
                 x.Layout.Place(id, target, index);
-                BarElements.Enable(x, id); // placing an element always makes it appear
             }
             else
             {

@@ -374,7 +374,7 @@ Jeder Wert: kleines Icon (Segoe Fluent Icons) + Zahl. Beschriftung „CPU“, �
 - **Zahnrad** (Segoe Fluent Icons `E713`) ganz rechts → Einstellungsfenster öffnen.
 
 ### 9.6 Sichtbarkeit
-Einstellungen `ShowCpu`, `ShowGpu`, `ShowRam`, `ShowNetwork` (alle Default `true`). Das Zahnrad ist immer sichtbar.
+Ob CPU, GPU, RAM und Netzwerk erscheinen, bestimmt allein die Anordnung (siehe 18.6); eigene „Anzeigen“-Schalter gibt es nicht. Das Zahnrad steht standardmäßig rechts und lässt sich wie jedes andere Element ausblenden.
 
 ---
 
@@ -421,7 +421,6 @@ Vollständige Defaults:
     "BackgroundOpacity": 0.6
   },
   "Desktops": {
-    "Show": true,
     "DotSize": 8,
     "ScrollSwitch": true
   },
@@ -431,7 +430,6 @@ Vollständige Defaults:
     "DateFormat": "ddd, d. MMM"
   },
   "Weather": {
-    "Show": true,
     "LocationName": null,
     "Latitude": null,
     "Longitude": null,
@@ -439,10 +437,6 @@ Vollständige Defaults:
     "IntervalMinutes": 15
   },
   "Stats": {
-    "ShowCpu": true,
-    "ShowGpu": true,
-    "ShowRam": true,
-    "ShowNetwork": true,
     "ShowLabels": true,
     "IntervalMs": 1000,
     "WarnThreshold": 85,
@@ -483,7 +477,6 @@ Werte beim Laden auf gültige Bereiche begrenzen: `BarHeight` 24–56, `FontSize
 - Wirkt sofort auf alle Leisten.
 
 **Virtuelle Desktops**
-- Anzeigen (ToggleSwitch)
 - Mit Mausrad wechseln (ToggleSwitch)
 - Punktgröße (Slider 6–14)
 - Hinweis-InfoBar, wenn `IsAvailable == false`: „Virtuelle Desktops werden auf dieser Windows-Version nicht unterstützt.“
@@ -494,7 +487,6 @@ Werte beim Laden auf gültige Bereiche begrenzen: `BarHeight` 24–56, `FontSize
 - Datumsformat (ComboBox mit Vorlagen + „Benutzerdefiniert“ → TextBox), Live-Vorschau
 
 **Wetter**
-- Anzeigen (ToggleSwitch)
 - Ort (AutoSuggestBox mit Geocoding-Suche), darunter aktuell gespeicherter Ort
 - Einheit: °C / °F (RadioButtons)
 - Aktualisierungsintervall in Minuten (NumberBox 5–120)
@@ -507,7 +499,6 @@ Werte beim Laden auf gültige Bereiche begrenzen: `BarHeight` 24–56, `FontSize
 - Hinweistext zur Bedienung
 
 **System**
-- CPU / GPU / RAM / Netzwerk anzeigen (je ToggleSwitch)
 - Beschriftungen anzeigen (ToggleSwitch)
 - Aktualisierungsintervall (ComboBox: 0,5 s / 1 s / 2 s / 5 s)
 - Warnschwelle, kritische Schwelle (Slider 50–100)
@@ -724,7 +715,7 @@ Das WinUI-Fenster trägt standardmäßig Rahmen-, Titel- und 3D-Kanten-Stile, di
 
 **Bedienung:** Einstellungsseite „Anordnung“ (11.3): die drei Bereichslisten nebeneinander, darunter die Knöpfe und die volle Breite „Nicht angezeigt“. Jede Änderung wird sofort gespeichert; `BarWindow` baut die drei Bereiche neu auf, sobald sich die Listen geändert haben (Vergleich über einen Schlüssel aus den drei Listen). Die Leiste selbst ist nicht per Maus umsortierbar: Klick, Mausrad und Rechtsklick der Elemente bleiben unverändert.
 
-**Zusammenspiel mit den Anzeigen-Schaltern:** „Anzeigen“-Schalter (Wetter, Desktops, CPU, GPU, RAM, Netzwerk) bleiben auf ihren Seiten erhalten. Ein Element erscheint nur, wenn es in einem Bereich steht **und** sein Schalter an ist. Wird ein Element über die Anordnungsseite in einen Bereich gelegt, schaltet das seinen Schalter ein; Ausblenden über die Anordnung lässt den Schalter unverändert. Elemente mit ausgeschaltetem Schalter zeigt die Seite mit dem Zusatz „(aus)“.
+**Sichtbarkeit:** Es gibt keine „Anzeigen“-Schalter auf den Seiten Virtuelle Desktops, Wetter und System; ein Element erscheint genau dann, wenn es in einem Bereich steht. Alte Werte (`Desktops.Show`, `Weather.Show`, `Stats.ShowCpu/ShowGpu/ShowRam/ShowNetwork`) in vorhandenen `settings.json` werden beim Laden ignoriert. GPU-Messung und Wetterabruf laufen nur, solange das jeweilige Element auf der Leiste steht.
 
 **Optische Änderungen gegenüber vorher:** Die „·“-Trenner in der Mitte entfallen; Abstände entstehen nur noch durch die Elementränder (Text-Elemente 6 px links/rechts, Kacheln und Zahnrad über ihren Innenabstand). Der Außenrand der Leiste ist von 12 auf 6 px verkleinert, weil Text-Elemente jetzt selbst 6 px Rand haben.
 

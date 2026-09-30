@@ -23,7 +23,6 @@ public sealed partial class WeatherPage : Page
     private void LoadValues()
     {
         var w = _s.Settings.Current.Weather;
-        ShowSwitch.IsOn = w.Show;
         UnitRadios.SelectedIndex = w.Unit == "Fahrenheit" ? 1 : 0;
         IntervalBox.Value = w.IntervalMinutes;
         ShowCurrentLocation();
@@ -36,8 +35,6 @@ public sealed partial class WeatherPage : Page
             ? string.Format(Loc.Get("Weather_CurrentLocation"), w.LocationName)
             : Loc.Get("Weather_NoLocation");
     }
-
-    private void ShowSwitch_Toggled(object sender, RoutedEventArgs e) => _s.Save(x => x.Weather.Show = ShowSwitch.IsOn);
 
     private void UnitRadios_SelectionChanged(object sender, SelectionChangedEventArgs e)
     {

@@ -26,7 +26,7 @@ public sealed partial class DesktopsViewModel : ObservableObject
 
     public void Update()
     {
-        IsVisible = _settings.Current.Desktops.Show && _desktops.IsAvailable;
+        IsVisible = _desktops.IsAvailable;
         Items = _desktops.Desktops;
         CurrentIndex = _desktops.CurrentIndex;
         Updated?.Invoke();
