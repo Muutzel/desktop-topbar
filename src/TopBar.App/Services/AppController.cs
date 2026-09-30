@@ -110,7 +110,7 @@ internal static class AppController
     private static void ReconcileAutostart(ISettingsService settings)
     {
         var autostart = _host!.Services.GetRequiredService<IAutostartService>();
-        // The setting is authoritative; on first run the default (true) enables autostart.
+        // The setting is authoritative; the default is false, so autostart is opt-in.
         if (autostart.IsEnabled != settings.Current.General.Autostart) autostart.SetEnabled(settings.Current.General.Autostart);
         autostart.RepairPathIfNeeded();
         settings.Changed += (_, s) =>

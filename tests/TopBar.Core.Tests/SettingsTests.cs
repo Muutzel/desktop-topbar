@@ -18,7 +18,7 @@ public class SettingsTests : IDisposable
         var s = new SettingsService(PathOf);
         Assert.True(File.Exists(PathOf));
         Assert.Equal(32, s.Current.General.BarHeight);
-        Assert.True(s.Current.General.Autostart);
+        Assert.False(s.Current.General.Autostart);
         Assert.Equal("ddd, d. MMM", s.Current.Clock.DateFormat);
         Assert.Equal(15, s.Current.Weather.IntervalMinutes);
         Assert.Equal(85, s.Current.Stats.WarnThreshold);

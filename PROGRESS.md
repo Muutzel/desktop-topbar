@@ -24,6 +24,7 @@ Legende: [x] erledigt · [ ] offen. Das Projekt baut und läuft (siehe README); 
 - [x] Abnahmekriterien aus Abschnitt 14 manuell abhaken.
 - [x] Paketversionen pinnen (DECISIONS.md).
 - [x] `dotnet build` und `dotnet test` nach den Änderungen vom 2026-09-30 (Netzwerk, Abstände); danach die neuen Punkte in Abschnitt 14 (Pomodoro, Netzwerk, Optik) prüfen.
+- [ ] Autostart-Default auf aus geändert (AppSettings, Spec 11.2/12.2, Test): **nicht gebaut, `dotnet test` noch nicht gelaufen**.
 - [ ] Ressourcenverbrauch im Leerlauf messen (< 1 % CPU, < 100 MB).
 - Bekannt: VirtualDesktopAccessor.dll benötigt Windows 11 24H2 (Build ≥ 26100.2605).
-- Bekannt: Im Debug-Build schreibt der erste Start den Autostart-Eintrag auf die Debug-EXE (Einstellung „Mit Windows starten“ ausschalten oder Release nutzen).
+- Bekannt: Autostart ist seit 2026-09-30 standardmäßig aus (Opt-in). Wird er in einem Debug-Build eingeschaltet, zeigt der Eintrag auf die Debug-EXE.

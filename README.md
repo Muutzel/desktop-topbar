@@ -39,7 +39,7 @@ dotnet publish src/TopBar.App -c Release -r win-x64 --self-contained true -o pub
 
 `publish/TopBar.exe` läuft direkt. Es gibt keinen Installer und kein MSIX.
 
-Hinweis: Der erste Start trägt laut Spec den Autostart-Eintrag `HKCU\...\Run\TopBar` ein. Bei Debug-Builds zeigt er auf die Debug-EXE. Zum Entwickeln die Einstellung „Mit Windows starten“ ausschalten.
+Hinweis: Autostart ist standardmäßig aus. Wer „Mit Windows starten“ in den Einstellungen einschaltet, bekommt den Eintrag `HKCU\...\Run\TopBar` auf die jeweils laufende EXE (bei Debug-Builds also auf die Debug-EXE; zum Entwickeln ausgeschaltet lassen).
 
 ## Dateien zur Laufzeit
 

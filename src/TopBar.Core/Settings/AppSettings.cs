@@ -6,7 +6,7 @@ namespace TopBar.Core.Settings;
 
 public sealed class GeneralSettings
 {
-    public bool Autostart { get; set; } = true;
+    public bool Autostart { get; set; } = false;
     public string Theme { get; set; } = "System";       // System | Light | Dark
     public string Monitors { get; set; } = "Primary";   // Primary | All
     public int BarHeight { get; set; } = 32;

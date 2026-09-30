@@ -413,7 +413,7 @@ Vollständige Defaults:
 {
   "SchemaVersion": 1,
   "General": {
-    "Autostart": true,
+    "Autostart": false,
     "Theme": "System",
     "Monitors": "Primary",
     "BarHeight": 32,
@@ -535,7 +535,7 @@ Werte beim Laden auf gültige Bereiche begrenzen: `BarHeight` 24–56, `FontSize
 - `SetEnabled(true)` schreibt den Wert, `SetEnabled(false)` löscht ihn.
 - `RepairPathIfNeeded()` beim Start: Wenn Autostart aktiv ist und der gespeicherte Pfad nicht zur aktuellen EXE passt → Wert neu schreiben.
 - Die Einstellung `General.Autostart` und der Registry-Zustand werden beim Start abgeglichen (Einstellung ist führend).
-- Beim allerersten Start (keine settings.json vorhanden) wird Autostart aktiviert.
+- Autostart ist standardmäßig **aus** (Opt-in über die Einstellung „Mit Windows starten“). Beim allerersten Start wird nichts in die Registry geschrieben. *[nach M9]*
 
 ### 12.3 Startablauf
 1. Single-Instance-Prüfung
