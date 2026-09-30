@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Page
+    x:Class="TopBar.App.SettingsPages.LayoutPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <ScrollViewer>
+        <StackPanel Spacing="16" Padding="36,20,36,36" MaxWidth="900" HorizontalAlignment="Left">
+            <TextBlock x:Uid="Layout_Title" Style="{StaticResource TitleTextBlockStyle}" />
+            <TextBlock x:Uid="Layout_Hint" TextWrapping="Wrap" Opacity="0.7" />
+
+            <Grid ColumnSpacing="12">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <StackPanel Grid.Column="0" Spacing="6">
+                    <TextBlock x:Uid="Layout_Left" Style="{StaticResource BodyStrongTextBlockStyle}" />
+                    <ListView x:Name="LeftList" SelectionMode="Single" MinHeight="220" Background="Transparent"
+                              BorderThickness="1" BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}" CornerRadius="4" />
+                </StackPanel>
+                <StackPanel Grid.Column="1" Spacing="6">
+                    <TextBlock x:Uid="Layout_Center" Style="{StaticResource BodyStrongTextBlockStyle}" />
+                    <ListView x:Name="CenterList" SelectionMode="Single" MinHeight="220" Background="Transparent"
+                              BorderThickness="1" BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}" CornerRadius="4" />
+                </StackPanel>
+                <StackPanel Grid.Column="2" Spacing="6">
+                    <TextBlock x:Uid="Layout_Right" Style="{StaticResource BodyStrongTextBlockStyle}" />
+                    <ListView x:Name="RightList" SelectionMode="Single" MinHeight="220" Background="Transparent"
+                              BorderThickness="1" BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}" CornerRadius="4" />
+                </StackPanel>
+            </Grid>
+
+            <!-- Buttons work on the selected element (alternative to dragging). -->
+            <StackPanel Orientation="Horizontal" Spacing="8">
+                <Button x:Name="EarlierButton" x:Uid="Layout_Earlier" Click="EarlierButton_Click" />
+                <Button x:Name="LaterButton" x:Uid="Layout_Later" Click="LaterButton_Click" />
+                <Button x:Name="ToLeftButton" x:Uid="Layout_ToLeft" Click="ToLeftButton_Click" />
+                <Button x:Name="ToCenterButton" x:Uid="Layout_ToCenter" Click="ToCenterButton_Click" />
+                <Button x:Name="ToRightButton" x:Uid="Layout_ToRight" Click="ToRightButton_Click" />
+                <Button x:Name="HideButton" x:Uid="Layout_Hide" Click="HideButton_Click" />
+            </StackPanel>
+
+            <Button x:Name="ResetButton" x:Uid="Layout_Reset" Click="ResetButton_Click" />
+
+            <!-- Elements that are not on the bar; drop here to hide. -->
+            <StackPanel Spacing="6">
+                <TextBlock x:Uid="Layout_Hidden" Style="{StaticResource BodyStrongTextBlockStyle}" />
+                <ListView x:Name="HiddenList" SelectionMode="Single" MinHeight="120" Background="Transparent"
+                          BorderThickness="1" BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}" CornerRadius="4" />
+            </StackPanel>
+        </StackPanel>
+    </ScrollViewer>
+</Page>

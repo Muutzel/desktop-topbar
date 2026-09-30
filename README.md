@@ -4,8 +4,10 @@ Schlanke Statusleiste am oberen Rand von Windows 11, ähnlich Waybar. Gebaut mit
 
 - **Links:** virtuelle Desktops als Punkte, der aktive als animierte Pille (Klick wechselt den Desktop)
   daneben ein Pomodoro-Timer (Klick startet/pausiert, Stopp-Symbol setzt zurück; Zeiten einstellbar)
-- **Mitte:** Wetter · Uhr · Datum
+- **Mitte:** Wetter, Uhr, Datum
 - **Rechts:** CPU, GPU, RAM, Netzwerk (Bytes oder Bits pro Sekunde, automatisch oder fest skaliert) und ein Zahnrad für die Einstellungen
+
+Das ist die Standardbelegung: Unter Einstellungen → Anordnung lässt sich jedes Element (Desktops, Pomodoro, Wetter, Uhrzeit, Datum, CPU, GPU, RAM, Netzwerk, Zahnrad) per Drag-and-Drop oder Knopf in einen anderen Bereich verschieben, umsortieren oder ausblenden.
 
 Die Leiste registriert sich als AppBar: Andere Fenster überlappen sie nicht. Sie blendet sich bei Vollbild-Apps aus, unterstützt mehrere Monitore und nutzt einen Acrylic-Hintergrund. Die Oberfläche ist auf Deutsch.
 

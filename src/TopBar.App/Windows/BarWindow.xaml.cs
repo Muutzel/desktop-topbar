@@ -5,7 +5,6 @@ using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Controls.Primitives;
 using Microsoft.UI.Xaml.Input;
-using TopBar.App.Controls;
 using TopBar.App.Services;
 using TopBar.App.ViewModels;
 using TopBar.Core.Services;
@@ -29,6 +28,7 @@ public sealed partial class BarWindow : Window
     private DesktopAcrylicController? _acrylic;
     private SystemBackdropConfiguration? _backdropConfig;
     private bool _allowClose;
+    private string _layoutKey = "";
 
     public string MonitorDevice => _monitorDevice;
 
@@ -81,16 +81,38 @@ public sealed partial class BarWindow : Window
         Win32Window.MakeToolWindow(_hwnd); // not in taskbar / Alt+Tab; deliberately NOT WS_EX_NOACTIVATE (breaks flyouts)
     }
 
+    /// <summary>Builds the three zones from <c>Settings.Layout</c>. Called at startup and whenever the layout changes.</summary>
     private void BuildContent()
     {
-        // Left section: virtual desktops, then the Pomodoro timer to their right (ThreeSectionPanel takes exactly three children).
-        var left = new StackPanel { Orientation = Orientation.Horizontal, Spacing = 12, VerticalAlignment = VerticalAlignment.Stretch };
-        left.Children.Add(new DesktopIndicator(_viewModels.Desktops, _settings));
-        left.Children.Add(new PomodoroControl(_viewModels.Pomodoro));
-        Sections.Children.Add(left);
-        Sections.Children.Add(new CenterInfo(_viewModels.Clock, _viewModels.Weather, _settings));
-        Sections.Children.Add(new SystemStatsControl(_viewModels.Stats));
+        var layout = _settings.Current.Layout;
+        _layoutKey = LayoutKey(layout);
+
+        Sections.Children.Clear(); // Unloaded of the old controls detaches their view-model handlers
+        Sections.Children.Add(BuildZone(layout.Left));
+        Sections.Children.Add(BuildZone(layout.Center));
+        Sections.Children.Add(BuildZone(layout.Right));
     }
+
+    private StackPanel BuildZone(IEnumerable<string> ids)
+    {
+        // Always a panel (even if empty): ThreeSectionPanel needs exactly three children.
+        var zone = new StackPanel { Orientation = Orientation.Horizontal, Spacing = 0, VerticalAlignment = VerticalAlignment.Stretch };
+        foreach (var id in ids)
+        {
+            try
+            {
+                if (BarElementFactory.Create(id, _viewModels, _settings) is { } element) zone.Children.Add(element);
+            }
+            catch (Exception ex)
+            {
+                _log.LogError(ex, "Bar: creating element {Id} failed", id);
+            }
+        }
+        return zone;
+    }
+
+    private static string LayoutKey(Core.Settings.LayoutSettings l) =>
+        string.Join(',', l.Left) + "|" + string.Join(',', l.Center) + "|" + string.Join(',', l.Right);
 
     private void SetupBackdrop()
     {
@@ -118,6 +140,7 @@ public sealed partial class BarWindow : Window
         DispatcherQueue.TryEnqueue(() =>
         {
             ApplyAppearance();
+            if (LayoutKey(e.Layout) != _layoutKey) BuildContent();
             _appBar.UpdatePosition(); // bar height may have changed
         });
     }

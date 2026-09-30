@@ -17,6 +17,9 @@
             <NavigationViewItem x:Uid="Nav_General" Tag="general">
                 <NavigationViewItem.Icon><FontIcon Glyph="&#xE713;" /></NavigationViewItem.Icon>
             </NavigationViewItem>
+            <NavigationViewItem x:Uid="Nav_Layout" Tag="layout">
+                <NavigationViewItem.Icon><FontIcon Glyph="&#xE8A9;" /></NavigationViewItem.Icon>
+            </NavigationViewItem>
             <NavigationViewItem x:Uid="Nav_Desktops" Tag="desktops">
                 <NavigationViewItem.Icon><FontIcon Glyph="&#xE7F4;" /></NavigationViewItem.Icon>
             </NavigationViewItem>

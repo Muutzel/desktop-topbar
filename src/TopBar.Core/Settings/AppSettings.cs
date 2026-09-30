@@ -75,6 +75,7 @@ public sealed class AppSettings
     public WeatherSettings Weather { get; set; } = new();
     public StatsSettings Stats { get; set; } = new();
     public PomodoroSettings Pomodoro { get; set; } = new();
+    public LayoutSettings Layout { get; set; } = new();
 
     /// <summary>Replaces null sections, invalid enum strings and clamps all numeric values to their valid range.</summary>
     public void Normalize()
@@ -86,6 +87,7 @@ public sealed class AppSettings
         Weather ??= new();
         Stats ??= new();
         Pomodoro ??= new();
+        Layout ??= new();
 
         General.Theme = OneOf(General.Theme, "System", "Light", "Dark");
         General.Monitors = OneOf(General.Monitors, "Primary", "All");
@@ -112,6 +114,8 @@ public sealed class AppSettings
         Pomodoro.ShortBreakMinutes = Math.Clamp(Pomodoro.ShortBreakMinutes, 1, 99);
         Pomodoro.Sessions = Math.Clamp(Pomodoro.Sessions, 1, 12);
         Pomodoro.LongBreakMinutes = Math.Clamp(Pomodoro.LongBreakMinutes, 1, 99);
+
+        Layout.Normalize();
     }
 
     public void CopyFrom(AppSettings other)
@@ -122,6 +126,7 @@ public sealed class AppSettings
         Weather = other.Weather;
         Stats = other.Stats;
         Pomodoro = other.Pomodoro;
+        Layout = other.Layout;
         Normalize();
     }
 

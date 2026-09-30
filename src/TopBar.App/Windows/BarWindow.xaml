@@ -12,7 +12,7 @@
                     FontFamily="{StaticResource BarFont}"
                     RightTapped="Root_RightTapped">
         <Grid Background="Transparent">
-            <controls:ThreeSectionPanel x:Name="Sections" Margin="12,0" />
+            <controls:ThreeSectionPanel x:Name="Sections" Margin="6,0" />
             <Border x:Name="BottomLine"
                     Height="1"
                     VerticalAlignment="Bottom"

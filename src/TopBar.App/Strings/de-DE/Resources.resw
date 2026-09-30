@@ -307,4 +307,79 @@
   <data name="Pomodoro_Toast_CycleDone_Text" xml:space="preserve">
     <value>Alle {0} Arbeitsphasen sind geschafft.</value>
   </data>
+  <data name="Nav_Layout.Content" xml:space="preserve">
+    <value>Anordnung</value>
+  </data>
+  <data name="Layout_Title.Text" xml:space="preserve">
+    <value>Elemente anordnen</value>
+  </data>
+  <data name="Layout_Hint.Text" xml:space="preserve">
+    <value>Ziehe ein Element mit der Maus in einen Bereich oder wähle es aus und nutze die Knöpfe. Die Leiste folgt sofort. Was unter „Nicht angezeigt“ steht, erscheint nicht auf der Leiste. Die Einstellungen der einzelnen Elemente (z. B. Wetter-Ort) bleiben auf ihren Seiten.</value>
+  </data>
+  <data name="Layout_Left.Text" xml:space="preserve">
+    <value>Links</value>
+  </data>
+  <data name="Layout_Center.Text" xml:space="preserve">
+    <value>Mitte</value>
+  </data>
+  <data name="Layout_Right.Text" xml:space="preserve">
+    <value>Rechts</value>
+  </data>
+  <data name="Layout_Hidden.Text" xml:space="preserve">
+    <value>Nicht angezeigt</value>
+  </data>
+  <data name="Layout_Earlier.Content" xml:space="preserve">
+    <value>Hoch</value>
+  </data>
+  <data name="Layout_Later.Content" xml:space="preserve">
+    <value>Runter</value>
+  </data>
+  <data name="Layout_ToLeft.Content" xml:space="preserve">
+    <value>Linke Zone</value>
+  </data>
+  <data name="Layout_ToCenter.Content" xml:space="preserve">
+    <value>Mittlere Zone</value>
+  </data>
+  <data name="Layout_ToRight.Content" xml:space="preserve">
+    <value>Rechte Zone</value>
+  </data>
+  <data name="Layout_Hide.Content" xml:space="preserve">
+    <value>Ausblenden</value>
+  </data>
+  <data name="Layout_Reset.Content" xml:space="preserve">
+    <value>Anordnung zurücksetzen</value>
+  </data>
+  <data name="Layout_Switched_Off" xml:space="preserve">
+    <value>(aus)</value>
+  </data>
+  <data name="Element_Desktops" xml:space="preserve">
+    <value>Virtuelle Desktops</value>
+  </data>
+  <data name="Element_Pomodoro" xml:space="preserve">
+    <value>Pomodoro-Timer</value>
+  </data>
+  <data name="Element_Weather" xml:space="preserve">
+    <value>Wetter</value>
+  </data>
+  <data name="Element_Clock" xml:space="preserve">
+    <value>Uhrzeit</value>
+  </data>
+  <data name="Element_Date" xml:space="preserve">
+    <value>Datum</value>
+  </data>
+  <data name="Element_Cpu" xml:space="preserve">
+    <value>CPU-Auslastung</value>
+  </data>
+  <data name="Element_Gpu" xml:space="preserve">
+    <value>GPU-Auslastung</value>
+  </data>
+  <data name="Element_Ram" xml:space="preserve">
+    <value>RAM-Auslastung</value>
+  </data>
+  <data name="Element_Network" xml:space="preserve">
+    <value>Netzwerk-Auslastung</value>
+  </data>
+  <data name="Element_Settings" xml:space="preserve">
+    <value>Einstellungen (Zahnrad)</value>
+  </data>
 </root>

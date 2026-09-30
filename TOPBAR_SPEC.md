@@ -77,10 +77,12 @@ topbar/
 │  │  ├─ Controls/
 │  │  │  ├─ ThreeSectionPanel.cs
 │  │  │  ├─ DesktopIndicator.xaml(.cs)
-│  │  │  ├─ CenterInfo.xaml(.cs)          # Wetter, Uhr, Datum
-│  │  │  ├─ SystemStatsControl.xaml(.cs)  # [nach M9] umbenannt (Namenskonflikt mit dem Record SystemStats)
+│  │  │  ├─ WeatherControl.xaml(.cs)      # [nach M9] Wetter (vorher Teil von CenterInfo)
+│  │  │  ├─ ClockControl.cs               # [nach M9] Uhrzeit bzw. Datum als eigenes Element
+│  │  │  ├─ StatControl.xaml(.cs)         # [nach M9] ein Systemwert (CPU/GPU/RAM/Netzwerk); ersetzt SystemStatsControl
+│  │  │  ├─ SettingsButtonControl.cs      # [nach M9] Zahnrad
 │  │  │  └─ PomodoroControl.xaml(.cs)     # [nach M9]
-│  │  ├─ Services/                         # u. a. AppController, AppNotifier (Toasts) [nach M9]
+│  │  ├─ Services/                         # u. a. AppController, AppNotifier (Toasts), BarElementFactory, BarElements [nach M9]
 │  │  ├─ ViewModels/
 │  │  ├─ Settings/                         # Einstellungsseiten
 │  │  ├─ Strings/de-DE/Resources.resw
@@ -231,6 +233,8 @@ Layout-Logik (als reine Funktion in `TopBar.Core/Layout/ThreeSectionLayout.cs`, 
 - Ist Left oder Right schmaler als gewünscht, wird der Inhalt abgeschnitten (`Clip`), nicht umgebrochen.
 
 Alle drei Bereiche sind vertikal zentriert.
+
+*[nach M9]* Was in den drei Bereichen steht, ist frei konfigurierbar (Abschnitt 18.6). Die Abschnitte 7 bis 9 beschreiben die Standardbelegung.
 
 ---
 
@@ -452,11 +456,16 @@ Vollständige Defaults:
     "ShortBreakMinutes": 5,
     "Sessions": 4,
     "LongBreakMinutes": 15
+  },
+  "Layout": {
+    "Left": ["Desktops", "Pomodoro"],
+    "Center": ["Weather", "Clock", "Date"],
+    "Right": ["Cpu", "Gpu", "Ram", "Network", "Settings"]
   }
 }
 ```
 
-Werte beim Laden auf gültige Bereiche begrenzen: `BarHeight` 24–56, `FontSize` 11–18, `BackgroundOpacity` 0.0–1.0, `DotSize` 6–14, `IntervalMinutes` 5–120, `IntervalMs` 500–5000, Schwellwerte 50–100 (Critical ≥ Warn), `NetworkUnit` ∈ {`Bytes`, `Bits`}, `NetworkScale` ∈ {`Auto`, `Kilo`, `Mega`} (ungültig → erster Wert), Pomodoro: `WorkMinutes`/`ShortBreakMinutes`/`LongBreakMinutes` 1–99, `Sessions` 1–12 *[nach M9]*.
+Werte beim Laden auf gültige Bereiche begrenzen: `BarHeight` 24–56, `FontSize` 11–18, `BackgroundOpacity` 0.0–1.0, `DotSize` 6–14, `IntervalMinutes` 5–120, `IntervalMs` 500–5000, Schwellwerte 50–100 (Critical ≥ Warn), `NetworkUnit` ∈ {`Bytes`, `Bits`}, `NetworkScale` ∈ {`Auto`, `Kilo`, `Mega`} (ungültig → erster Wert), Pomodoro: `WorkMinutes`/`ShortBreakMinutes`/`LongBreakMinutes` 1–99, `Sessions` 1–12 *[nach M9]*. `Layout` *[nach M9]*: unbekannte Element-IDs und doppelte Einträge werden entfernt (erstes Vorkommen gewinnt, Reihenfolge Left, Center, Right), Groß-/Kleinschreibung wird korrigiert; ein Element, das in keiner Liste steht, wird nicht angezeigt. Fehlt `Layout` in der Datei, gilt die Standardbelegung.
 
 ### 11.3 Seiten
 
@@ -467,6 +476,11 @@ Werte beim Laden auf gültige Bereiche begrenzen: `BarHeight` 24–56, `FontSize
 - Höhe der Leiste (Slider 24–56, Schritt 2, Wert daneben anzeigen)
 - Schriftgröße (Slider 11–18)
 - Deckkraft des Hintergrunds (Slider 0–100 %)
+
+**Anordnung** *[nach M9]* (zweite Seite, nach „Allgemein“)
+- Vier Listen: Links, Mitte, Rechts nebeneinander, darunter (volle Breite, unter den Knöpfen) Nicht angezeigt. Elemente per Drag-and-Drop zwischen und innerhalb der Listen verschieben.
+- Knöpfe für das ausgewählte Element: Hoch, Runter, Linke Zone, Mittlere Zone, Rechte Zone, Ausblenden; „Anordnung zurücksetzen“.
+- Wirkt sofort auf alle Leisten.
 
 **Virtuelle Desktops**
 - Anzeigen (ToggleSwitch)
@@ -589,6 +603,7 @@ Reihenfolge einhalten. Nach jedem Meilenstein: bauen, starten, manuell prüfen, 
 - [ ] *[nach M9]* Pomodoro: Läuft eine Phase ab, erscheint ein Windows-Toast (oder der Systemton), die nächste Phase wartet pausiert auf einen Klick; nach der langen Pause steht der Timer wieder am Anfang.
 - [ ] *[nach M9]* Pomodoro: Zeiten in den Einstellungen ändern wirkt sofort; eine laufende Phase wird dadurch nie verlängert.
 - [ ] *[nach M9]* Netzwerk: Einheit (Bytes/Bits) und Skalierung (Automatisch/kilo/mega) wirken sofort; beim Wechsel KB/s ↔ MB/s (bzw. kbit/s ↔ Mbit/s) verschiebt sich nichts.
+- [ ] *[nach M9]* Anordnung: Jedes Element (Desktops, Pomodoro, Wetter, Uhrzeit, Datum, CPU, GPU, RAM, Netzwerk, Zahnrad) lässt sich per Maus und per Knopf in einen anderen Bereich und an eine andere Position schieben bzw. ausblenden; die Leiste folgt sofort; nach „Neu laden“/Neustart bleibt die Anordnung erhalten; Mitte bleibt zentriert, auch wenn ein Bereich leer ist.
 - [ ] *[nach M9]* Optik: Kein Rahmen, keine Rundung, kein Lichtsaum um die Leiste; Abstand Icon–Label–Wert bei CPU/GPU/RAM gleichmäßig 6 px, kein toter Hover-Bereich zwischen den Werten.
 
 ## 15. Unit-Tests (Pflicht, in `TopBar.Core.Tests`)
@@ -600,6 +615,7 @@ Reihenfolge einhalten. Nach jedem Meilenstein: bauen, starten, manuell prüfen, 
 - Settings: Defaults, fehlende Felder, ungültige Werte werden begrenzt, defekte Datei.
 - Zeitformat/Datumsformat inkl. ungültigem benutzerdefiniertem Format.
 - *[nach M9]* Netzwerk: Bytes und Bits, Skalierung Auto/Kilo/Mega, Zahlen- und Einheiten-Teile, Normalisierung von `NetworkUnit`/`NetworkScale`.
+- *[nach M9]* `LayoutSettings`: Standardbelegung, Verschieben zwischen Bereichen, Index-Begrenzung, Entfernen/Wiederherstellen, Normalisierung (unbekannt, doppelt, Schreibweise, null).
 - *[nach M9]* `PomodoroEngine`: kompletter Zyklus, Start/Pause/Skip/Reset, Phasenende ohne Autostart, Einstellungsänderung während des Laufs, Formatierung „mm:ss“.
 
 ---
@@ -675,7 +691,7 @@ Diese Abschnitte beschreiben, was nach den Meilensteinen M1–M9 dazukam. Das Ve
 - Zahl: kilo immer ganzzahlig; ab mega unter 10 eine Nachkommastelle (`9,9`), sonst ganzzahlig. Der reine Text (`NetworkRate.Format`) füllt auf 3 Zeichen mit Ziffernbreiten-Leerzeichen (U+2007) auf, z. B. `  5 KB/s`.
 - Bei fester Skalierung kann die Zahl mehr als drei Stellen haben (z. B. `10000 kbit/s`).
 
-**Darstellung als Tabelle** (`SystemStatsControl`):
+**Darstellung als Tabelle** (`StatControl`, Art Netzwerk):
 - Feste Spalten: `↓ Zahl Einheit  ↑ Zahl Einheit`, Pfeile in der Sekundärfarbe.
 - Zahlenspalte rechtsbündig, Breite gemessen an „0000“ (vierstellig möglich). Einheitenspalte linksbündig, Breite der breitesten möglichen Einheit der gewählten Einstellung (`NetworkRate.UnitSamples`).
 - Spaltenabstand 4 px, zwischen den beiden Hälften 8 px.
@@ -699,3 +715,17 @@ Das WinUI-Fenster trägt standardmäßig Rahmen-, Titel- und 3D-Kanten-Stile, di
 - Lizenz MIT (`LICENSE`), mitgelieferte Fremdkomponenten in `THIRD_PARTY_NOTICES.md` (VirtualDesktopAccessor.dll, Fluent System Icons).
 - Paketversionen sind gepinnt (siehe `DECISIONS.md`); Ziel-Framework der App `net10.0-windows10.0.22621.0`, Plattform x64.
 - Datumsformat-Test: Die abgekürzte Vorlage `ddd, d. MMM` wird gegen die Kultur selbst geprüft, weil „Di.“/„Sep.“ von den ICU-Daten des Rechners abhängen.
+
+### 18.6 Anordnung der Elemente
+
+**Elemente** (IDs in `TopBar.Core/Settings/LayoutSettings.cs`, `BarElementIds`): `Desktops`, `Pomodoro`, `Weather`, `Clock`, `Date`, `Cpu`, `Gpu`, `Ram`, `Network`, `Settings` (Zahnrad). Uhrzeit und Datum sind getrennte Elemente; CPU, GPU, RAM und Netzwerk sind einzelne Kacheln.
+
+**Einstellung** `Layout.Left` / `Layout.Center` / `Layout.Right`: geordnete Listen von Element-IDs (Standardbelegung siehe 11.2, entspricht dem Aussehen vor der Änderung bis auf die Punkte unten). Jedes Element steht höchstens einmal auf der Leiste. Was in keiner Liste steht, wird nicht angezeigt.
+
+**Bedienung:** Einstellungsseite „Anordnung“ (11.3): die drei Bereichslisten nebeneinander, darunter die Knöpfe und die volle Breite „Nicht angezeigt“. Jede Änderung wird sofort gespeichert; `BarWindow` baut die drei Bereiche neu auf, sobald sich die Listen geändert haben (Vergleich über einen Schlüssel aus den drei Listen). Die Leiste selbst ist nicht per Maus umsortierbar: Klick, Mausrad und Rechtsklick der Elemente bleiben unverändert.
+
+**Zusammenspiel mit den Anzeigen-Schaltern:** „Anzeigen“-Schalter (Wetter, Desktops, CPU, GPU, RAM, Netzwerk) bleiben auf ihren Seiten erhalten. Ein Element erscheint nur, wenn es in einem Bereich steht **und** sein Schalter an ist. Wird ein Element über die Anordnungsseite in einen Bereich gelegt, schaltet das seinen Schalter ein; Ausblenden über die Anordnung lässt den Schalter unverändert. Elemente mit ausgeschaltetem Schalter zeigt die Seite mit dem Zusatz „(aus)“.
+
+**Optische Änderungen gegenüber vorher:** Die „·“-Trenner in der Mitte entfallen; Abstände entstehen nur noch durch die Elementränder (Text-Elemente 6 px links/rechts, Kacheln und Zahnrad über ihren Innenabstand). Der Außenrand der Leiste ist von 12 auf 6 px verkleinert, weil Text-Elemente jetzt selbst 6 px Rand haben.
+
+**Technik:** `BarElementFactory` erzeugt pro Element-ID ein Control (eine Instanz je Leistenfenster). `ThreeSectionPanel` bekommt weiterhin genau drei Kinder, jeweils ein horizontales `StackPanel` pro Bereich (auch wenn leer).
