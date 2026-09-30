@@ -11,6 +11,10 @@ public sealed partial class StatEntry : ObservableObject
     [ObservableProperty] private string _text = "";
     [ObservableProperty] private string _tooltip = "";
     [ObservableProperty] private StatFormat.Level _level;
+    /// <summary>Optional table cells (number, unit, number, unit). Empty = plain <see cref="Text"/>.</summary>
+    [ObservableProperty] private string[] _cells = [];
+    /// <summary>Units the unit column must be able to hold (width reservation).</summary>
+    [ObservableProperty] private string[] _unitSamples = [];
 }
 
 public sealed partial class StatsViewModel : ObservableObject
@@ -52,7 +56,12 @@ public sealed partial class StatsViewModel : ObservableObject
         Ram.Level = StatFormat.GetLevel(s.RamPercent, c.WarnThreshold, c.CriticalThreshold);
 
         Network.IsVisible = c.ShowNetwork;
-        Network.Text = NetworkRate.FormatPair(s.DownBytesPerSec, s.UpBytesPerSec);
+        var display = NetworkDisplay.From(c.NetworkUnit, c.NetworkScale);
+        Network.Text = NetworkRate.FormatPair(s.DownBytesPerSec, s.UpBytesPerSec, display);
+        var down = NetworkRate.Parts(s.DownBytesPerSec, display);
+        var up = NetworkRate.Parts(s.UpBytesPerSec, display);
+        Network.Cells = [down.Number, down.Unit, up.Number, up.Unit];
+        Network.UnitSamples = NetworkRate.UnitSamples(display);
         Network.Tooltip = string.IsNullOrEmpty(s.NetworkDescription) ? "Netzwerk" : s.NetworkDescription;
         Network.Level = StatFormat.Level.Normal;
 

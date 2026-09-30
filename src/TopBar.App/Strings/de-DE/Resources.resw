@@ -136,6 +136,27 @@
   <data name="System_Interval_5000.Content" xml:space="preserve">
     <value>5 s</value>
   </data>
+  <data name="System_NetUnit.Header" xml:space="preserve">
+    <value>Netzwerk: Einheit</value>
+  </data>
+  <data name="System_NetUnit_Bytes.Content" xml:space="preserve">
+    <value>Bytes pro Sekunde (KB/s, MB/s)</value>
+  </data>
+  <data name="System_NetUnit_Bits.Content" xml:space="preserve">
+    <value>Bits pro Sekunde (kbit/s, Mbit/s)</value>
+  </data>
+  <data name="System_NetScale.Header" xml:space="preserve">
+    <value>Netzwerk: Skalierung</value>
+  </data>
+  <data name="System_NetScale_Auto.Content" xml:space="preserve">
+    <value>Automatisch (je nach Geschwindigkeit)</value>
+  </data>
+  <data name="System_NetScale_Kilo.Content" xml:space="preserve">
+    <value>Immer kilo (KB/s bzw. kbit/s)</value>
+  </data>
+  <data name="System_NetScale_Mega.Content" xml:space="preserve">
+    <value>Immer mega (MB/s bzw. Mbit/s)</value>
+  </data>
   <data name="System_Nic.Header" xml:space="preserve">
     <value>Netzwerkadapter</value>
   </data>

@@ -44,6 +44,9 @@ public sealed partial class SystemPage : Page
         WarnRow.Value = c.WarnThreshold;
         CriticalRow.Value = c.CriticalThreshold;
 
+        SelectByTag(NetUnitCombo, c.NetworkUnit);
+        SelectByTag(NetScaleCombo, c.NetworkScale);
+
         NicCombo.Items.Clear();
         NicCombo.Items.Add(new ComboBoxItem { Content = Loc.Get("System_Nic_Auto"), Tag = "" });
         var stats = AppController.Services.GetRequiredService<ISystemStatsService>();
@@ -73,6 +76,21 @@ public sealed partial class SystemPage : Page
     {
         if (IntervalCombo.SelectedItem is ComboBoxItem { Tag: string tag } && int.TryParse(tag, out var ms))
             _s.Save(x => x.Stats.IntervalMs = ms);
+    }
+
+    private static void SelectByTag(ComboBox combo, string tag) =>
+        combo.SelectedItem = combo.Items.OfType<ComboBoxItem>().FirstOrDefault(i => (string)i.Tag == tag) ?? combo.Items[0];
+
+    private void NetUnitCombo_SelectionChanged(object sender, SelectionChangedEventArgs e)
+    {
+        if (NetUnitCombo.SelectedItem is ComboBoxItem { Tag: string tag })
+            _s.Save(x => x.Stats.NetworkUnit = tag);
+    }
+
+    private void NetScaleCombo_SelectionChanged(object sender, SelectionChangedEventArgs e)
+    {
+        if (NetScaleCombo.SelectedItem is ComboBoxItem { Tag: string tag })
+            _s.Save(x => x.Stats.NetworkScale = tag);
     }
 
     private void NicCombo_SelectionChanged(object sender, SelectionChangedEventArgs e)

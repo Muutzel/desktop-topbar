@@ -9,7 +9,7 @@
         <SolidColorBrush x:Key="CriticalBrush" Color="{ThemeResource SystemFillColorCritical}" />
         <SolidColorBrush x:Key="SecondaryTextBrush" Color="{ThemeResource TextFillColorSecondary}" />
     </UserControl.Resources>
-    <StackPanel x:Name="Row" Orientation="Horizontal" Spacing="12" VerticalAlignment="Stretch">
+    <StackPanel x:Name="Row" Orientation="Horizontal" Spacing="0" VerticalAlignment="Stretch">
         <Button x:Name="SettingsButton" Style="{StaticResource BarButtonStyle}" Margin="0,4" Click="SettingsButton_Click">
             <FontIcon FontFamily="{StaticResource SegoeIconsFont}" Glyph="&#xE713;" FontSize="14" />
         </Button>

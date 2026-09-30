@@ -24,6 +24,16 @@
             <controls:SliderRow x:Name="WarnRow" />
             <controls:SliderRow x:Name="CriticalRow" />
 
+            <ComboBox x:Name="NetUnitCombo" x:Uid="System_NetUnit" MinWidth="320" SelectionChanged="NetUnitCombo_SelectionChanged">
+                <ComboBoxItem x:Uid="System_NetUnit_Bytes" Tag="Bytes" />
+                <ComboBoxItem x:Uid="System_NetUnit_Bits" Tag="Bits" />
+            </ComboBox>
+            <ComboBox x:Name="NetScaleCombo" x:Uid="System_NetScale" MinWidth="320" SelectionChanged="NetScaleCombo_SelectionChanged">
+                <ComboBoxItem x:Uid="System_NetScale_Auto" Tag="Auto" />
+                <ComboBoxItem x:Uid="System_NetScale_Kilo" Tag="Kilo" />
+                <ComboBoxItem x:Uid="System_NetScale_Mega" Tag="Mega" />
+            </ComboBox>
+
             <ComboBox x:Name="NicCombo" x:Uid="System_Nic" MinWidth="320" SelectionChanged="NicCombo_SelectionChanged" />
         </StackPanel>
     </ScrollViewer>

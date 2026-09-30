@@ -43,7 +43,7 @@ public class SettingsTests : IDisposable
         { "General": { "BarHeight": 500, "FontSize": 1, "BackgroundOpacity": 7, "Theme": "Neon", "Monitors": "x" },
           "Desktops": { "DotSize": 99 },
           "Weather": { "IntervalMinutes": 1, "Unit": "Kelvin" },
-          "Stats": { "IntervalMs": 10, "WarnThreshold": 99, "CriticalThreshold": 60 } }
+          "Stats": { "IntervalMs": 10, "WarnThreshold": 99, "CriticalThreshold": 60, "NetworkUnit": "Nibbles", "NetworkScale": "Giga" } }
         """);
         var s = new SettingsService(PathOf).Current;
         Assert.Equal(56, s.General.BarHeight);
@@ -55,6 +55,8 @@ public class SettingsTests : IDisposable
         Assert.Equal(5, s.Weather.IntervalMinutes);
         Assert.Equal("Celsius", s.Weather.Unit);
         Assert.Equal(500, s.Stats.IntervalMs);
+        Assert.Equal("Bytes", s.Stats.NetworkUnit);
+        Assert.Equal("Auto", s.Stats.NetworkScale);
         Assert.Equal(99, s.Stats.WarnThreshold);
         Assert.Equal(99, s.Stats.CriticalThreshold); // Critical >= Warn
     }

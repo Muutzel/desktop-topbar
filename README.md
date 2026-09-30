@@ -5,7 +5,7 @@ Schlanke Statusleiste am oberen Rand von Windows 11, ähnlich Waybar. Gebaut mit
 - **Links:** virtuelle Desktops als Punkte, der aktive als animierte Pille (Klick wechselt den Desktop)
   daneben ein Pomodoro-Timer (Klick startet/pausiert, Stopp-Symbol setzt zurück; Zeiten einstellbar)
 - **Mitte:** Wetter · Uhr · Datum
-- **Rechts:** CPU, GPU, RAM, Netzwerk und ein Zahnrad für die Einstellungen
+- **Rechts:** CPU, GPU, RAM, Netzwerk (Bytes oder Bits pro Sekunde, automatisch oder fest skaliert) und ein Zahnrad für die Einstellungen
 
 Die Leiste registriert sich als AppBar: Andere Fenster überlappen sie nicht. Sie blendet sich bei Vollbild-Apps aus, unterstützt mehrere Monitore und nutzt einen Acrylic-Hintergrund. Die Oberfläche ist auf Deutsch.
 
@@ -51,7 +51,7 @@ Hinweis: Der erste Start trägt laut Spec den Autostart-Eintrag `HKCU\...\Run\To
 - `src/TopBar.App`: WinUI-3-App (Fenster, Controls, ViewModels, Einstellungsseiten)
 - `tests/TopBar.Core.Tests`: xUnit-Tests
 
-Weitere Dokumente: `TOPBAR_SPEC.md` (Spezifikation), `DECISIONS.md` (Entscheidungen und Abweichungen), `PROGRESS.md` (Stand).
+Weitere Dokumente: `TOPBAR_SPEC.md` (Spezifikation, Erweiterungen nach M9 in Abschnitt 18), `DECISIONS.md` (Entscheidungen und Abweichungen), `PROGRESS.md` (Stand).
 
 ## Bekannte Einschränkungen
 

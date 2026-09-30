@@ -51,6 +51,8 @@ public sealed class StatsSettings
     public int WarnThreshold { get; set; } = 85;
     public int CriticalThreshold { get; set; } = 95;
     public string? NetworkInterfaceId { get; set; }
+    public string NetworkUnit { get; set; } = "Bytes";  // Bytes (KB/s) | Bits (kbit/s)
+    public string NetworkScale { get; set; } = "Auto"; // Auto | Kilo | Mega
 }
 
 public sealed class PomodoroSettings
@@ -99,6 +101,8 @@ public sealed class AppSettings
         Weather.Unit = OneOf(Weather.Unit, "Celsius", "Fahrenheit");
         Weather.IntervalMinutes = Math.Clamp(Weather.IntervalMinutes, 5, 120);
 
+        Stats.NetworkUnit = OneOf(Stats.NetworkUnit, "Bytes", "Bits");
+        Stats.NetworkScale = OneOf(Stats.NetworkScale, "Auto", "Kilo", "Mega");
         Stats.IntervalMs = Math.Clamp(Stats.IntervalMs, 500, 5000);
         Stats.WarnThreshold = Math.Clamp(Stats.WarnThreshold, 50, 100);
         Stats.CriticalThreshold = Math.Clamp(Stats.CriticalThreshold, 50, 100);

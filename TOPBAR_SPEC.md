@@ -2,6 +2,8 @@
 
 > **An den Agenten:** Dieses Dokument ist die vollständige und verbindliche Spezifikation. Alle Entscheidungen sind hier bereits getroffen. Lies das komplette Dokument, bevor du Code schreibst. Arbeite die Meilensteine in Abschnitt 13 der Reihe nach ab.
 
+> **Stand 2026-09-30:** M1–M9 sind umgesetzt. Danach kamen Erweiterungen dazu (Pomodoro-Timer, Netzwerk-Einheit und -Tabelle, Abstands- und Rahmen-Feinschliff). Sie stehen gesammelt in **Abschnitt 18** und sind in den betroffenen Abschnitten mit *[nach M9]* markiert. Wo ein Text mit *[nach M9]* dem Ursprungstext widerspricht, gilt *[nach M9]*.
+
 ---
 
 ## 0. Arbeitsregeln für den Agenten
@@ -14,6 +16,12 @@
 6. **Abhängigkeiten:** Nur die in Abschnitt 2 genannten Pakete. Jede weitere NuGet-Referenz in `DECISIONS.md` begründen.
 7. **Unsichere Fakten prüfen:** Wo in diesem Dokument „**prüfen**“ steht, verifizierst du den Punkt vor der Implementierung (Doku/README der Bibliothek lesen, kleines Testprogramm).
 8. **Sprache:** Code, Bezeichner, Kommentare und Commit-Messages auf Englisch. Sichtbare UI-Texte auf Deutsch.
+9. **Dokumentation pflegen:** Jedes neue Feature und jede Verhaltensänderung wird im selben Arbeitsgang dokumentiert, nicht erst später:
+   - `TOPBAR_SPEC.md`: Verhalten, Einstellungen (inkl. JSON-Schema und Wertebereiche in 11.2/11.3), Projektstruktur, Abnahmekriterien (14) und Tests (15). Nachträge nach M9 kommen in Abschnitt 18 bzw. werden in den betroffenen Abschnitten mit *[nach M9]* markiert.
+   - `DECISIONS.md`: nur Abweichungen von der Spec und Unsicherheiten (Datum, Thema, Entscheidung, Grund), keine Feature-Beschreibungen.
+   - `PROGRESS.md`: Eintrag für das Feature; war es nicht gebaut oder getestet, das ausdrücklich vermerken.
+   - `README.md`: nur, wenn sich für Nutzer etwas Sichtbares ändert (Funktionen, Bauen/Starten).
+   Kein Feature gilt als fertig, solange Spec und `PROGRESS.md` nicht dazu passen.
 
 ---
 
@@ -24,7 +32,7 @@ Eine schlanke, native **Status-Bar am oberen Bildschirmrand von Windows 11**, ve
 Die Bar:
 - reserviert oben Platz wie die Taskleiste (maximierte Fenster beginnen darunter),
 - startet automatisch mit Windows,
-- hat drei Bereiche: links virtuelle Desktops, Mitte Wetter/Uhr/Datum, rechts Systemauslastung und Einstellungen.
+- hat drei Bereiche: links virtuelle Desktops *(nach M9: plus Pomodoro-Timer, siehe 18.1)*, Mitte Wetter/Uhr/Datum, rechts Systemauslastung und Einstellungen.
 
 ---
 
@@ -53,9 +61,12 @@ Die App braucht **keine Administratorrechte** und darf keine anfordern.
 ```
 topbar/
 ├─ TopBar.sln
+├─ TOPBAR_SPEC.md
 ├─ DECISIONS.md
 ├─ PROGRESS.md
 ├─ README.md
+├─ LICENSE                         # MIT [nach M9]
+├─ THIRD_PARTY_NOTICES.md          # [nach M9]
 ├─ src/
 │  ├─ TopBar.App/                 # WinUI-3-Projekt (EXE)
 │  │  ├─ Program.cs               # eigener Main (Single Instance), DISABLE_XAML_GENERATED_MAIN
@@ -67,14 +78,16 @@ topbar/
 │  │  │  ├─ ThreeSectionPanel.cs
 │  │  │  ├─ DesktopIndicator.xaml(.cs)
 │  │  │  ├─ CenterInfo.xaml(.cs)          # Wetter, Uhr, Datum
-│  │  │  └─ SystemStats.xaml(.cs)
+│  │  │  ├─ SystemStatsControl.xaml(.cs)  # [nach M9] umbenannt (Namenskonflikt mit dem Record SystemStats)
+│  │  │  └─ PomodoroControl.xaml(.cs)     # [nach M9]
+│  │  ├─ Services/                         # u. a. AppController, AppNotifier (Toasts) [nach M9]
 │  │  ├─ ViewModels/
 │  │  ├─ Settings/                         # Einstellungsseiten
 │  │  ├─ Strings/de-DE/Resources.resw
 │  │  └─ Assets/
 │  │     ├─ Fonts/FluentSystemIcons-Regular.ttf
 │  │     └─ Native/VirtualDesktopAccessor.dll
-│  ├─ TopBar.Core/                # netX.0 ohne UI: Interfaces, Modelle, Settings, reine Logik
+│  ├─ TopBar.Core/                # netX.0 ohne UI: Interfaces, Modelle, Settings, reine Logik (u. a. Pomodoro/PomodoroEngine.cs [nach M9])
 │  └─ TopBar.Platform/            # netX.0-windows: AppBar, PDH, VirtualDesktop, Registry, HTTP
 └─ tests/
    └─ TopBar.Core.Tests/
@@ -161,6 +174,7 @@ Allgemeine Regeln für Services:
   - `IsAlwaysOnTop = true`
 - `AppWindow.IsShownInSwitchers = false` und zusätzlich Extended Style `WS_EX_TOOLWINDOW` setzen → nicht in Taskleiste und Alt+Tab.
 - **Kein** `WS_EX_NOACTIVATE` (bricht Flyouts/Kontextmenüs in WinUI 3).
+- *[nach M9]* Fensterrahmen vollständig entfernen, siehe 18.4.
 - Position: x = linker Rand des Monitors, y = oberer Rand, Breite = volle Monitorbreite, Höhe = `BarHeight × DPI-Skalierung` (physische Pixel).
 - Das Fenster ist per-Monitor-DPI-aware (Standard bei WinUI 3). Bei `WM_DPICHANGED` Höhe neu berechnen und AppBar neu setzen.
 
@@ -198,9 +212,9 @@ Implementierung in `TopBar.Platform/AppBar/AppBarController.cs`:
   - `TintOpacity` aus Einstellung `BackgroundOpacity` (Default 0.6).
 - Untere Kante: 1 px Linie mit Brush `CardStrokeColorDefaultBrush`.
 - Schrift: `Segoe UI Variable Text`, Größe aus Einstellung `FontSize` (Default 13).
-- Ziffern dürfen die Breite nicht springen lassen: Jede Zahlenanzeige bekommt eine feste `MinWidth`, die für den breitesten möglichen Wert reicht (z. B. „100 %“, „999,9 MB/s“).
+- Ziffern dürfen die Breite nicht springen lassen: Jede Zahlenanzeige bekommt eine feste `MinWidth`, die für den breitesten möglichen Wert reicht. *[nach M9]* Prozentwerte: gemessen an „88 %“ (nicht „100 %“). Netzwerk: feste Spalten, siehe 18.2.
 - Interaktive Elemente: Hover-Hintergrund `SubtleFillColorSecondaryBrush`, gedrückt `SubtleFillColorTertiaryBrush`, `CornerRadius = 4`, Innenabstand 8 px horizontal.
-- Bar-Innenabstand links/rechts: 12 px. Abstand zwischen Elementen in einem Bereich: 12 px.
+- Bar-Innenabstand links/rechts: 12 px. Abstand zwischen Elementen in einem Bereich: 12 px. *[nach M9]* Ausnahme Systemwerte rechts: Innenabstand der Kacheln 6 px, Abstand zwischen den Kacheln 0 px (sichtbarer Abstand ≈ 12 px), siehe 18.3.
 - Theme: Einstellung `Theme` = `"System"` (Default), `"Light"` oder `"Dark"` → `RequestedTheme` des Root-Elements setzen. Bei `"System"` auf Änderungen reagieren (`UISettings.ColorValuesChanged`).
 
 ---
@@ -328,7 +342,7 @@ Jeder Wert: kleines Icon (Segoe Fluent Icons) + Zahl. Beschriftung „CPU“, �
 | CPU | PDH `\Processor Information(_Total)\% Processor Utility`; Wert auf 0–100 begrenzen (kann durch Turbo > 100 sein) | `12 %` | `CPU-Auslastung: 12 %` |
 | GPU | PDH `\GPU Engine(*)\Utilization Percentage` (siehe 9.2) | `34 %` | `GPU-Auslastung: 34 %` |
 | RAM | `GlobalMemoryStatusEx` → `dwMemoryLoad` bzw. aus `ullTotalPhys`/`ullAvailPhys` | `45 %` | `Arbeitsspeicher: 14,2 / 31,9 GB` |
-| Netzwerk | `NetworkInterface.GetAllNetworkInterfaces()` → `GetIPStatistics().BytesReceived/BytesSent`, Delta pro Sekunde | `↓ 1,2 MB/s  ↑ 80 KB/s` | Name des/der Interfaces |
+| Netzwerk | `NetworkInterface.GetAllNetworkInterfaces()` → `GetIPStatistics().BytesReceived/BytesSent`, Delta pro Sekunde | `↓ 1,2 MB/s  ↑ 80 KB/s` *(nach M9: Tabelle, Einheit wählbar, 18.2)* | Name des/der Interfaces |
 
 - PDH über CsWin32: `PdhOpenQuery`, `PdhAddEnglishCounter` (englische Counter-Namen, unabhängig von der Windows-Sprache!), `PdhCollectQueryData`, `PdhGetFormattedCounterValue` / `PdhGetFormattedCounterArray`. Die erste Messung liefert keinen gültigen Wert → erst ab dem zweiten Sample anzeigen.
 - Aktualisierung alle `StatsIntervalMs` (Default 1000, erlaubt 500–5000).
@@ -344,11 +358,7 @@ Jeder Wert: kleines Icon (Segoe Fluent Icons) + Zahl. Beschriftung „CPU“, �
 - Berücksichtigt werden Interfaces mit `OperationalStatus.Up`, außer `Loopback` und `Tunnel`, sowie Interfaces, deren Beschreibung „Hyper-V“, „VirtualBox“, „VMware“, „WSL“, „vEthernet“ oder „TAP“ enthält.
 - Einstellung `NetworkInterfaceId`: `null` = automatisch (Summe aller berücksichtigten), sonst genau das Interface mit dieser `Id`.
 - Negatives Delta (z. B. nach Adapter-Neustart) als 0 behandeln.
-- Formatierung (Basis 1024, deutsche Dezimaltrennung):
-  - < 1024 B/s → `0 KB/s` (Bytes nicht separat anzeigen)
-  - < 1 MB/s → `N KB/s` ohne Nachkommastelle
-  - < 10 MB/s → `N,N MB/s`
-  - sonst → `N MB/s`; ab 1 GB/s analog `N,N GB/s`
+- Formatierung: *[nach M9]* siehe 18.2 (Einheit Bytes/Bits, Skalierung, dreistellige Zahl). Die ursprüngliche Regel (nur Bytes, Basis 1024) bleibt als Default „Bytes“ + „Automatisch“ erhalten, mit einer Änderung: Die Einheit wechselt bei 1000 statt 1024 der aktuellen Einheit, damit die Zahl nie vierstellig wird.
 
 ### 9.4 Warnfarben
 - Gilt für CPU, GPU und RAM.
@@ -433,12 +443,20 @@ Vollständige Defaults:
     "IntervalMs": 1000,
     "WarnThreshold": 85,
     "CriticalThreshold": 95,
-    "NetworkInterfaceId": null
+    "NetworkInterfaceId": null,
+    "NetworkUnit": "Bytes",
+    "NetworkScale": "Auto"
+  },
+  "Pomodoro": {
+    "WorkMinutes": 25,
+    "ShortBreakMinutes": 5,
+    "Sessions": 4,
+    "LongBreakMinutes": 15
   }
 }
 ```
 
-Werte beim Laden auf gültige Bereiche begrenzen: `BarHeight` 24–56, `FontSize` 11–18, `BackgroundOpacity` 0.0–1.0, `DotSize` 6–14, `IntervalMinutes` 5–120, `IntervalMs` 500–5000, Schwellwerte 50–100 (Critical ≥ Warn).
+Werte beim Laden auf gültige Bereiche begrenzen: `BarHeight` 24–56, `FontSize` 11–18, `BackgroundOpacity` 0.0–1.0, `DotSize` 6–14, `IntervalMinutes` 5–120, `IntervalMs` 500–5000, Schwellwerte 50–100 (Critical ≥ Warn), `NetworkUnit` ∈ {`Bytes`, `Bits`}, `NetworkScale` ∈ {`Auto`, `Kilo`, `Mega`} (ungültig → erster Wert), Pomodoro: `WorkMinutes`/`ShortBreakMinutes`/`LongBreakMinutes` 1–99, `Sessions` 1–12 *[nach M9]*.
 
 ### 11.3 Seiten
 
@@ -467,11 +485,20 @@ Werte beim Laden auf gültige Bereiche begrenzen: `BarHeight` 24–56, `FontSize
 - Einheit: °C / °F (RadioButtons)
 - Aktualisierungsintervall in Minuten (NumberBox 5–120)
 
+**Pomodoro** *[nach M9]*
+- Arbeitsphase in Minuten (NumberBox 1–99)
+- Kurze Pause in Minuten (NumberBox 1–99)
+- Arbeitsphasen bis zur langen Pause (NumberBox 1–12)
+- Lange Pause in Minuten (NumberBox 1–99)
+- Hinweistext zur Bedienung
+
 **System**
 - CPU / GPU / RAM / Netzwerk anzeigen (je ToggleSwitch)
 - Beschriftungen anzeigen (ToggleSwitch)
 - Aktualisierungsintervall (ComboBox: 0,5 s / 1 s / 2 s / 5 s)
 - Warnschwelle, kritische Schwelle (Slider 50–100)
+- Netzwerk: Einheit (ComboBox: Bytes pro Sekunde KB/s, MB/s / Bits pro Sekunde kbit/s, Mbit/s) *[nach M9]*
+- Netzwerk: Skalierung (ComboBox: Automatisch / Immer kilo / Immer mega) *[nach M9]*
 - Netzwerkadapter (ComboBox: „Automatisch“ + Liste der berücksichtigten Interfaces)
 
 **Info**
@@ -531,6 +558,9 @@ Reihenfolge einhalten. Nach jedem Meilenstein: bauen, starten, manuell prüfen, 
 | M7 | Virtuelle Desktops: Kreise/Pille, Animation, Klick, Mausrad, Events, Fallback | Wechsel per Win+Strg+←/→ wird in < 300 ms angezeigt; neue/gelöschte Desktops erscheinen live |
 | M8 | Multi-Monitor, Vollbild-Erkennung, Explorer-Neustart, DPI-Wechsel, Kontextmenü „Neu laden“ | Alle Punkte aus Abschnitt 14 erfüllt |
 | M9 | Feinschliff Optik, README mit Build- und Publish-Anleitung | Abschnitt 14 komplett abgehakt |
+| M10 *(nach M9)* | Pomodoro-Timer inkl. Einstellungsseite und Toast (18.1) | Kriterien „Pomodoro“ in Abschnitt 14 |
+| M11 *(nach M9)* | Fensterrahmen (18.4) | Kriterium „Optik“ in Abschnitt 14 |
+| M12 *(nach M9)* | Netzwerk-Einheit/Skalierung/Tabelle, Abstände (18.2–18.3) | Kriterien „Netzwerk“ und „Optik“ in Abschnitt 14 |
 
 ---
 
@@ -555,6 +585,11 @@ Reihenfolge einhalten. Nach jedem Meilenstein: bauen, starten, manuell prüfen, 
 - [ ] Defekte settings.json führt nicht zum Absturz (Backup wird angelegt).
 - [ ] Funktioniert ohne Administratorrechte.
 - [ ] CPU-Last der App im Leerlauf < 1 %.
+- [ ] *[nach M9]* Pomodoro: Klick startet/pausiert; Zeit läuft sekundengenau; Weiter-Pfeil und Stopp-Symbol erscheinen nur, solange ein Zyklus läuft; Stopp setzt auf Arbeitsphase 1/N zurück.
+- [ ] *[nach M9]* Pomodoro: Läuft eine Phase ab, erscheint ein Windows-Toast (oder der Systemton), die nächste Phase wartet pausiert auf einen Klick; nach der langen Pause steht der Timer wieder am Anfang.
+- [ ] *[nach M9]* Pomodoro: Zeiten in den Einstellungen ändern wirkt sofort; eine laufende Phase wird dadurch nie verlängert.
+- [ ] *[nach M9]* Netzwerk: Einheit (Bytes/Bits) und Skalierung (Automatisch/kilo/mega) wirken sofort; beim Wechsel KB/s ↔ MB/s (bzw. kbit/s ↔ Mbit/s) verschiebt sich nichts.
+- [ ] *[nach M9]* Optik: Kein Rahmen, keine Rundung, kein Lichtsaum um die Leiste; Abstand Icon–Label–Wert bei CPU/GPU/RAM gleichmäßig 6 px, kein toter Hover-Bereich zwischen den Werten.
 
 ## 15. Unit-Tests (Pflicht, in `TopBar.Core.Tests`)
 
@@ -564,6 +599,8 @@ Reihenfolge einhalten. Nach jedem Meilenstein: bauen, starten, manuell prüfen, 
 - GPU-Aggregation: Summe je (luid, engtype), Maximum je luid, mehrere GPUs.
 - Settings: Defaults, fehlende Felder, ungültige Werte werden begrenzt, defekte Datei.
 - Zeitformat/Datumsformat inkl. ungültigem benutzerdefiniertem Format.
+- *[nach M9]* Netzwerk: Bytes und Bits, Skalierung Auto/Kilo/Mega, Zahlen- und Einheiten-Teile, Normalisierung von `NetworkUnit`/`NetworkScale`.
+- *[nach M9]* `PomodoroEngine`: kompletter Zyklus, Start/Pause/Skip/Reset, Phasenende ohne Autostart, Einstellungsänderung während des Laufs, Formatierung „mm:ss“.
 
 ---
 
@@ -592,6 +629,73 @@ Folgendes **nicht** umsetzen, auch nicht teilweise:
 - Sparklines/Verlaufsgraphen
 - Anlegen/Löschen/Umbenennen virtueller Desktops aus der Bar
 - Installer, Auto-Update
+- Pomodoro: Statistik/Verlauf, Speichern des Timer-Zustands über einen Neustart, frei wählbare Töne *[nach M9]*
 - Weitere Sprachen als Deutsch (UI-Texte trotzdem in `Resources.resw`, damit später erweiterbar)
 
 Die Architektur soll neue Module später einfach ermöglichen: Jedes Modul = Service + ViewModel + Control, eingehängt in einen der drei Bereiche.
+
+---
+
+## 18. Nachträge nach M9
+
+Diese Abschnitte beschreiben, was nach den Meilensteinen M1–M9 dazukam. Das Verhalten ist aus dem Code abgeleitet und gilt als verbindlich. Entscheidungen und Unsicherheiten dazu stehen in `DECISIONS.md`.
+
+### 18.1 Pomodoro-Timer (links, rechts neben den Desktop-Punkten)
+
+**Darstellung:** `[Symbol] mm:ss  Info  [Weiter] [Stopp]`
+- Symbol: 🍅 (Segoe UI Emoji, einfarbig, nimmt die Textfarbe) in der Arbeitsphase, ☕ in Pausen. Deckkraft 100 % wenn der Timer läuft, sonst 45 %.
+- Zeit `mm:ss`, Sekunden aufgerundet (nie `00:00`, solange noch Zeit übrig ist). Feste Breite (gemessen an „88:88“). Pausiert: Deckkraft 60 %.
+- Info (Sekundärfarbe): in der Arbeitsphase `N/M` (aktuelle Arbeitsphase von M), in Pausen „Pause“ bzw. „Lange Pause“.
+- Weiter-Pfeil (`E893`) und Stopp-Symbol (`E71A`) sind nur sichtbar, solange der Zyklus nicht im Zustand „Leerlauf“ ist.
+- Tooltip Hauptknopf: `<Phase> N/M · Klicken zum Starten | Pausieren | Fortsetzen`. Tooltips der Nebenknöpfe: „Phase beenden und zur nächsten wechseln“, „Zurücksetzen“.
+
+**Verhalten** (`TopBar.Core/Pomodoro/PomodoroEngine.cs`, reine State-Machine ohne Timer/UI, Zeit wird von außen übergeben):
+- Zyklus: Arbeit 1 → kurze Pause → … → Arbeit N → lange Pause → zurück in den Leerlauf (Arbeitsphase 1, gestoppt).
+- Zustände: `Idle`, `Running`, `Paused`.
+- Klick auf den Hauptknopf: Start bzw. Pause bzw. Fortsetzen.
+- Läuft eine Phase ab, wird die nächste vorbereitet, aber **nicht gestartet**: Zustand `Paused` mit voller Dauer. Der Nutzer startet sie per Klick. Nach der langen Pause springt der Timer in den Leerlauf.
+- Weiter-Pfeil (Skip): beendet die aktuelle Phase sofort und startet die nächste (auch aus der Pause). Im Leerlauf ohne Wirkung.
+- Stopp: zurück auf Arbeitsphase 1, gestoppt.
+- Einstellungen während des Laufs: Die laufende Phase behält ihre Restzeit, wird aber höchstens auf die neue Dauer gekürzt, nie verlängert. Im Leerlauf gilt die neue Dauer sofort. Sinkt die Zahl der Arbeitsphasen unter die aktuelle, wird die aktuelle Nummer begrenzt.
+- Der Zustand wird nicht gespeichert: Ein App-Neustart setzt den Timer zurück, „Neu laden“ (Kontextmenü) nicht.
+
+**Technik:**
+- `PomodoroViewModel` treibt die Engine mit einem 250-ms-`DispatcherQueueTimer`, der nur läuft, solange der Timer läuft.
+- Phasenende → Windows-Toast über das Windows App SDK (`AppNotificationManager`, unpackaged, Registrierung beim Start, Abmeldung beim Beenden; `AppNotifier`). Schlägt der Toast fehl: Systemton per `MessageBeep` (`SystemSound.Notify`). Der Toast braucht keine Aktion beim Klick.
+- `ThreeSectionPanel` nimmt genau drei Kinder; der linke Bereich ist deshalb ein horizontales `StackPanel` (Spacing 12) aus `DesktopIndicator` und `PomodoroControl`.
+- Einstellungsseite „Pomodoro“ (Icon `E916`, nicht verifiziert) zwischen „Wetter“ und „System“, Werte siehe 11.2/11.3.
+
+### 18.2 Netzwerkanzeige
+
+**Einstellungen** `Stats.NetworkUnit` (`Bytes` | `Bits`, Default `Bytes`) und `Stats.NetworkScale` (`Auto` | `Kilo` | `Mega`, Default `Auto`).
+
+**Formatierung** (`TopBar.Core/Stats/NetworkRate.cs`, Werte werden abgeschnitten, nie gerundet, deutsche Dezimaltrennung):
+- Bytes: Basis 1024, Einheiten `KB/s`, `MB/s`, `GB/s`. Bits: Wert × 8, Basis 1000, Einheiten `kbit/s`, `Mbit/s`, `Gbit/s`.
+- `Auto`: Die Einheit wechselt, sobald der Wert in der aktuellen Einheit ≥ 1000 ist. `Kilo`/`Mega`: immer kilo bzw. mega.
+- Zahl: kilo immer ganzzahlig; ab mega unter 10 eine Nachkommastelle (`9,9`), sonst ganzzahlig. Der reine Text (`NetworkRate.Format`) füllt auf 3 Zeichen mit Ziffernbreiten-Leerzeichen (U+2007) auf, z. B. `  5 KB/s`.
+- Bei fester Skalierung kann die Zahl mehr als drei Stellen haben (z. B. `10000 kbit/s`).
+
+**Darstellung als Tabelle** (`SystemStatsControl`):
+- Feste Spalten: `↓ Zahl Einheit  ↑ Zahl Einheit`, Pfeile in der Sekundärfarbe.
+- Zahlenspalte rechtsbündig, Breite gemessen an „0000“ (vierstellig möglich). Einheitenspalte linksbündig, Breite der breitesten möglichen Einheit der gewählten Einstellung (`NetworkRate.UnitSamples`).
+- Spaltenabstand 4 px, zwischen den beiden Hälften 8 px.
+
+### 18.3 Systemwerte: Abstände
+
+- Werte (CPU/GPU/RAM) linksbündig, damit Icon, Label und Wert gleichmäßig 6 px Abstand haben. Der Leerraum der festen Breite liegt rechts vom Wert.
+- Kachel-Innenabstand 6 px (statt 8), Abstand zwischen den Kacheln 0 (statt 12). Ergebnis: sichtbarer Abstand zwischen zwei Werten ≈ 12 px plus der Restplatz der festen Breite.
+
+### 18.4 Fensterrahmen
+
+Das WinUI-Fenster trägt standardmäßig Rahmen-, Titel- und 3D-Kanten-Stile, die einen hellen Saum um die Leiste zeichnen. Deshalb:
+- Fensterstil auf `WS_POPUP | WS_VISIBLE` setzen (`Win32Window.StripFrame`).
+- Erweiterte Stile `WS_EX_WINDOWEDGE`, `WS_EX_CLIENTEDGE`, `WS_EX_DLGMODALFRAME`, `WS_EX_STATICEDGE` entfernen (zusammen mit `WS_EX_TOOLWINDOW`).
+- DWM: Rahmenfarbe `DWMWA_COLOR_NONE` und `DWMWCP_DONOTROUND` (eckig, bündig mit dem Bildschirmrand).
+- `WM_NCCALCSIZE` und `WM_NCPAINT` mit 0 beantworten: Es gibt keinen Nicht-Client-Bereich.
+- Die Werte werden einmalig beim Start geloggt.
+
+### 18.5 Sonstiges
+
+- Lizenz MIT (`LICENSE`), mitgelieferte Fremdkomponenten in `THIRD_PARTY_NOTICES.md` (VirtualDesktopAccessor.dll, Fluent System Icons).
+- Paketversionen sind gepinnt (siehe `DECISIONS.md`); Ziel-Framework der App `net10.0-windows10.0.22621.0`, Plattform x64.
+- Datumsformat-Test: Die abgekürzte Vorlage `ddd, d. MMM` wird gegen die Kultur selbst geprüft, weil „Di.“/„Sep.“ von den ICU-Daten des Rechners abhängen.

@@ -22,7 +22,9 @@ public sealed partial class SystemStatsControl : UserControl
     {
         public required Button Button { get; init; }
         public required TextBlock Label { get; init; }
-        public required TextBlock Value { get; init; }
+        public TextBlock? Value { get; init; }
+        /// <summary>Table mode: number and unit cells (down number, down unit, up number, up unit).</summary>
+        public TextBlock[]? Cells { get; init; }
         public required StatEntry Entry { get; init; }
         public required string WidestSample { get; init; }
     }
@@ -36,17 +38,17 @@ public sealed partial class SystemStatsControl : UserControl
         _vm = vm;
 
         var index = 0;
-        Add(vm.Cpu, "CPU", GlyphCpu, "100 %", index++);
-        Add(vm.Gpu, "GPU", GlyphGpu, "100 %", index++);
-        Add(vm.Ram, "RAM", GlyphRam, "100 %", index++);
-        Add(vm.Network, "", GlyphNetwork, "↓ 999,9 MB/s  ↑ 999,9 MB/s", index);
+        Add(vm.Cpu, "CPU", GlyphCpu, "88 %", index++);
+        Add(vm.Gpu, "GPU", GlyphGpu, "88 %", index++);
+        Add(vm.Ram, "RAM", GlyphRam, "88 %", index++);
+        Add(vm.Network, "", GlyphNetwork, "", index, table: true);
 
         Loaded += (_, _) => { _vm.Updated += Refresh; Refresh(); };
         Unloaded += (_, _) => _vm.Updated -= Refresh;
         ActualThemeChanged += (_, _) => Refresh();
     }
 
-    private void Add(StatEntry entry, string label, int glyph, string widest, int position)
+    private void Add(StatEntry entry, string label, int glyph, string widest, int position, bool table = false)
     {
         var icon = new TextBlock
         {
@@ -61,23 +63,52 @@ public sealed partial class SystemStatsControl : UserControl
             VerticalAlignment = VerticalAlignment.Center,
             Foreground = (Brush)Resources["SecondaryTextBrush"],
         };
-        var value = new TextBlock { VerticalAlignment = VerticalAlignment.Center, TextAlignment = TextAlignment.Right };
-
         var content = new StackPanel { Orientation = Orientation.Horizontal, Spacing = 6 };
         content.Children.Add(icon);
         content.Children.Add(labelBlock);
-        content.Children.Add(value);
+
+        TextBlock? value = null;
+        TextBlock[]? cells = null;
+        if (table)
+        {
+            // Fixed columns: ↓ number unit   ↑ number unit. Numbers right-aligned, units left-aligned.
+            var grid = new Grid { ColumnSpacing = 4, VerticalAlignment = VerticalAlignment.Center };
+            for (var i = 0; i < 6; i++) grid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
+            TextBlock Cell(string text, int column, TextAlignment align, bool secondary = false)
+            {
+                var tb = new TextBlock { Text = text, TextAlignment = align, VerticalAlignment = VerticalAlignment.Center };
+                if (secondary) tb.Foreground = (Brush)Resources["SecondaryTextBrush"];
+                Grid.SetColumn(tb, column);
+                grid.Children.Add(tb);
+                return tb;
+            }
+            Cell("↓", 0, TextAlignment.Left, secondary: true);
+            var downNumber = Cell("", 1, TextAlignment.Right);
+            var downUnit = Cell("", 2, TextAlignment.Left);
+            var upArrow = Cell("↑", 3, TextAlignment.Left, secondary: true);
+            upArrow.Margin = new Thickness(8, 0, 0, 0);
+            var upNumber = Cell("", 4, TextAlignment.Right);
+            var upUnit = Cell("", 5, TextAlignment.Left);
+            cells = [downNumber, downUnit, upNumber, upUnit];
+            content.Children.Add(grid);
+        }
+        else
+        {
+            value = new TextBlock { VerticalAlignment = VerticalAlignment.Center, TextAlignment = TextAlignment.Left };
+            content.Children.Add(value);
+        }
 
         var button = new Button
         {
             Style = (Style)Application.Current.Resources["BarButtonStyle"],
             Margin = new Thickness(0, 4, 0, 4),
+            Padding = new Thickness(6, 0, 6, 0),
             Content = content,
         };
         button.Click += (_, _) => OpenTaskManager();
 
         Row.Children.Insert(position, button);
-        _items.Add(new StatItem { Button = button, Label = labelBlock, Value = value, Entry = entry, WidestSample = widest });
+        _items.Add(new StatItem { Button = button, Label = labelBlock, Value = value, Cells = cells, Entry = entry, WidestSample = widest });
     }
 
     private void Refresh()
@@ -87,16 +118,26 @@ public sealed partial class SystemStatsControl : UserControl
             var e = item.Entry;
             item.Button.Visibility = e.IsVisible ? Visibility.Visible : Visibility.Collapsed;
             item.Label.Visibility = _vm.ShowLabels && !string.IsNullOrEmpty(item.Label.Text) ? Visibility.Visible : Visibility.Collapsed;
-            item.Value.Text = e.Text;
-            item.Value.MinWidth = MeasureWidth(item.Value, item.WidestSample); // fixed width: no jumping
-            ToolTipService.SetToolTip(item.Button, e.Tooltip);
-
-            switch (e.Level)
+            if (item.Cells is { } cells)
             {
-                case StatFormat.Level.Critical: item.Value.Foreground = (Brush)Resources["CriticalBrush"]; break;
-                case StatFormat.Level.Warning: item.Value.Foreground = (Brush)Resources["WarnBrush"]; break;
-                default: item.Value.ClearValue(TextBlock.ForegroundProperty); break;
+                for (var i = 0; i < cells.Length; i++) cells[i].Text = i < e.Cells.Length ? e.Cells[i] : "";
+                var numberWidth = MeasureWidth(cells[0], "0000");
+                var unitWidth = e.UnitSamples.Length == 0 ? 0 : e.UnitSamples.Max(u => MeasureWidth(cells[1], u));
+                cells[0].MinWidth = cells[2].MinWidth = numberWidth; // fixed columns: no jumping
+                cells[1].MinWidth = cells[3].MinWidth = unitWidth;
             }
+            else if (item.Value is { } value)
+            {
+                value.Text = e.Text;
+                value.MinWidth = MeasureWidth(value, item.WidestSample); // fixed width: no jumping
+                switch (e.Level)
+                {
+                    case StatFormat.Level.Critical: value.Foreground = (Brush)Resources["CriticalBrush"]; break;
+                    case StatFormat.Level.Warning: value.Foreground = (Brush)Resources["WarnBrush"]; break;
+                    default: value.ClearValue(TextBlock.ForegroundProperty); break;
+                }
+            }
+            ToolTipService.SetToolTip(item.Button, e.Tooltip);
         }
     }
 
