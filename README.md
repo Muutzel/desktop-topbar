@@ -55,6 +55,13 @@ Hinweis: Der erste Start trägt laut Spec den Autostart-Eintrag `HKCU\...\Run\To
 
 Weitere Dokumente: `TOPBAR_SPEC.md` (Spezifikation, Erweiterungen nach M9 in Abschnitt 18), `DECISIONS.md` (Entscheidungen und Abweichungen), `PROGRESS.md` (Stand).
 
+## Hinweise für Mitwirkende und KI-Agenten
+
+- Vor jeder Änderung `TOPBAR_SPEC.md` lesen, insbesondere Abschnitt 0 (Arbeitsregeln) und Abschnitt 18 (Nachträge nach M9).
+- Neue Features und Änderungen immer mit dokumentieren (Regel 9 in Abschnitt 0): Spec, `DECISIONS.md` (nur Abweichungen), `PROGRESS.md`, bei sichtbaren Änderungen auch `README.md`.
+- Code, Bezeichner, Kommentare und Commit-Messages auf Englisch, sichtbare UI-Texte auf Deutsch.
+- Nicht gebauter oder ungetesteter Code wird in `PROGRESS.md` als solcher vermerkt.
+
 ## Bekannte Einschränkungen
 
 - Paketversionen sind teilweise noch Floating-Versionen (siehe `DECISIONS.md`).
