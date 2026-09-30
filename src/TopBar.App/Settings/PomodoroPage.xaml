@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Page
+    x:Class="TopBar.App.SettingsPages.PomodoroPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <ScrollViewer>
+        <StackPanel Spacing="24" Padding="36,20,36,36" MaxWidth="720" HorizontalAlignment="Left">
+            <TextBlock x:Uid="Pomodoro_Title" Style="{StaticResource TitleTextBlockStyle}" />
+
+            <NumberBox x:Name="WorkBox" x:Uid="Pomodoro_Work"
+                       Minimum="1" Maximum="99" SmallChange="1" LargeChange="5"
+                       SpinButtonPlacementMode="Inline" HorizontalAlignment="Left" MinWidth="180"
+                       ValueChanged="WorkBox_ValueChanged" />
+
+            <NumberBox x:Name="ShortBreakBox" x:Uid="Pomodoro_ShortBreak"
+                       Minimum="1" Maximum="99" SmallChange="1" LargeChange="5"
+                       SpinButtonPlacementMode="Inline" HorizontalAlignment="Left" MinWidth="180"
+                       ValueChanged="ShortBreakBox_ValueChanged" />
+
+            <NumberBox x:Name="SessionsBox" x:Uid="Pomodoro_Sessions"
+                       Minimum="1" Maximum="12" SmallChange="1" LargeChange="2"
+                       SpinButtonPlacementMode="Inline" HorizontalAlignment="Left" MinWidth="180"
+                       ValueChanged="SessionsBox_ValueChanged" />
+
+            <NumberBox x:Name="LongBreakBox" x:Uid="Pomodoro_LongBreak"
+                       Minimum="1" Maximum="99" SmallChange="1" LargeChange="5"
+                       SpinButtonPlacementMode="Inline" HorizontalAlignment="Left" MinWidth="180"
+                       ValueChanged="LongBreakBox_ValueChanged" />
+
+            <TextBlock x:Uid="Pomodoro_Hint" TextWrapping="Wrap" Opacity="0.7" />
+        </StackPanel>
+    </ScrollViewer>
+</Page>

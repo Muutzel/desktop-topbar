@@ -83,7 +83,11 @@ public sealed partial class BarWindow : Window
 
     private void BuildContent()
     {
-        Sections.Children.Add(new DesktopIndicator(_viewModels.Desktops, _settings));
+        // Left section: virtual desktops, then the Pomodoro timer to their right (ThreeSectionPanel takes exactly three children).
+        var left = new StackPanel { Orientation = Orientation.Horizontal, Spacing = 12, VerticalAlignment = VerticalAlignment.Stretch };
+        left.Children.Add(new DesktopIndicator(_viewModels.Desktops, _settings));
+        left.Children.Add(new PomodoroControl(_viewModels.Pomodoro));
+        Sections.Children.Add(left);
         Sections.Children.Add(new CenterInfo(_viewModels.Clock, _viewModels.Weather, _settings));
         Sections.Children.Add(new SystemStatsControl(_viewModels.Stats));
     }

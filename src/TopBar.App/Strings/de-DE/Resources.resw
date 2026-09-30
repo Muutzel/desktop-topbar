@@ -220,4 +220,70 @@
   <data name="Info_Reset_Confirm" xml:space="preserve">
     <value>Zurücksetzen</value>
   </data>
+  <data name="Nav_Pomodoro.Content" xml:space="preserve">
+    <value>Pomodoro</value>
+  </data>
+  <data name="Pomodoro_Title.Text" xml:space="preserve">
+    <value>Pomodoro-Timer</value>
+  </data>
+  <data name="Pomodoro_Work.Header" xml:space="preserve">
+    <value>Arbeitsphase (Minuten)</value>
+  </data>
+  <data name="Pomodoro_ShortBreak.Header" xml:space="preserve">
+    <value>Kurze Pause (Minuten)</value>
+  </data>
+  <data name="Pomodoro_Sessions.Header" xml:space="preserve">
+    <value>Arbeitsphasen bis zur langen Pause</value>
+  </data>
+  <data name="Pomodoro_LongBreak.Header" xml:space="preserve">
+    <value>Lange Pause (Minuten)</value>
+  </data>
+  <data name="Pomodoro_Hint.Text" xml:space="preserve">
+    <value>Ein Klick auf den Timer in der Leiste startet oder pausiert ihn, der Pfeil beendet die aktuelle Phase vorzeitig, das Stopp-Symbol setzt ihn zurück. Läuft eine Phase ab, erscheint eine Windows-Benachrichtigung; die nächste Phase startest du selbst per Klick. Nach der langen Pause springt der Timer auf den Anfang.</value>
+  </data>
+  <data name="Pomodoro_Phase_Work" xml:space="preserve">
+    <value>Fokus</value>
+  </data>
+  <data name="Pomodoro_Phase_Break" xml:space="preserve">
+    <value>Pause</value>
+  </data>
+  <data name="Pomodoro_Phase_LongBreak" xml:space="preserve">
+    <value>Lange Pause</value>
+  </data>
+  <data name="Pomodoro_Tip_Start" xml:space="preserve">
+    <value>Klicken zum Starten</value>
+  </data>
+  <data name="Pomodoro_Tip_Pause" xml:space="preserve">
+    <value>Klicken zum Pausieren</value>
+  </data>
+  <data name="Pomodoro_Tip_Resume" xml:space="preserve">
+    <value>Klicken zum Fortsetzen</value>
+  </data>
+  <data name="Pomodoro_Skip" xml:space="preserve">
+    <value>Phase beenden und zur nächsten wechseln</value>
+  </data>
+  <data name="Pomodoro_Reset" xml:space="preserve">
+    <value>Zurücksetzen</value>
+  </data>
+  <data name="Pomodoro_Toast_WorkDone_Title" xml:space="preserve">
+    <value>Arbeitsphase {0}/{1} geschafft</value>
+  </data>
+  <data name="Pomodoro_Toast_WorkDone_Short" xml:space="preserve">
+    <value>Zeit für eine kurze Pause. Sie startet, wenn du auf den Timer klickst.</value>
+  </data>
+  <data name="Pomodoro_Toast_WorkDone_Long" xml:space="preserve">
+    <value>Zeit für die lange Pause. Sie startet, wenn du auf den Timer klickst.</value>
+  </data>
+  <data name="Pomodoro_Toast_BreakDone_Title" xml:space="preserve">
+    <value>Pause vorbei</value>
+  </data>
+  <data name="Pomodoro_Toast_BreakDone_Text" xml:space="preserve">
+    <value>Arbeitsphase {0}/{1} ist bereit. Klick auf den Timer zum Starten.</value>
+  </data>
+  <data name="Pomodoro_Toast_CycleDone_Title" xml:space="preserve">
+    <value>Zyklus abgeschlossen</value>
+  </data>
+  <data name="Pomodoro_Toast_CycleDone_Text" xml:space="preserve">
+    <value>Alle {0} Arbeitsphasen sind geschafft.</value>
+  </data>
 </root>

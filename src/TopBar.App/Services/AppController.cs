@@ -45,6 +45,7 @@ internal static class AppController
             var settings = _host.Services.GetRequiredService<ISettingsService>();
             ReconcileAutostart(settings);
 
+            AppNotifier.Initialize();
             StartServices();
             _viewModels = new BarViewModels(
                 _host.Services.GetRequiredService<IClockService>(),
@@ -165,6 +166,7 @@ internal static class AppController
             _log.LogInformation("Exiting");
             _bars?.CloseAll();
             StopServices();
+            AppNotifier.Shutdown();
         }
         catch (Exception ex) { LogFatal(ex, "Exit"); }
         finally

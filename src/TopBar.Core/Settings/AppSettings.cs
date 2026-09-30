@@ -53,6 +53,15 @@ public sealed class StatsSettings
     public string? NetworkInterfaceId { get; set; }
 }
 
+public sealed class PomodoroSettings
+{
+    public int WorkMinutes { get; set; } = 25;
+    public int ShortBreakMinutes { get; set; } = 5;
+    /// <summary>Number of work units until the long break.</summary>
+    public int Sessions { get; set; } = 4;
+    public int LongBreakMinutes { get; set; } = 15;
+}
+
 public sealed class AppSettings
 {
     public const int CurrentSchemaVersion = 1;
@@ -63,6 +72,7 @@ public sealed class AppSettings
     public ClockSettings Clock { get; set; } = new();
     public WeatherSettings Weather { get; set; } = new();
     public StatsSettings Stats { get; set; } = new();
+    public PomodoroSettings Pomodoro { get; set; } = new();
 
     /// <summary>Replaces null sections, invalid enum strings and clamps all numeric values to their valid range.</summary>
     public void Normalize()
@@ -73,6 +83,7 @@ public sealed class AppSettings
         Clock ??= new();
         Weather ??= new();
         Stats ??= new();
+        Pomodoro ??= new();
 
         General.Theme = OneOf(General.Theme, "System", "Light", "Dark");
         General.Monitors = OneOf(General.Monitors, "Primary", "All");
@@ -92,6 +103,11 @@ public sealed class AppSettings
         Stats.WarnThreshold = Math.Clamp(Stats.WarnThreshold, 50, 100);
         Stats.CriticalThreshold = Math.Clamp(Stats.CriticalThreshold, 50, 100);
         if (Stats.CriticalThreshold < Stats.WarnThreshold) Stats.CriticalThreshold = Stats.WarnThreshold;
+
+        Pomodoro.WorkMinutes = Math.Clamp(Pomodoro.WorkMinutes, 1, 99);
+        Pomodoro.ShortBreakMinutes = Math.Clamp(Pomodoro.ShortBreakMinutes, 1, 99);
+        Pomodoro.Sessions = Math.Clamp(Pomodoro.Sessions, 1, 12);
+        Pomodoro.LongBreakMinutes = Math.Clamp(Pomodoro.LongBreakMinutes, 1, 99);
     }
 
     public void CopyFrom(AppSettings other)
@@ -101,6 +117,7 @@ public sealed class AppSettings
         Clock = other.Clock;
         Weather = other.Weather;
         Stats = other.Stats;
+        Pomodoro = other.Pomodoro;
         Normalize();
     }
 

@@ -3,6 +3,7 @@
 Schlanke Statusleiste am oberen Rand von Windows 11, ähnlich Waybar. Gebaut mit WinUI 3 und .NET 10.
 
 - **Links:** virtuelle Desktops als Punkte, der aktive als animierte Pille (Klick wechselt den Desktop)
+  daneben ein Pomodoro-Timer (Klick startet/pausiert, Stopp-Symbol setzt zurück; Zeiten einstellbar)
 - **Mitte:** Wetter · Uhr · Datum
 - **Rechts:** CPU, GPU, RAM, Netzwerk und ein Zahnrad für die Einstellungen
 

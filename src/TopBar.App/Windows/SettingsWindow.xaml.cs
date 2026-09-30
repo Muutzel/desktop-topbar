@@ -17,6 +17,7 @@ public sealed partial class SettingsWindow : Window
         ["desktops"] = typeof(DesktopsPage),
         ["clock"] = typeof(ClockPage),
         ["weather"] = typeof(WeatherPage),
+        ["pomodoro"] = typeof(PomodoroPage),
         ["system"] = typeof(SystemPage),
         ["info"] = typeof(InfoPage),
     };

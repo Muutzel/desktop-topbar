@@ -55,6 +55,7 @@ public sealed class BarViewModels
     public WeatherViewModel Weather { get; }
     public StatsViewModel Stats { get; }
     public DesktopsViewModel Desktops { get; }
+    public PomodoroViewModel Pomodoro { get; }
 
     internal BarViewModels(IClockService clock, IWeatherService weather, ISystemStatsService stats, IVirtualDesktopService desktops, ISettingsService settings, IUiThread ui)
     {
@@ -62,11 +63,12 @@ public sealed class BarViewModels
         Weather = new WeatherViewModel(weather, settings, ui);
         Stats = new StatsViewModel(stats, settings, ui);
         Desktops = new DesktopsViewModel(desktops, settings, ui);
+        Pomodoro = new PomodoroViewModel(settings, ui);
     }
 
     /// <summary>Re-reads everything after services were restarted.</summary>
     public void RefreshAll()
     {
-        Clock.Update(); Weather.Update(); Stats.Update(); Desktops.Update();
+        Clock.Update(); Weather.Update(); Stats.Update(); Desktops.Update(); Pomodoro.Update();
     }
 }
