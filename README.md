@@ -15,7 +15,7 @@ Die Leiste registriert sich als AppBar: Andere Fenster überlappen sie nicht. Si
 
 ## Hinweis: Vibe-coded
 
-Der gesamte Code dieses Projekts ist per Vibe-Coding mit einem KI-Assistenten (Claude) entstanden, auf Basis einer von mir geschriebenen Spezifikation (`TOPBAR_SPEC.md`). Ich habe ihn getestet und ausprobiert, aber nicht Zeile für Zeile geprüft. Rechne mit Ecken und Kanten, und nutze es auf eigenes Risiko.
+Der gesamte Code dieses Projekts ist per Vibe-Coding mit einem KI-Assistenten (Claude: Opus 5.5 und Sonnet 5.5) entstanden, auf Basis einer von mir geschriebenen Spezifikation (`TOPBAR_SPEC.md`). Ich habe ihn getestet und ausprobiert, aber nicht Zeile für Zeile geprüft. Rechne mit Ecken und Kanten, und nutze es auf eigenes Risiko.
 
 ## Voraussetzungen
 
