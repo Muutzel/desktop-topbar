@@ -29,7 +29,20 @@ public sealed partial class SettingsWindow : Window
     {
         InitializeComponent();
         Title = Loc.Get("Settings_Title");
+        PomodoroNavIcon.Loaded += (_, _) => MakeMonochrome(PomodoroNavIcon);
         NavigateTo("general");
+    }
+
+    /// <summary>FontIcon has no color-font switch: find the TextBlock it renders with and turn color fonts off (emoji then take the icon color).</summary>
+    private static void MakeMonochrome(DependencyObject root)
+    {
+        var count = Microsoft.UI.Xaml.Media.VisualTreeHelper.GetChildrenCount(root);
+        for (var i = 0; i < count; i++)
+        {
+            var child = Microsoft.UI.Xaml.Media.VisualTreeHelper.GetChild(root, i);
+            if (child is TextBlock t) t.IsColorFontEnabled = false;
+            MakeMonochrome(child);
+        }
     }
 
     /// <summary>Shows and activates the window; navigates to <paramref name="page"/> if given.</summary>
