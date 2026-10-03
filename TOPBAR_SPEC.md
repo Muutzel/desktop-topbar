@@ -383,9 +383,10 @@ Ob CPU, GPU, RAM und Netzwerk erscheinen, bestimmt allein die Anordnung (siehe 1
 Rechtsklick irgendwo auf der Bar (auch auf Elementen) öffnet ein `MenuFlyout` an der Mausposition:
 
 | Eintrag | Icon | Aktion |
-|---|---|---|
+|*[nach M9]* „Neu laden“ ist nicht mehr im Kontextmenü, sondern als Knopf „Leiste neu laden“ auf der Seite „Info“ (Aktion unverändert: Alle Bar-Fenster schließen inkl. `ABM_REMOVE`, Services neu starten, Bars neu erzeugen; die `settings.json` wird dabei nicht neu eingelesen). Das Menü hat nur noch „Einstellungen“ und „Beenden“; „Beenden“ bleibt dort, weil TopBar weder Tray-Symbol noch Taskleisteneintrag hat.
+
+---|---|---|
 | Einstellungen | `E713` | Einstellungsfenster öffnen |
-| Neu laden | `E72C` | Alle Bar-Fenster schließen (inkl. `ABM_REMOVE`), Services neu starten, Bars neu erzeugen |
 | — | | Trenner |
 | Beenden | `E7E8` | App sauber beenden (inkl. `ABM_REMOVE` für alle Bars) |
 
@@ -664,13 +665,13 @@ Diese Abschnitte beschreiben, was nach den Meilensteinen M1–M9 dazukam. Das Ve
 - Weiter-Pfeil (Skip): beendet die aktuelle Phase sofort und startet die nächste (auch aus der Pause). Im Leerlauf ohne Wirkung.
 - Stopp: zurück auf Arbeitsphase 1, gestoppt.
 - Einstellungen während des Laufs: Die laufende Phase behält ihre Restzeit, wird aber höchstens auf die neue Dauer gekürzt, nie verlängert. Im Leerlauf gilt die neue Dauer sofort. Sinkt die Zahl der Arbeitsphasen unter die aktuelle, wird die aktuelle Nummer begrenzt.
-- Der Zustand wird nicht gespeichert: Ein App-Neustart setzt den Timer zurück, „Neu laden“ (Kontextmenü) nicht.
+- Der Zustand wird nicht gespeichert: Ein App-Neustart setzt den Timer zurück, „Leiste neu laden“ (Info) nicht.
 
 **Technik:**
 - `PomodoroViewModel` treibt die Engine mit einem 250-ms-`DispatcherQueueTimer`, der nur läuft, solange der Timer läuft.
 - Phasenende → Windows-Toast über das Windows App SDK (`AppNotificationManager`, unpackaged, Registrierung beim Start, Abmeldung beim Beenden; `AppNotifier`). Schlägt der Toast fehl: Systemton per `MessageBeep` (`SystemSound.Notify`). Der Toast braucht keine Aktion beim Klick.
 - `ThreeSectionPanel` nimmt genau drei Kinder; der linke Bereich ist deshalb ein horizontales `StackPanel` (Spacing 12) aus `DesktopIndicator` und `PomodoroControl`.
-- Einstellungsseite „Pomodoro“ (Icon `E916`, nicht verifiziert) zwischen „Wetter“ und „System“, Werte siehe 11.2/11.3.
+- Einstellungsseite „Pomodoro“ (Icon `E916`, nicht verifiziert), Reihenfolge der Seiten siehe 18.7, Werte siehe 11.2/11.3.
 
 ### 18.2 Netzwerkanzeige
 
@@ -725,9 +726,11 @@ Das WinUI-Fenster trägt standardmäßig Rahmen-, Titel- und 3D-Kanten-Stile, di
 
 **Feature-Schalter:** `settings.json` → `Features` mit je einem Schalter pro Element: `Desktops`, `Pomodoro`, `Weather`, `Clock`, `Date`, `Cpu`, `Gpu`, `Ram`, `Network`, `SettingsButton` (alle Default `true`) und `UrlChecker` (Default `false`). Die Schalter stehen auf der Seite „Anordnung“ im Abschnitt „Funktionen“ (eine Zeile mit Ein/Aus je Element, ohne das Zahnrad) und wirken sofort: Die Seitenleiste der Einstellungen und die Listen der Anordnung passen sich live an, ausgeschaltete Elemente verschwinden von der Leiste. Alternativ per Hand in der Datei ändern (dann TopBar beenden und neu starten; „Neu laden“ liest die Datei nicht neu ein). Fehlt ein Schlüssel in der Datei, gilt sein Standard (`true`, beim URL-Checker `false`) und er wird beim nächsten Start ergänzt. Wieder eingeschaltet landet ein Element unter „Nicht angezeigt“ (die alte Position ist weg). Ein ausgeschaltetes Element wird nicht in „Anordnung“ angeboten und nicht angezeigt; GPU-Messung, Wetterabruf und URL-Prüfung laufen dann ebenfalls nicht (sie hängen an der Platzierung). Seiten verschwinden aus den Einstellungen, wenn ihre Elemente aus sind: „Virtuelle Desktops“ (`Desktops`), „Uhr“ (`Clock` und `Date` beide aus), „Wetter“, „Pomodoro-Timer“, „System“ (alle vier Systemwerte aus), „URL-Checker“. „Allgemein“, „Anordnung“ und „Info“ gibt es immer. Die Schalter sind reines Aufräumen der Oberfläche, kein Zugriffsschutz. `AppSettings.Normalize` entfernt ausgeschaltete Elemente aus allen Bereichen der Anordnung (die Position geht dabei verloren). „Einstellungen zurücksetzen“ lässt `Features` unangetastet. Ohne das Zahnrad (`SettingsButton=false`) öffnen sich die Einstellungen nur noch durch einen zweiten Programmstart. Beim Start schreibt TopBar die `settings.json` vollständig neu, wenn sich beim Einlesen etwas geändert hat (neue Schlüssel wie `Features` erscheinen, ungültige Werte werden korrigiert, unbekannte Schlüssel entfallen).
 
+**Reihenfolge:** Die Seitenleiste der Einstellungen lautet: Allgemein, Anordnung, dann alphabetisch (Pomodoro-Timer, System, Uhr & Datum, URL-Checker, Virtuelle Desktops, Wetter), zuletzt Info. Wer eine Seite ergänzt, sortiert sie von Hand in `SettingsWindow.xaml` ein. Die Schalter in `Features` (Klasse `FeatureSettings`, also auch in der `settings.json`) und die Liste „Funktionen“ auf der Anordnungsseite (nach angezeigtem Namen) sind alphabetisch sortiert.
+
 **URL-Checker:** Standardmäßig aus (`Features.UrlChecker=false`); ohne den Schalter gibt es keinen Seiteneintrag, kein Element in „Anordnung“ und keinen Netzwerkverkehr. Mit Schalter legst du das Element unter „Anordnung“ selbst auf die Leiste.
 
-**Einstellungen** `UrlChecker.Urls` (Default `["https://google.com"]`, höchstens 50, nur http/https, ohne Schema wird `https://` ergänzt, Duplikate ohne Beachtung der Groß-/Kleinschreibung entfallen), `UrlChecker.IntervalMinutes` (Default 5, 1–120), `UrlChecker.TimeoutSeconds` (Default 10, 2–60). Seite „URL-Checker“ (Icon `E71B`, nicht verifiziert) zwischen „Pomodoro-Timer“ und „System“: Liste mit Entfernen-Knopf je URL, Eingabefeld mit „Hinzufügen“ (Enter geht auch), die zwei Zahlenfelder.
+**Einstellungen** `UrlChecker.Urls` (Default `["https://google.com"]`, höchstens 50, nur http/https, ohne Schema wird `https://` ergänzt, Duplikate ohne Beachtung der Groß-/Kleinschreibung entfallen), `UrlChecker.IntervalMinutes` (Default 5, 1–120), `UrlChecker.TimeoutSeconds` (Default 10, 2–60). Seite „URL-Checker“ (Icon `E71B`, nicht verifiziert): Liste mit Entfernen-Knopf je URL, Eingabefeld mit „Hinzufügen“ (Enter geht auch), die zwei Zahlenfelder.
 
 **Prüfung** (`TopBar.Platform/Services/UrlCheckService.cs`): `GET` mit `ResponseHeadersRead` (kein Body-Download, kein HEAD-Problem mit 405), Weiterleitungen werden verfolgt (höchstens 5), höchstens 8 Aufrufe parallel, System-Proxy mit Windows-Anmeldung. **Erreichbar = Status 2xx** (`UrlCheckRules.IsOk`); alles andere sowie Timeout, DNS-, TLS- und Verbindungsfehler gelten als Fehlschlag. Es werden nur Statuscodes bewertet, keine Inhalte und keine Antwortzeit.
 - **Rot erst nach zwei Fehlschlägen in Folge** (`UrlCheckRules.FailuresUntilProblem`). Nach dem ersten Fehlschlag folgt die nächste Runde nach 15 s; solange eine URL als Problem gilt, wird höchstens im Minutentakt geprüft (nicht erst im eingestellten Intervall), damit die Erholung bald sichtbar wird.

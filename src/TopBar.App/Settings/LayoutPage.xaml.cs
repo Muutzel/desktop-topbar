@@ -68,7 +68,8 @@ public sealed partial class LayoutPage : Page
     {
         var features = _s.Settings.Current.Features;
         FeatureList.Children.Clear();
-        foreach (var id in BarElementIds.All.Where(i => i != BarElementIds.SettingsButton))
+        foreach (var id in BarElementIds.All.Where(i => i != BarElementIds.SettingsButton)
+                     .OrderBy(i => BarElements.Name(i), StringComparer.CurrentCultureIgnoreCase))
         {
             var name = new TextBlock { Text = BarElements.Name(id), VerticalAlignment = VerticalAlignment.Center };
             var toggle = new ToggleSwitch

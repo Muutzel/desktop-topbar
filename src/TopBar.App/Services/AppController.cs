@@ -139,7 +139,7 @@ internal static class AppController
         }
     }
 
-    /// <summary>Context menu "Neu laden": close all bars, restart services, recreate bars.</summary>
+    /// <summary>Info page "Leiste neu laden": close all bars, restart services, recreate bars.</summary>
     public static void Reload()
     {
         if (_exiting || _bars is null) return;

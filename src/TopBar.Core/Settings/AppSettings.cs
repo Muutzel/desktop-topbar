@@ -65,18 +65,19 @@ public sealed class PomodoroSettings
 /// </summary>
 public sealed class FeatureSettings
 {
-    public bool Desktops { get; set; } = true;
-    public bool Pomodoro { get; set; } = true;
-    public bool Weather { get; set; } = true;
+    // Alphabetical on purpose: settings.json lists the switches in declaration order.
     public bool Clock { get; set; } = true;
-    public bool Date { get; set; } = true;
     public bool Cpu { get; set; } = true;
+    public bool Date { get; set; } = true;
+    public bool Desktops { get; set; } = true;
     public bool Gpu { get; set; } = true;
-    public bool Ram { get; set; } = true;
     public bool Network { get; set; } = true;
+    public bool Pomodoro { get; set; } = true;
+    public bool Ram { get; set; } = true;
     /// <summary>The gear button. Without it the settings can still be opened by starting TopBar a second time.</summary>
     public bool SettingsButton { get; set; } = true;
     public bool UrlChecker { get; set; } = false;
+    public bool Weather { get; set; } = true;
 
     /// <summary>Whether the bar element with this id (see <see cref="BarElementIds"/>) is switched on. Unknown ids count as on.</summary>
     public bool IsElementEnabled(string id) => id switch

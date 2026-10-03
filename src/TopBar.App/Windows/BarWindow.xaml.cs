@@ -200,13 +200,10 @@ public sealed partial class BarWindow : Window
 
         var settings = new MenuFlyoutItem { Text = Loc.Get("Menu_Settings"), Icon = SegoeIcon("") };
         settings.Click += (_, _) => AppController.OpenSettings();
-        var reload = new MenuFlyoutItem { Text = Loc.Get("Menu_Reload"), Icon = SegoeIcon("") };
-        reload.Click += (_, _) => AppController.Reload();
         var exit = new MenuFlyoutItem { Text = Loc.Get("Menu_Exit"), Icon = SegoeIcon("") };
         exit.Click += (_, _) => AppController.Exit();
 
         flyout.Items.Add(settings);
-        flyout.Items.Add(reload);
         flyout.Items.Add(new MenuFlyoutSeparator());
         flyout.Items.Add(exit);
 

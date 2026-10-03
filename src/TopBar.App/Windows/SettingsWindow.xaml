@@ -20,23 +20,23 @@
             <NavigationViewItem x:Uid="Nav_Layout" Tag="layout">
                 <NavigationViewItem.Icon><FontIcon Glyph="&#xE8A9;" /></NavigationViewItem.Icon>
             </NavigationViewItem>
-            <NavigationViewItem x:Uid="Nav_Desktops" Tag="desktops">
-                <NavigationViewItem.Icon><FontIcon Glyph="&#xE7F4;" /></NavigationViewItem.Icon>
+            <NavigationViewItem x:Uid="Nav_Pomodoro" Tag="pomodoro">
+                <NavigationViewItem.Icon><FontIcon x:Name="PomodoroNavIcon" FontFamily="Segoe UI Emoji" Glyph="&#x1F345;" /></NavigationViewItem.Icon>
+            </NavigationViewItem>
+            <NavigationViewItem x:Uid="Nav_System" Tag="system">
+                <NavigationViewItem.Icon><FontIcon Glyph="&#xE9D9;" /></NavigationViewItem.Icon>
             </NavigationViewItem>
             <NavigationViewItem x:Uid="Nav_Clock" Tag="clock">
                 <NavigationViewItem.Icon><FontIcon Glyph="&#xE823;" /></NavigationViewItem.Icon>
             </NavigationViewItem>
-            <NavigationViewItem x:Uid="Nav_Weather" Tag="weather">
-                <NavigationViewItem.Icon><FontIcon Glyph="&#xE753;" /></NavigationViewItem.Icon>
-            </NavigationViewItem>
-            <NavigationViewItem x:Uid="Nav_Pomodoro" Tag="pomodoro">
-                <NavigationViewItem.Icon><FontIcon x:Name="PomodoroNavIcon" FontFamily="Segoe UI Emoji" Glyph="&#x1F345;" /></NavigationViewItem.Icon>
-            </NavigationViewItem>
             <NavigationViewItem x:Name="UrlCheckerNavItem" x:Uid="Nav_UrlChecker" Tag="urlchecker" Visibility="Collapsed">
                 <NavigationViewItem.Icon><FontIcon Glyph="&#xE71B;" /></NavigationViewItem.Icon>
             </NavigationViewItem>
-            <NavigationViewItem x:Uid="Nav_System" Tag="system">
-                <NavigationViewItem.Icon><FontIcon Glyph="&#xE9D9;" /></NavigationViewItem.Icon>
+            <NavigationViewItem x:Uid="Nav_Desktops" Tag="desktops">
+                <NavigationViewItem.Icon><FontIcon Glyph="&#xE7F4;" /></NavigationViewItem.Icon>
+            </NavigationViewItem>
+            <NavigationViewItem x:Uid="Nav_Weather" Tag="weather">
+                <NavigationViewItem.Icon><FontIcon Glyph="&#xE753;" /></NavigationViewItem.Icon>
             </NavigationViewItem>
             <NavigationViewItem x:Uid="Nav_Info" Tag="info">
                 <NavigationViewItem.Icon><FontIcon Glyph="&#xE946;" /></NavigationViewItem.Icon>

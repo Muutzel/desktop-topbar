@@ -16,6 +16,7 @@
             </Border>
 
             <Button x:Name="OpenLogsButton" x:Uid="Info_OpenLogs" Click="OpenLogsButton_Click" />
+            <Button x:Name="ReloadButton" x:Uid="Info_Reload" Click="ReloadButton_Click" />
             <Button x:Name="ResetButton" x:Uid="Info_Reset" Click="ResetButton_Click" />
         </StackPanel>
     </ScrollViewer>

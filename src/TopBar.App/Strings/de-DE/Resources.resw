@@ -157,8 +157,8 @@
   <data name="Menu_Settings" xml:space="preserve">
     <value>Einstellungen</value>
   </data>
-  <data name="Menu_Reload" xml:space="preserve">
-    <value>Neu laden</value>
+  <data name="Info_Reload.Content" xml:space="preserve">
+    <value>Leiste neu laden</value>
   </data>
   <data name="Menu_Exit" xml:space="preserve">
     <value>Beenden</value>

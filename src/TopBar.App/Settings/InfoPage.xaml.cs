@@ -29,6 +29,9 @@ public sealed partial class InfoPage : Page
         catch (Exception ex) { AppController.LogWarning(ex, "Could not open log folder"); }
     }
 
+    /// <summary>Rescue button: closes the bars, restarts all services and rebuilds the bars (does not re-read settings.json).</summary>
+    private void ReloadButton_Click(object sender, RoutedEventArgs e) => AppController.Reload();
+
     private async void ResetButton_Click(object sender, RoutedEventArgs e)
     {
         var dialog = new ContentDialog
