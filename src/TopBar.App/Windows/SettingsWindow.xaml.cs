@@ -1,8 +1,11 @@
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using TopBar.App.Services;
 using TopBar.App.SettingsPages;
+using TopBar.Core.Services;
+using TopBar.Core.Settings;
 using TopBar.Platform.AppBar;
 using Windows.Graphics;
 
@@ -19,6 +22,7 @@ public sealed partial class SettingsWindow : Window
         ["clock"] = typeof(ClockPage),
         ["weather"] = typeof(WeatherPage),
         ["pomodoro"] = typeof(PomodoroPage),
+        ["urlchecker"] = typeof(UrlCheckerPage),
         ["system"] = typeof(SystemPage),
         ["info"] = typeof(InfoPage),
     };
@@ -30,7 +34,20 @@ public sealed partial class SettingsWindow : Window
         InitializeComponent();
         Title = Loc.Get("Settings_Title");
         PomodoroNavIcon.Loaded += (_, _) => MakeMonochrome(PomodoroNavIcon);
+        // Pages of switched-off features are not offered; follows the switches live (they sit on the "Anordnung" page).
+        ApplyFeatureVisibility();
+        var settings = AppController.Services.GetRequiredService<ISettingsService>();
+        EventHandler<AppSettings> onChanged = (_, _) => DispatcherQueue.TryEnqueue(ApplyFeatureVisibility);
+        settings.Changed += onChanged;
+        Closed += (_, _) => settings.Changed -= onChanged;
         NavigateTo("general");
+    }
+
+    private void ApplyFeatureVisibility()
+    {
+        foreach (var item in Nav.MenuItems.OfType<NavigationViewItem>())
+            item.Visibility = FeatureEnabled((string)item.Tag) ? Visibility.Visible : Visibility.Collapsed;
+        if (Nav.SelectedItem is NavigationViewItem { Tag: string tag } && !FeatureEnabled(tag)) NavigateTo("layout");
     }
 
     /// <summary>FontIcon has no color-font switch: find the TextBlock it renders with and turn color fonts off (emoji then take the icon color).</summary>
@@ -58,9 +75,12 @@ public sealed partial class SettingsWindow : Window
         Activate();
     }
 
+    private static bool FeatureEnabled(string tag) =>
+        AppController.Services.GetRequiredService<ISettingsService>().Current.Features.IsPageEnabled(tag);
+
     private void NavigateTo(string tag)
     {
-        if (!Pages.ContainsKey(tag)) tag = "general";
+        if (!Pages.ContainsKey(tag) || !FeatureEnabled(tag)) tag = "general";
         var item = Nav.MenuItems.OfType<NavigationViewItem>().First(i => (string)i.Tag == tag);
         if (!ReferenceEquals(Nav.SelectedItem, item)) Nav.SelectedItem = item; // triggers SelectionChanged
         else if (ContentFrame.Content is null) ContentFrame.Navigate(Pages[tag]);

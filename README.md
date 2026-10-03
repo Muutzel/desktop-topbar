@@ -46,6 +46,8 @@ Hinweis: Autostart ist standardmäßig aus. Wer „Mit Windows starten“ in den
 - Einstellungen: `%LOCALAPPDATA%\TopBar\settings.json` (eine defekte Datei wird zu `settings.broken-<Zeitstempel>.json` gesichert)
 - Logs: `%LOCALAPPDATA%\TopBar\logs\topbar-<Datum>.log` (7 Tage)
 
+In der `settings.json` steht unter `Features` je Element ein Schalter (Standard `true`, außer `UrlChecker`). Die Schalter stehen auch unter Einstellungen → Anordnung → „Funktionen“ und wirken sofort. Ein ausgeschaltetes Element und seine Einstellungsseite verschwinden. Der **URL-Checker** (ruft eine URL-Liste auf, rot bei Fehlern) ist standardmäßig aus: `"UrlChecker": true` setzen und TopBar neu starten, dann erscheinen die Seite „URL-Checker“ und das Element in „Anordnung“.
+
 ## Projektstruktur
 
 - `src/TopBar.Core`: reine Logik ohne UI und Win32 (Einstellungen, Layout, Formatierung, Wettercodes, GPU-Aggregation)

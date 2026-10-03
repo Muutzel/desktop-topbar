@@ -50,6 +50,15 @@
                 <ListView x:Name="HiddenList" SelectionMode="Single" MinHeight="120" Background="Transparent"
                           BorderThickness="1" BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}" CornerRadius="4" />
             </StackPanel>
+
+            <!-- Features: switch elements (and their settings pages) on or off completely. Rows are built in code. -->
+            <StackPanel Spacing="6">
+                <TextBlock x:Uid="Layout_Features" Style="{StaticResource BodyStrongTextBlockStyle}" />
+                <TextBlock x:Uid="Layout_Features_Hint" TextWrapping="Wrap" Opacity="0.7" />
+                <Border Style="{StaticResource SettingsCardStyle}">
+                    <StackPanel x:Name="FeatureList" Spacing="2" />
+                </Border>
+            </StackPanel>
         </StackPanel>
     </ScrollViewer>
 </Page>

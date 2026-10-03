@@ -93,4 +93,29 @@ public class SettingsTests : IDisposable
         var f = new SettingsService(PathOf).Current.Clock.DateFormat;
         Assert.False(string.IsNullOrWhiteSpace(f));
     }
+
+    [Fact]
+    public void FeatureFlag_IsReadFromJson_AndSurvivesSave()
+    {
+        Directory.CreateDirectory(_dir);
+        File.WriteAllText(PathOf, """{ "Features": { "UrlChecker": true }, "UrlChecker": { "Urls": ["https://intranet.test"] } }""");
+        var s = new SettingsService(PathOf);
+        Assert.True(s.Current.Features.UrlChecker);
+        Assert.Equal(["https://intranet.test"], s.Current.UrlChecker.Urls);
+
+        s.Update(x => x.General.BarHeight = 40);
+        var again = new SettingsService(PathOf);
+        Assert.True(again.Current.Features.UrlChecker);
+        Assert.Equal(["https://intranet.test"], again.Current.UrlChecker.Urls);
+    }
+
+    [Fact]
+    public void MissingFeaturesSection_MeansFeatureOff()
+    {
+        Directory.CreateDirectory(_dir);
+        File.WriteAllText(PathOf, """{ "General": { "BarHeight": 40 } }""");
+        var s = new SettingsService(PathOf);
+        Assert.False(s.Current.Features.UrlChecker);
+        Assert.Equal(["https://google.com"], s.Current.UrlChecker.Urls);
+    }
 }

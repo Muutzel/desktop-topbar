@@ -1,4 +1,5 @@
 using TopBar.Core.Settings;
+using TopBar.Core.UrlCheck;
 
 namespace TopBar.Core.Services;
 
@@ -71,4 +72,13 @@ public interface IAutostartService
     bool IsEnabled { get; }
     void SetEnabled(bool enabled);
     void RepairPathIfNeeded();
+}
+
+public interface IUrlCheckService
+{
+    UrlCheckSnapshot Current { get; }
+    /// <summary>Runs a check round as soon as possible (no effect while the feature is off or no URL is configured).</summary>
+    void CheckNow();
+    /// <summary>A round started, finished, or the URL list changed.</summary>
+    event EventHandler Changed;
 }

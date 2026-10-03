@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Page
+    x:Class="TopBar.App.SettingsPages.UrlCheckerPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Page.Resources>
+        <SolidColorBrush x:Key="CriticalBrush" Color="{ThemeResource SystemFillColorCritical}" />
+    </Page.Resources>
+    <ScrollViewer>
+        <StackPanel Spacing="8" Padding="36,20,36,36" MaxWidth="720" HorizontalAlignment="Left">
+            <TextBlock x:Uid="UrlChecker_Title" Style="{StaticResource TitleTextBlockStyle}" />
+            <Border Height="8" />
+
+            <Border Style="{StaticResource SettingsCardStyle}">
+                <StackPanel Spacing="8">
+                    <TextBlock x:Uid="UrlChecker_Urls_Header" FontWeight="SemiBold" />
+                    <StackPanel x:Name="UrlList" Spacing="4" />
+                    <TextBlock x:Name="EmptyText" x:Uid="UrlChecker_Empty" Opacity="0.7" TextWrapping="Wrap" Visibility="Collapsed" />
+                    <Grid ColumnSpacing="8">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <TextBox x:Name="UrlBox" x:Uid="UrlChecker_UrlBox" KeyDown="UrlBox_KeyDown" />
+                        <Button x:Name="AddButton" x:Uid="UrlChecker_Add" Grid.Column="1" Click="AddButton_Click" />
+                    </Grid>
+                    <TextBlock x:Name="ErrorText" x:Uid="UrlChecker_Invalid" Foreground="{StaticResource CriticalBrush}" TextWrapping="Wrap" Visibility="Collapsed" />
+                </StackPanel>
+            </Border>
+
+            <Border Style="{StaticResource SettingsCardStyle}">
+                <NumberBox x:Name="IntervalBox" x:Uid="UrlChecker_Interval"
+                           Minimum="1" Maximum="120" SmallChange="1" LargeChange="5"
+                           SpinButtonPlacementMode="Inline" HorizontalAlignment="Left" MinWidth="180"
+                           ValueChanged="IntervalBox_ValueChanged" />
+            </Border>
+
+            <Border Style="{StaticResource SettingsCardStyle}">
+                <NumberBox x:Name="TimeoutBox" x:Uid="UrlChecker_Timeout"
+                           Minimum="2" Maximum="60" SmallChange="1" LargeChange="5"
+                           SpinButtonPlacementMode="Inline" HorizontalAlignment="Left" MinWidth="180"
+                           ValueChanged="TimeoutBox_ValueChanged" />
+            </Border>
+
+            <TextBlock x:Uid="UrlChecker_Hint" TextWrapping="Wrap" Opacity="0.7" />
+        </StackPanel>
+    </ScrollViewer>
+</Page>

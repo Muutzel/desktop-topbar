@@ -42,6 +42,11 @@ public sealed partial class InfoPage : Page
         };
         if (await dialog.ShowAsync() != ContentDialogResult.Primary) return;
 
-        AppController.Services.GetRequiredService<ISettingsService>().Update(s => s.CopyFrom(new AppSettings()));
+        AppController.Services.GetRequiredService<ISettingsService>().Update(s =>
+        {
+            var features = s.Features; // machine-level switches (edited by hand in settings.json) survive a reset
+            s.CopyFrom(new AppSettings());
+            s.Features = features;
+        });
     }
 }

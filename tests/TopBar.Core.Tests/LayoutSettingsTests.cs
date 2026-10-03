@@ -9,8 +9,9 @@ public class LayoutSettingsTests
     {
         var l = new LayoutSettings();
         var all = l.Left.Concat(l.Center).Concat(l.Right).ToList();
-        Assert.Equal(BarElementIds.All.Count, all.Count);
-        Assert.Equal(BarElementIds.All.OrderBy(x => x), all.OrderBy(x => x));
+        var expected = BarElementIds.All.Where(id => !BarElementIds.Optional.Contains(id)).ToList();
+        Assert.Equal(expected.Count, all.Count);
+        Assert.Equal(expected.OrderBy(x => x), all.OrderBy(x => x));
         Assert.Empty(l.Unplaced());
     }
 
@@ -77,5 +78,34 @@ public class LayoutSettingsTests
         Assert.False(l.IsPlaced(BarElementIds.Gpu));
         l.Place(BarElementIds.Gpu, BarZone.Center);
         Assert.True(l.IsPlaced(BarElementIds.Gpu));
+    }
+
+    [Fact]
+    public void OptionalElements_AreNotInTheDefaultLayout()
+    {
+        var l = new LayoutSettings();
+        Assert.False(l.IsPlaced(BarElementIds.UrlChecker));
+        Assert.Contains(BarElementIds.UrlChecker, BarElementIds.All);
+    }
+
+    [Fact]
+    public void Unplaced_ListsOptionalElementsOnlyWhenTheirFeatureIsOn()
+    {
+        var l = new LayoutSettings();
+        Assert.DoesNotContain(BarElementIds.UrlChecker, l.Unplaced());
+        Assert.DoesNotContain(BarElementIds.UrlChecker, l.Unplaced(new FeatureSettings()));
+        Assert.Contains(BarElementIds.UrlChecker, l.Unplaced(new FeatureSettings { UrlChecker = true }));
+    }
+
+    [Fact]
+    public void RemoveUnavailable_StripsOnlyElementsWithFeatureOff()
+    {
+        var l = new LayoutSettings();
+        l.Place(BarElementIds.UrlChecker, BarZone.Left);
+        l.RemoveUnavailable(new FeatureSettings { UrlChecker = true });
+        Assert.True(l.IsPlaced(BarElementIds.UrlChecker));
+        l.RemoveUnavailable(new FeatureSettings { UrlChecker = false });
+        Assert.False(l.IsPlaced(BarElementIds.UrlChecker));
+        Assert.True(l.IsPlaced(BarElementIds.Clock));
     }
 }

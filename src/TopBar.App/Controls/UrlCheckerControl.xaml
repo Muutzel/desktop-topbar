@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<UserControl
+    x:Class="TopBar.App.Controls.UrlCheckerControl"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    VerticalAlignment="Stretch">
+    <UserControl.Resources>
+        <SolidColorBrush x:Key="CriticalBrush" Color="{ThemeResource SystemFillColorCritical}" />
+        <SolidColorBrush x:Key="CriticalTintBrush" Color="{ThemeResource SystemFillColorCritical}" Opacity="0.25" />
+        <SolidColorBrush x:Key="SecondaryTextBrush" Color="{ThemeResource TextFillColorSecondary}" />
+    </UserControl.Resources>
+    <Button x:Name="MainButton" Style="{StaticResource BarButtonStyle}" Margin="0,4" Padding="4,0" Click="MainButton_Click">
+        <!-- The button template has a fixed transparent background, so the red marker is a tinted border inside the button -->
+        <Border x:Name="Tint" CornerRadius="4" Padding="6,2">
+        <StackPanel Orientation="Horizontal" Spacing="6">
+            <!-- Fixed 16 px slot: the small progress ring and the state icon swap without moving anything -->
+            <Grid Width="16" Height="16" VerticalAlignment="Center">
+                <TextBlock x:Name="StateIcon" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                <ProgressRing x:Name="Ring" Width="16" Height="16" IsActive="False" Visibility="Collapsed" />
+            </Grid>
+            <TextBlock x:Name="CountText" VerticalAlignment="Center" TextAlignment="Left" />
+        </StackPanel>
+        </Border>
+    </Button>
+</UserControl>

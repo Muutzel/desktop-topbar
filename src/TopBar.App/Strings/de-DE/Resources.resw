@@ -296,7 +296,7 @@
     <value>Elemente anordnen</value>
   </data>
   <data name="Layout_Hint.Text" xml:space="preserve">
-    <value>Ziehe ein Element mit der Maus in einen Bereich oder wähle es aus und nutze die Knöpfe. Die Leiste folgt sofort. Was unter „Nicht angezeigt“ steht, erscheint nicht auf der Leiste. Die Einstellungen der einzelnen Elemente (z. B. Wetter-Ort) bleiben auf ihren Seiten.</value>
+    <value>Ziehe ein Element mit der Maus in einen Bereich oder wähle es aus und nutze die Knöpfe. Die Leiste folgt sofort. Was unter „Nicht angezeigt“ steht, erscheint nicht auf der Leiste. Die Einstellungen der einzelnen Elemente (z. B. Wetter-Ort) bleiben auf ihren Seiten. Unten bei „Funktionen“ schaltest du Elemente samt ihrer Einstellungsseite ganz ein oder aus.</value>
   </data>
   <data name="Layout_Left.Text" xml:space="preserve">
     <value>Links</value>
@@ -360,5 +360,83 @@
   </data>
   <data name="Element_Settings" xml:space="preserve">
     <value>Einstellungen (Zahnrad)</value>
+  </data>
+  <data name="Nav_UrlChecker.Content" xml:space="preserve">
+    <value>URL-Checker</value>
+  </data>
+  <data name="Element_UrlChecker" xml:space="preserve">
+    <value>URL-Checker</value>
+  </data>
+  <data name="UrlChecker_Title.Text" xml:space="preserve">
+    <value>URL-Checker</value>
+  </data>
+  <data name="UrlChecker_Urls_Header.Text" xml:space="preserve">
+    <value>Zu prüfende URLs</value>
+  </data>
+  <data name="UrlChecker_Empty.Text" xml:space="preserve">
+    <value>Keine URL eingetragen. Der Checker ist pausiert.</value>
+  </data>
+  <data name="UrlChecker_UrlBox.PlaceholderText" xml:space="preserve">
+    <value>https://beispiel.de</value>
+  </data>
+  <data name="UrlChecker_Add.Content" xml:space="preserve">
+    <value>Hinzufügen</value>
+  </data>
+  <data name="UrlChecker_Invalid.Text" xml:space="preserve">
+    <value>Das ist keine gültige http- oder https-Adresse.</value>
+  </data>
+  <data name="UrlChecker_Remove" xml:space="preserve">
+    <value>Entfernen</value>
+  </data>
+  <data name="UrlChecker_Interval.Header" xml:space="preserve">
+    <value>Prüfintervall (Minuten)</value>
+  </data>
+  <data name="UrlChecker_Timeout.Header" xml:space="preserve">
+    <value>Zeitlimit pro URL (Sekunden)</value>
+  </data>
+  <data name="UrlChecker_Hint.Text" xml:space="preserve">
+    <value>Eine URL gilt als erreichbar, wenn sie mit einem 2xx-Status antwortet (Weiterleitungen werden verfolgt). Rot wird sie erst nach zwei Fehlversuchen hintereinander; der zweite Versuch folgt nach etwa 15 Sekunden. Das Element erscheint erst auf der Leiste, wenn du es unter „Anordnung“ platzierst.</value>
+  </data>
+  <data name="UrlChecker_Tip_NoUrls" xml:space="preserve">
+    <value>Keine URLs eingetragen · Klicken öffnet die Einstellungen</value>
+  </data>
+  <data name="UrlChecker_Tip_Checking" xml:space="preserve">
+    <value>Prüfe URLs …</value>
+  </data>
+  <data name="UrlChecker_Tip_AllOk" xml:space="preserve">
+    <value>Alle {0} URLs erreichbar · geprüft um {1}</value>
+  </data>
+  <data name="UrlChecker_Tip_Problem" xml:space="preserve">
+    <value>{0} von {1} URLs nicht erreichbar · geprüft um {2}</value>
+  </data>
+  <data name="UrlChecker_Tip_More" xml:space="preserve">
+    <value>… und {0} weitere</value>
+  </data>
+  <data name="UrlChecker_Tip_Click" xml:space="preserve">
+    <value>Klicken: jetzt prüfen</value>
+  </data>
+  <data name="UrlChecker_Fail_Http" xml:space="preserve">
+    <value>HTTP {0}</value>
+  </data>
+  <data name="UrlChecker_Fail_Timeout" xml:space="preserve">
+    <value>Zeitüberschreitung</value>
+  </data>
+  <data name="UrlChecker_Fail_Dns" xml:space="preserve">
+    <value>Name nicht auflösbar</value>
+  </data>
+  <data name="UrlChecker_Fail_Tls" xml:space="preserve">
+    <value>TLS-/Zertifikatsfehler</value>
+  </data>
+  <data name="UrlChecker_Fail_Connection" xml:space="preserve">
+    <value>Verbindung fehlgeschlagen</value>
+  </data>
+  <data name="UrlChecker_Fail_Other" xml:space="preserve">
+    <value>Fehler</value>
+  </data>
+  <data name="Layout_Features.Text" xml:space="preserve">
+    <value>Funktionen</value>
+  </data>
+  <data name="Layout_Features_Hint.Text" xml:space="preserve">
+    <value>Was hier ausgeschaltet ist, gibt es nicht: weder auf der Leiste noch in den Listen oben, und die zugehörige Einstellungsseite verschwindet. Wieder eingeschaltet erscheint das Element unter „Nicht angezeigt“.</value>
   </data>
 </root>

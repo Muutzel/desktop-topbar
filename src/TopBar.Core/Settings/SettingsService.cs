@@ -50,6 +50,8 @@ public sealed class SettingsService : ISettingsService
             var loaded = JsonSerializer.Deserialize(json, SettingsJsonContext.Default.AppSettings)
                          ?? throw new JsonException("settings.json is empty");
             loaded.Normalize();
+            // Write the file back if normalizing changed anything (new keys such as "Features" appear, invalid values are fixed).
+            if (!string.Equals(Serialize(loaded), json, StringComparison.Ordinal)) Save(loaded);
             return loaded;
         }
         catch (Exception ex) when (ex is JsonException or IOException or UnauthorizedAccessException or NotSupportedException)
@@ -72,6 +74,8 @@ public sealed class SettingsService : ISettingsService
         }
     }
 
+    private static string Serialize(AppSettings settings) => JsonSerializer.Serialize(settings, SettingsJsonContext.Default.AppSettings);
+
     private void Save(AppSettings settings)
     {
         try
@@ -79,7 +83,7 @@ public sealed class SettingsService : ISettingsService
             var dir = Path.GetDirectoryName(_path)!;
             Directory.CreateDirectory(dir);
             var tmp = _path + ".tmp";
-            File.WriteAllText(tmp, JsonSerializer.Serialize(settings, SettingsJsonContext.Default.AppSettings), new UTF8Encoding(false));
+            File.WriteAllText(tmp, Serialize(settings), new UTF8Encoding(false));
             File.Move(tmp, _path, overwrite: true);
         }
         catch (Exception ex)

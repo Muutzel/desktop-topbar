@@ -60,7 +60,42 @@ public sealed partial class LayoutPage : Page
             };
         }
 
-        Loaded += (_, _) => _s.Load(() => Reload(null));
+        Loaded += (_, _) => _s.Load(() => { Reload(null); BuildFeatures(); });
+    }
+
+    /// <summary>One row per element with an on/off switch (the gear is left out: without it the settings cannot be opened from the bar).</summary>
+    private void BuildFeatures()
+    {
+        var features = _s.Settings.Current.Features;
+        FeatureList.Children.Clear();
+        foreach (var id in BarElementIds.All.Where(i => i != BarElementIds.SettingsButton))
+        {
+            var name = new TextBlock { Text = BarElements.Name(id), VerticalAlignment = VerticalAlignment.Center };
+            var toggle = new ToggleSwitch
+            {
+                IsOn = features.IsElementEnabled(id),
+                OnContent = Loc.Get("Common_On"),
+                OffContent = Loc.Get("Common_Off"),
+                MinWidth = 0,
+            };
+            var row = new Grid { ColumnSpacing = 12 };
+            row.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
+            row.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
+            Grid.SetColumn(toggle, 1);
+            row.Children.Add(name);
+            row.Children.Add(toggle);
+
+            var captured = id;
+            toggle.Toggled += (_, _) => SetFeature(captured, toggle.IsOn);
+            FeatureList.Children.Add(row);
+        }
+    }
+
+    /// <summary>Saves the switch. Switching off removes the element from the zones (Normalize), so the lists are rebuilt.</summary>
+    private void SetFeature(string id, bool on)
+    {
+        _s.Save(x => x.Features.SetElementEnabled(id, on));
+        Reload(null);
     }
 
     /// <summary>Rebuilds all four lists from the settings and re-selects <paramref name="selectId"/> if given.</summary>
@@ -73,7 +108,7 @@ public sealed partial class LayoutPage : Page
             Fill(LeftList, settings.Layout.Left);
             Fill(CenterList, settings.Layout.Center);
             Fill(RightList, settings.Layout.Right);
-            Fill(HiddenList, settings.Layout.Unplaced());
+            Fill(HiddenList, settings.Layout.Unplaced(settings.Features));
 
             if (selectId is not null)
             {

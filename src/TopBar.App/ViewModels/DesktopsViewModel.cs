@@ -56,19 +56,21 @@ public sealed class BarViewModels
     public StatsViewModel Stats { get; }
     public DesktopsViewModel Desktops { get; }
     public PomodoroViewModel Pomodoro { get; }
+    public UrlCheckerViewModel UrlChecker { get; }
 
-    internal BarViewModels(IClockService clock, IWeatherService weather, ISystemStatsService stats, IVirtualDesktopService desktops, ISettingsService settings, IUiThread ui)
+    internal BarViewModels(IClockService clock, IWeatherService weather, ISystemStatsService stats, IVirtualDesktopService desktops, IUrlCheckService urlCheck, ISettingsService settings, IUiThread ui)
     {
         Clock = new ClockViewModel(clock, settings, ui);
         Weather = new WeatherViewModel(weather, settings, ui);
         Stats = new StatsViewModel(stats, settings, ui);
         Desktops = new DesktopsViewModel(desktops, settings, ui);
         Pomodoro = new PomodoroViewModel(settings, ui);
+        UrlChecker = new UrlCheckerViewModel(urlCheck, settings, ui);
     }
 
     /// <summary>Re-reads everything after services were restarted.</summary>
     public void RefreshAll()
     {
-        Clock.Update(); Weather.Update(); Stats.Update(); Desktops.Update(); Pomodoro.Update();
+        Clock.Update(); Weather.Update(); Stats.Update(); Desktops.Update(); Pomodoro.Update(); UrlChecker.Update();
     }
 }

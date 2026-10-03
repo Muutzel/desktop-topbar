@@ -52,6 +52,7 @@ internal static class AppController
                 _host.Services.GetRequiredService<IWeatherService>(),
                 _host.Services.GetRequiredService<ISystemStatsService>(),
                 _host.Services.GetRequiredService<IVirtualDesktopService>(),
+                _host.Services.GetRequiredService<IUrlCheckService>(),
                 settings, UiThread);
 
             _bars = new BarManager(settings, _viewModels, _log);
@@ -94,6 +95,7 @@ internal static class AppController
         AddHosted<WeatherService, IWeatherService>(builder.Services);
         AddHosted<SystemStatsService, ISystemStatsService>(builder.Services);
         AddHosted<VirtualDesktopService, IVirtualDesktopService>(builder.Services);
+        AddHosted<UrlCheckService, IUrlCheckService>(builder.Services);
 
         return builder.Build();
     }

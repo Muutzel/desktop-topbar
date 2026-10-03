@@ -15,6 +15,7 @@ Legende: [x] erledigt · [ ] offen. Das Projekt baut und läuft (siehe README); 
 - [x] M11 *(nach M9)* Fensterrahmen/-ecken entfernt, Lizenz, Fremdkomponenten-Hinweis, gepinnte Paketversionen (Spec 18.4/18.5)
 - [x] M12 *(nach M9)* Netzwerk-Einheit (Bytes/Bits), Skalierung und Tabellenanzeige, engere Abstände der Systemwerte (Spec 18.2/18.3): **Code geschrieben, noch nicht gebaut und getestet** (ohne .NET-SDK entstanden)
 - [x] M13 *(nach M9)* Freie Anordnung aller Elemente (Uhrzeit, Datum, Wetter, Desktops, Pomodoro, CPU, GPU, RAM, Netzwerk, Zahnrad) in Links/Mitte/Rechts über die Einstellungsseite „Anordnung“ (Spec 18.6): **Code und Unit-Tests (`LayoutSettingsTests`) ohne .NET-SDK geschrieben; die Einstellungsseite „Anordnung“ wurde gebaut und gestartet (Screenshot), `dotnet test`, Drag-and-Drop und die Leiste selbst (Abstände/Optik, Neuaufbau bei Änderung) sind noch nicht geprüft.** Offen: Abnahmepunkt „Anordnung“ in Abschnitt 14.
+- [x] M14 *(nach M9)* URL-Checker als optionales Element hinter `Features.UrlChecker` (Spec 18.7): Einstellungen, Prüfdienst, Leistenelement, Seite „URL-Checker“, Tests: Dazu Feature-Schalter für jedes Element, ausgeblendete Seiten und vollständiges Schreiben der `settings.json` beim Start (Spec 18.7). **Ohne .NET-SDK geschrieben; Core, Platform und Tests bauten zwischenzeitlich, App-Fehler (Konstruktor) behoben; `dotnet build` der App, `dotnet test` und der Start nach den Feature-Änderungen stehen aus.**
 
 ## Offen / Bekanntes
 

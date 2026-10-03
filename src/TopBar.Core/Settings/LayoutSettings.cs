@@ -20,11 +20,18 @@ public static class BarElementIds
     public const string Ram = "Ram";
     public const string Network = "Network";
     public const string SettingsButton = "Settings";
+    public const string UrlChecker = "UrlChecker";
 
     public static readonly IReadOnlyList<string> All =
     [
-        Desktops, Pomodoro, Weather, Clock, Date, Cpu, Gpu, Ram, Network, SettingsButton,
+        Desktops, Pomodoro, Weather, Clock, Date, Cpu, Gpu, Ram, Network, SettingsButton, UrlChecker,
     ];
+
+    /// <summary>Elements that are not part of the default layout (the user places them by hand).</summary>
+    public static readonly IReadOnlyList<string> Optional = [UrlChecker];
+
+    /// <summary>False for an element whose feature switch is off (it is neither offered nor shown). <c>null</c> means the default switches.</summary>
+    public static bool IsAvailable(string id, FeatureSettings? features) => (features ?? new FeatureSettings()).IsElementEnabled(id);
 }
 
 /// <summary>Which element sits in which zone of the bar, in display order (left to right).</summary>
@@ -44,11 +51,18 @@ public sealed class LayoutSettings
     /// <summary>True if <paramref name="id"/> sits in any zone, i.e. is shown on the bar.</summary>
     public bool IsPlaced(string id) => Left.Contains(id) || Center.Contains(id) || Right.Contains(id);
 
-    /// <summary>Elements that are currently in no zone (hidden from the bar).</summary>
-    public List<string> Unplaced()
+    /// <summary>Elements that are currently in no zone (hidden from the bar). Elements whose feature switch is off are not listed.</summary>
+    public List<string> Unplaced(FeatureSettings? features = null)
     {
         var placed = new HashSet<string>(Left.Concat(Center).Concat(Right), StringComparer.Ordinal);
-        return BarElementIds.All.Where(id => !placed.Contains(id)).ToList();
+        return BarElementIds.All.Where(id => !placed.Contains(id) && BarElementIds.IsAvailable(id, features)).ToList();
+    }
+
+    /// <summary>Removes elements whose feature switch is off from all zones.</summary>
+    public void RemoveUnavailable(FeatureSettings? features)
+    {
+        foreach (var id in BarElementIds.All)
+            if (!BarElementIds.IsAvailable(id, features)) Remove(id);
     }
 
     /// <summary>Puts <paramref name="id"/> into <paramref name="zone"/> at <paramref name="index"/> (clamped). Moves it if it is placed already.</summary>

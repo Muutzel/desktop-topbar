@@ -14,6 +14,8 @@ internal static class BarElementFactory
 
     public static FrameworkElement? Create(string id, BarViewModels vm, ISettingsService settings)
     {
+        if (!BarElementIds.IsAvailable(id, settings.Current.Features)) return null; // optional element, feature off
+
         FrameworkElement? element = id switch
         {
             BarElementIds.Desktops => new DesktopIndicator(vm.Desktops, settings) { Margin = TextMargin },
@@ -26,6 +28,7 @@ internal static class BarElementFactory
             BarElementIds.Ram => new StatControl(vm.Stats, StatKind.Ram),
             BarElementIds.Network => new StatControl(vm.Stats, StatKind.Network),
             BarElementIds.SettingsButton => new SettingsButtonControl(),
+            BarElementIds.UrlChecker => new UrlCheckerControl(vm.UrlChecker) { Margin = TextMargin },
             _ => null,
         };
         return element;
