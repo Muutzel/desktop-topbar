@@ -27,6 +27,9 @@ public sealed partial class SettingsWindow : Window
         ["info"] = typeof(InfoPage),
     };
 
+    /// <summary>Pages that are always there; everything else in the navigation is a switchable feature.</summary>
+    private static readonly HashSet<string> FixedPages = ["general", "layout", "info"];
+
     private bool _positioned;
 
     public SettingsWindow()
@@ -45,8 +48,16 @@ public sealed partial class SettingsWindow : Window
 
     private void ApplyFeatureVisibility()
     {
+        var anyFeatureVisible = false;
         foreach (var item in Nav.MenuItems.OfType<NavigationViewItem>())
-            item.Visibility = FeatureEnabled((string)item.Tag) ? Visibility.Visible : Visibility.Collapsed;
+        {
+            var itemTag = (string)item.Tag;
+            var visible = FeatureEnabled(itemTag);
+            item.Visibility = visible ? Visibility.Visible : Visibility.Collapsed;
+            if (visible && !FixedPages.Contains(itemTag)) anyFeatureVisible = true;
+        }
+        // The dynamic (feature) block is framed by two separators; with no feature on, a single one remains.
+        FeaturesSeparatorTop.Visibility = anyFeatureVisible ? Visibility.Visible : Visibility.Collapsed;
         if (Nav.SelectedItem is NavigationViewItem { Tag: string tag } && !FeatureEnabled(tag)) NavigateTo("layout");
     }
 

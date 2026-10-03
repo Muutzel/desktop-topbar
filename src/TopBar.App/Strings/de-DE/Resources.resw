@@ -434,7 +434,7 @@
     <value>Fehler</value>
   </data>
   <data name="Layout_Features.Text" xml:space="preserve">
-    <value>Funktionen</value>
+    <value>Module</value>
   </data>
   <data name="Layout_Features_Hint.Text" xml:space="preserve">
     <value>Was hier ausgeschaltet ist, gibt es nicht: weder auf der Leiste noch in den Listen oben, und die zugehörige Einstellungsseite verschwindet. Wieder eingeschaltet erscheint das Element unter „Nicht angezeigt“.</value>

@@ -20,6 +20,7 @@
             <NavigationViewItem x:Uid="Nav_Layout" Tag="layout">
                 <NavigationViewItem.Icon><FontIcon Glyph="&#xE8A9;" /></NavigationViewItem.Icon>
             </NavigationViewItem>
+            <NavigationViewItemSeparator x:Name="FeaturesSeparatorTop" />
             <NavigationViewItem x:Uid="Nav_Pomodoro" Tag="pomodoro">
                 <NavigationViewItem.Icon><FontIcon x:Name="PomodoroNavIcon" FontFamily="Segoe UI Emoji" Glyph="&#x1F345;" /></NavigationViewItem.Icon>
             </NavigationViewItem>
@@ -38,6 +39,7 @@
             <NavigationViewItem x:Uid="Nav_Weather" Tag="weather">
                 <NavigationViewItem.Icon><FontIcon Glyph="&#xE753;" /></NavigationViewItem.Icon>
             </NavigationViewItem>
+            <NavigationViewItemSeparator x:Name="FeaturesSeparatorBottom" />
             <NavigationViewItem x:Uid="Nav_Info" Tag="info">
                 <NavigationViewItem.Icon><FontIcon Glyph="&#xE946;" /></NavigationViewItem.Icon>
             </NavigationViewItem>
