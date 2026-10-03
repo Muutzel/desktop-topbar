@@ -13,6 +13,16 @@
             <FontFamily x:Key="SegoeIconsFont">Segoe Fluent Icons</FontFamily>
             <FontFamily x:Key="BarFont">Segoe UI Variable Text</FontFamily>
 
+            <!-- Framed card that groups one setting on the settings pages -->
+            <Style x:Key="SettingsCardStyle" TargetType="Border">
+                <Setter Property="Background" Value="{ThemeResource CardBackgroundFillColorDefaultBrush}" />
+                <Setter Property="BorderBrush" Value="{ThemeResource CardStrokeColorDefaultBrush}" />
+                <Setter Property="BorderThickness" Value="1" />
+                <Setter Property="CornerRadius" Value="4" />
+                <Setter Property="Padding" Value="16,12" />
+                <Setter Property="HorizontalAlignment" Value="Stretch" />
+            </Style>
+
             <!-- Flat button with rounded hover surface, used for all interactive bar elements -->
             <Style x:Key="BarButtonStyle" TargetType="Button">
                 <Setter Property="Background" Value="Transparent" />

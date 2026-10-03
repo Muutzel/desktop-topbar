@@ -5,13 +5,18 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:controls="using:TopBar.App.Controls">
     <ScrollViewer>
-        <StackPanel Spacing="24" Padding="36,20,36,36" MaxWidth="720" HorizontalAlignment="Left">
+        <StackPanel Spacing="8" Padding="36,20,36,36" MaxWidth="720" HorizontalAlignment="Left">
             <TextBlock x:Uid="Desktops_Title" Style="{StaticResource TitleTextBlockStyle}" />
+            <Border Height="8" />
 
             <InfoBar x:Name="UnavailableInfo" x:Uid="Desktops_Unavailable" Severity="Warning" IsClosable="False" IsOpen="False" />
 
-            <ToggleSwitch x:Name="ScrollSwitch" x:Uid="Desktops_Scroll" Toggled="ScrollSwitch_Toggled" />
-            <controls:SliderRow x:Name="DotSizeRow" />
+            <Border Style="{StaticResource SettingsCardStyle}">
+                <ToggleSwitch x:Name="ScrollSwitch" x:Uid="Desktops_Scroll" Toggled="ScrollSwitch_Toggled" />
+            </Border>
+            <Border Style="{StaticResource SettingsCardStyle}">
+                <controls:SliderRow x:Name="DotSizeRow" />
+            </Border>
         </StackPanel>
     </ScrollViewer>
 </Page>

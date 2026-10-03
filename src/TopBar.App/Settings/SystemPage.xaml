@@ -5,32 +5,47 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:controls="using:TopBar.App.Controls">
     <ScrollViewer>
-        <StackPanel Spacing="24" Padding="36,20,36,36" MaxWidth="720" HorizontalAlignment="Left">
+        <StackPanel Spacing="8" Padding="36,20,36,36" MaxWidth="720" HorizontalAlignment="Left">
             <TextBlock x:Uid="System_Title" Style="{StaticResource TitleTextBlockStyle}" />
+            <Border Height="8" />
 
-            <ToggleSwitch x:Name="LabelsSwitch" x:Uid="System_Labels" Toggled="LabelsSwitch_Toggled" />
+            <Border Style="{StaticResource SettingsCardStyle}">
+                <ToggleSwitch x:Name="LabelsSwitch" x:Uid="System_Labels" Toggled="LabelsSwitch_Toggled" />
+            </Border>
 
-            <ComboBox x:Name="IntervalCombo" x:Uid="System_Interval" MinWidth="200" SelectionChanged="IntervalCombo_SelectionChanged">
-                <ComboBoxItem x:Uid="System_Interval_500" Tag="500" />
-                <ComboBoxItem x:Uid="System_Interval_1000" Tag="1000" />
-                <ComboBoxItem x:Uid="System_Interval_2000" Tag="2000" />
-                <ComboBoxItem x:Uid="System_Interval_5000" Tag="5000" />
-            </ComboBox>
+            <Border Style="{StaticResource SettingsCardStyle}">
+                <ComboBox x:Name="IntervalCombo" x:Uid="System_Interval" MinWidth="200" SelectionChanged="IntervalCombo_SelectionChanged">
+                    <ComboBoxItem x:Uid="System_Interval_500" Tag="500" />
+                    <ComboBoxItem x:Uid="System_Interval_1000" Tag="1000" />
+                    <ComboBoxItem x:Uid="System_Interval_2000" Tag="2000" />
+                    <ComboBoxItem x:Uid="System_Interval_5000" Tag="5000" />
+                </ComboBox>
+            </Border>
 
-            <controls:SliderRow x:Name="WarnRow" />
-            <controls:SliderRow x:Name="CriticalRow" />
+            <Border Style="{StaticResource SettingsCardStyle}">
+                <controls:SliderRow x:Name="WarnRow" />
+            </Border>
+            <Border Style="{StaticResource SettingsCardStyle}">
+                <controls:SliderRow x:Name="CriticalRow" />
+            </Border>
 
-            <ComboBox x:Name="NetUnitCombo" x:Uid="System_NetUnit" MinWidth="320" SelectionChanged="NetUnitCombo_SelectionChanged">
-                <ComboBoxItem x:Uid="System_NetUnit_Bytes" Tag="Bytes" />
-                <ComboBoxItem x:Uid="System_NetUnit_Bits" Tag="Bits" />
-            </ComboBox>
-            <ComboBox x:Name="NetScaleCombo" x:Uid="System_NetScale" MinWidth="320" SelectionChanged="NetScaleCombo_SelectionChanged">
-                <ComboBoxItem x:Uid="System_NetScale_Auto" Tag="Auto" />
-                <ComboBoxItem x:Uid="System_NetScale_Kilo" Tag="Kilo" />
-                <ComboBoxItem x:Uid="System_NetScale_Mega" Tag="Mega" />
-            </ComboBox>
+            <Border Style="{StaticResource SettingsCardStyle}">
+                <ComboBox x:Name="NetUnitCombo" x:Uid="System_NetUnit" MinWidth="320" SelectionChanged="NetUnitCombo_SelectionChanged">
+                    <ComboBoxItem x:Uid="System_NetUnit_Bytes" Tag="Bytes" />
+                    <ComboBoxItem x:Uid="System_NetUnit_Bits" Tag="Bits" />
+                </ComboBox>
+            </Border>
+            <Border Style="{StaticResource SettingsCardStyle}">
+                <ComboBox x:Name="NetScaleCombo" x:Uid="System_NetScale" MinWidth="320" SelectionChanged="NetScaleCombo_SelectionChanged">
+                    <ComboBoxItem x:Uid="System_NetScale_Auto" Tag="Auto" />
+                    <ComboBoxItem x:Uid="System_NetScale_Kilo" Tag="Kilo" />
+                    <ComboBoxItem x:Uid="System_NetScale_Mega" Tag="Mega" />
+                </ComboBox>
+            </Border>
 
-            <ComboBox x:Name="NicCombo" x:Uid="System_Nic" MinWidth="320" SelectionChanged="NicCombo_SelectionChanged" />
+            <Border Style="{StaticResource SettingsCardStyle}">
+                <ComboBox x:Name="NicCombo" x:Uid="System_Nic" MinWidth="320" SelectionChanged="NicCombo_SelectionChanged" />
+            </Border>
         </StackPanel>
     </ScrollViewer>
 </Page>

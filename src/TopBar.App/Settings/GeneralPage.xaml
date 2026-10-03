@@ -5,25 +5,38 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:controls="using:TopBar.App.Controls">
     <ScrollViewer>
-        <StackPanel Spacing="24" Padding="36,20,36,36" MaxWidth="720" HorizontalAlignment="Left">
+        <StackPanel Spacing="8" Padding="36,20,36,36" MaxWidth="720" HorizontalAlignment="Left">
             <TextBlock x:Uid="General_Title" Style="{StaticResource TitleTextBlockStyle}" />
+            <Border Height="8" />
 
-            <ToggleSwitch x:Name="AutostartSwitch" x:Uid="General_Autostart" Toggled="AutostartSwitch_Toggled" />
+            <Border Style="{StaticResource SettingsCardStyle}">
+                <ToggleSwitch x:Name="AutostartSwitch" x:Uid="General_Autostart" Toggled="AutostartSwitch_Toggled" />
+            </Border>
 
-            <RadioButtons x:Name="ThemeRadios" x:Uid="General_Theme" SelectionChanged="ThemeRadios_SelectionChanged">
-                <RadioButton x:Uid="General_Theme_System" Tag="System" />
-                <RadioButton x:Uid="General_Theme_Light" Tag="Light" />
-                <RadioButton x:Uid="General_Theme_Dark" Tag="Dark" />
-            </RadioButtons>
+            <Border Style="{StaticResource SettingsCardStyle}">
+                <RadioButtons x:Name="ThemeRadios" x:Uid="General_Theme" SelectionChanged="ThemeRadios_SelectionChanged">
+                    <RadioButton x:Uid="General_Theme_System" Tag="System" />
+                    <RadioButton x:Uid="General_Theme_Light" Tag="Light" />
+                    <RadioButton x:Uid="General_Theme_Dark" Tag="Dark" />
+                </RadioButtons>
+            </Border>
 
-            <RadioButtons x:Name="MonitorRadios" x:Uid="General_Monitors" SelectionChanged="MonitorRadios_SelectionChanged">
-                <RadioButton x:Uid="General_Monitors_Primary" Tag="Primary" />
-                <RadioButton x:Uid="General_Monitors_All" Tag="All" />
-            </RadioButtons>
+            <Border Style="{StaticResource SettingsCardStyle}">
+                <RadioButtons x:Name="MonitorRadios" x:Uid="General_Monitors" SelectionChanged="MonitorRadios_SelectionChanged">
+                    <RadioButton x:Uid="General_Monitors_Primary" Tag="Primary" />
+                    <RadioButton x:Uid="General_Monitors_All" Tag="All" />
+                </RadioButtons>
+            </Border>
 
-            <controls:SliderRow x:Name="BarHeightRow" />
-            <controls:SliderRow x:Name="FontSizeRow" />
-            <controls:SliderRow x:Name="OpacityRow" />
+            <Border Style="{StaticResource SettingsCardStyle}">
+                <controls:SliderRow x:Name="BarHeightRow" />
+            </Border>
+            <Border Style="{StaticResource SettingsCardStyle}">
+                <controls:SliderRow x:Name="FontSizeRow" />
+            </Border>
+            <Border Style="{StaticResource SettingsCardStyle}">
+                <controls:SliderRow x:Name="OpacityRow" />
+            </Border>
         </StackPanel>
     </ScrollViewer>
 </Page>

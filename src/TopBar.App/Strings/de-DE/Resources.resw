@@ -224,7 +224,7 @@
     <value>Zurücksetzen</value>
   </data>
   <data name="Nav_Pomodoro.Content" xml:space="preserve">
-    <value>Pomodoro</value>
+    <value>Pomodoro-Timer</value>
   </data>
   <data name="Pomodoro_Title.Text" xml:space="preserve">
     <value>Pomodoro-Timer</value>

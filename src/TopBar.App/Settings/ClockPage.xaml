@@ -4,20 +4,27 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <ScrollViewer>
-        <StackPanel Spacing="24" Padding="36,20,36,36" MaxWidth="720" HorizontalAlignment="Left">
+        <StackPanel Spacing="8" Padding="36,20,36,36" MaxWidth="720" HorizontalAlignment="Left">
             <TextBlock x:Uid="Clock_Title" Style="{StaticResource TitleTextBlockStyle}" />
+            <Border Height="8" />
 
-            <ToggleSwitch x:Name="Use24hSwitch" x:Uid="Clock_Use24h" Toggled="Use24hSwitch_Toggled" />
-            <ToggleSwitch x:Name="SecondsSwitch" x:Uid="Clock_Seconds" Toggled="SecondsSwitch_Toggled" />
+            <Border Style="{StaticResource SettingsCardStyle}">
+                <ToggleSwitch x:Name="Use24hSwitch" x:Uid="Clock_Use24h" Toggled="Use24hSwitch_Toggled" />
+            </Border>
+            <Border Style="{StaticResource SettingsCardStyle}">
+                <ToggleSwitch x:Name="SecondsSwitch" x:Uid="Clock_Seconds" Toggled="SecondsSwitch_Toggled" />
+            </Border>
 
-            <StackPanel Spacing="8">
-                <ComboBox x:Name="FormatCombo" x:Uid="Clock_DateFormat" MinWidth="280" SelectionChanged="FormatCombo_SelectionChanged" />
-                <TextBox x:Name="CustomBox" x:Uid="Clock_CustomFormat" MinWidth="280" Visibility="Collapsed" TextChanged="CustomBox_TextChanged" />
-                <StackPanel Orientation="Horizontal" Spacing="8">
-                    <TextBlock x:Uid="Clock_Preview" Opacity="0.7" />
-                    <TextBlock x:Name="PreviewText" />
+            <Border Style="{StaticResource SettingsCardStyle}">
+                <StackPanel Spacing="8">
+                    <ComboBox x:Name="FormatCombo" x:Uid="Clock_DateFormat" MinWidth="280" SelectionChanged="FormatCombo_SelectionChanged" />
+                    <TextBox x:Name="CustomBox" x:Uid="Clock_CustomFormat" MinWidth="280" Visibility="Collapsed" TextChanged="CustomBox_TextChanged" />
+                    <StackPanel Orientation="Horizontal" Spacing="8">
+                        <TextBlock x:Uid="Clock_Preview" Opacity="0.7" />
+                        <TextBlock x:Name="PreviewText" />
+                    </StackPanel>
                 </StackPanel>
-            </StackPanel>
+            </Border>
         </StackPanel>
     </ScrollViewer>
 </Page>
