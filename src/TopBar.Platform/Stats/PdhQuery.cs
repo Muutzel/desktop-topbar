@@ -69,6 +69,9 @@ internal sealed unsafe class PdhQuery : IDisposable
             if (status != PDH_CSTATUS_VALID_DATA && status != PDH_CSTATUS_NEW_DATA) continue;
             result.Add((items[i].szName.ToString(), items[i].FmtValue.Anonymous.doubleValue));
         }
+        // `buffer` is only referenced through a raw pointer above; without this the JIT may treat it as dead after the pointer
+        // was taken, and a GC triggered by the string/List allocations in the loop could free the POH array while we read it.
+        GC.KeepAlive(buffer);
         return result;
     }
 
