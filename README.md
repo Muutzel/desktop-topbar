@@ -34,7 +34,7 @@ dotnet run --project src/TopBar.App
 Publish as a standalone EXE (no installed .NET or Windows App SDK runtime required):
 
 ```powershell
-dotnet publish src/TopBar.App -c Release -r win-x64 --self-contained true -o publish
+dotnet publish src/TopBar.App -c Release -r win-x64 --self-contained true  -p:PublishSingleFile=true -p:IncludeNativeLibrariesForSelfExtract=true -p:IncludeAllContentForSelfExtract=true -p:WindowsAppSDKSelfContained=true -o publish
 ```
 
 `publish/TopBar.exe` runs directly. There is no installer and no MSIX.
