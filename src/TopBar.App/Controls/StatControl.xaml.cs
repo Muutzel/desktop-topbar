@@ -24,7 +24,6 @@ public sealed partial class StatControl : UserControl
     private const int GlyphCpu = 58540;      // developer_board
     private const int GlyphGpu = 60827;      // top_speed
     private const int GlyphRam = 58463;      // data_usage
-    private const int GlyphNetwork = 62554;  // globe
 
     private readonly StatsViewModel _vm;
     private readonly StatEntry _entry;
@@ -45,18 +44,11 @@ public sealed partial class StatControl : UserControl
             StatKind.Cpu => (vm.Cpu, "CPU", GlyphCpu, "88 %"),
             StatKind.Gpu => (vm.Gpu, "GPU", GlyphGpu, "88 %"),
             StatKind.Ram => (vm.Ram, "RAM", GlyphRam, "88 %"),
-            _ => (vm.Network, "", GlyphNetwork, ""),
+            _ => (vm.Network, "", 0, ""),
         };
         _entry = entry;
         _widestSample = widest;
 
-        var icon = new TextBlock
-        {
-            Text = char.ConvertFromUtf32(glyph),
-            FontFamily = (FontFamily)Application.Current.Resources["FluentIconsFont"],
-            FontSize = 16,
-            VerticalAlignment = VerticalAlignment.Center,
-        };
         _label = new TextBlock
         {
             Text = label,
@@ -64,7 +56,17 @@ public sealed partial class StatControl : UserControl
             Foreground = (Brush)Resources["SecondaryTextBrush"],
         };
         var content = new StackPanel { Orientation = Orientation.Horizontal, Spacing = 6 };
-        content.Children.Add(icon);
+        // Network shows only the ↓/↑ table (no icon): saves space.
+        if (kind != StatKind.Network)
+        {
+            content.Children.Add(new TextBlock
+            {
+                Text = char.ConvertFromUtf32(glyph),
+                FontFamily = (FontFamily)Application.Current.Resources["FluentIconsFont"],
+                FontSize = 16,
+                VerticalAlignment = VerticalAlignment.Center,
+            });
+        }
         content.Children.Add(_label);
 
         if (kind == StatKind.Network)
